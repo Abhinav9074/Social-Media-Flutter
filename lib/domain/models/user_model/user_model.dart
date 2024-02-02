@@ -20,6 +20,7 @@ class UserModel with FirestoreModel {
   final List<String> requestedCommunities;
   final List<String> liked;
   final List<String> disliked;
+  final bool blocked;
 
   UserModel(
       {required this.username,
@@ -39,7 +40,8 @@ class UserModel with FirestoreModel {
       required this.disliked,
       required this.communities,
       required this.requestedCommunities,
-      required this.communitiyNames
+      required this.communitiyNames,
+      required this.blocked
       });
 
   @override
@@ -62,7 +64,8 @@ class UserModel with FirestoreModel {
       FirebaseConstants.filedPhone: phno,
       FirebaseConstants.fieldCommunities: communities,
       FirebaseConstants.fieldRequestedCommunities:requestedCommunities,
-      FirebaseConstants.fieldCommunitiyNames:communitiyNames
+      FirebaseConstants.fieldCommunitiyNames:communitiyNames,
+      FirebaseConstants.fieldUserBlocked:blocked
     };
   }
 }

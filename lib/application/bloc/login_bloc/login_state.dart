@@ -20,3 +20,5 @@ class NewUserState extends LoginState{
 
   NewUserState({required this.username, required this.email});
 }
+
+class UserBlockedState extends LoginState{}

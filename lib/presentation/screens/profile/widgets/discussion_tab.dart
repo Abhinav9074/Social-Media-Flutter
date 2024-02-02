@@ -1,6 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:connected/domain/common/firestore_constants/firebase_constants.dart';
-import 'package:connected/domain/fire_store_functions/user_db/user_db_functions.dart';
 import 'package:connected/presentation/core/media_query/media_query.dart';
 import 'package:connected/presentation/core/themes/theme.dart';
 import 'package:connected/presentation/screens/profile/screens/self_discussion_view.dart';
@@ -8,8 +7,8 @@ import 'package:flutter/material.dart';
 
 class DiscussionTab extends StatelessWidget {
   final int count;
-
-  const DiscussionTab({super.key, required this.count});
+  final String id;
+  const DiscussionTab({super.key, required this.count,required this.id});
 
   @override
   Widget build(BuildContext context) {
@@ -17,7 +16,7 @@ class DiscussionTab extends StatelessWidget {
         stream: FirebaseFirestore.instance
             .collection(FirebaseConstants.discussionDb)
             .where(FirebaseConstants.fieldDiscussionUserId,
-                isEqualTo: UserDbFunctions().userId)
+                isEqualTo: id)
             .snapshots(),
         builder: (context, snapshot) {
           if (!snapshot.hasData) {

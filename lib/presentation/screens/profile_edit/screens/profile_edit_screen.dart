@@ -5,6 +5,7 @@ import 'package:connected/domain/fire_store_functions/user_db/user_db_functions.
 import 'package:connected/presentation/core/themes/theme.dart';
 import 'package:connected/presentation/screens/profile_edit/widgets/old_profile.dart';
 import 'package:connected/presentation/screens/profile_edit/widgets/username_edit.dart';
+import 'package:connected/presentation/widgets/textField.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -20,7 +21,7 @@ class EditProfileScreen extends StatelessWidget {
         appBar: AppBar(
           title: const Text(
             'Edit Profile',
-            style: MyTextStyle.commonHeadingText,
+            style: MyTextStyle.googleButton,
           ),
           centerTitle: true,
         ),
@@ -45,7 +46,14 @@ class EditProfileScreen extends StatelessWidget {
                           image: snapshot.data![FirebaseConstants.fieldImage]),
 
                       //username editing
-                      EditUsername(userCont: usernameCont)
+                      Padding(
+                        padding: const EdgeInsets.fromLTRB(0, 10, 0, 5),
+                        child: CustomTextField(hint: 'Realname', textCont: usernameCont, suffixOnPressed: (){}, prefixOnPressed: (){}, suffixIcon: const Icon(Icons.abc), prefixIcon: const Icon(Icons.supervised_user_circle)),
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.fromLTRB(0, 5, 0, 5),
+                        child: CustomTextField(hint: 'Bio', textCont: usernameCont, suffixOnPressed: (){}, prefixOnPressed: (){}, suffixIcon: const Icon(Icons.abc), prefixIcon: const Icon(Icons.description)),
+                      )
                     ],
                   ),
                 );

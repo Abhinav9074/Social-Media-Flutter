@@ -58,7 +58,7 @@ class PostViewPage extends StatelessWidget {
           Padding(
             padding: const EdgeInsets.all(20.0),
             child: SizedBox(
-              height: 500,
+              height: MediaQueryCustom.discussionContainerHeight(context),
               width: double.infinity,
               child: ListView(
                 children:  [

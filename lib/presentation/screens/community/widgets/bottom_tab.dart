@@ -50,7 +50,8 @@ class CommunityMessageTab extends StatelessWidget {
                   icon: const Icon(Icons.attachment)),
               suffixIcon: IconButton(
                   onPressed: () async {
-                    //checking whether the date exist or not
+                    if(textCont.text.isNotEmpty){
+                      //checking whether the date exist or not
                     final dateData = await FirebaseFirestore.instance
                         .collection(FirebaseConstants.communityPostDb)
                         .where(FirebaseConstants.fieldCommunityId,
@@ -79,6 +80,7 @@ class CommunityMessageTab extends StatelessWidget {
                             image: ''));
 
                     textCont.clear();
+                    }
                   },
                   icon: const Icon(Icons.send)),
               contentPadding: const EdgeInsets.all(0),

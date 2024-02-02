@@ -1,14 +1,15 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:connected/application/bloc/like_bloc.dart/like_bloc.dart';
 import 'package:connected/domain/common/firestore_constants/firebase_constants.dart';
+import 'package:connected/domain/fire_store_functions/user_db/user_db_functions.dart';
 import 'package:connected/presentation/screens/home/widgets/heading_image_widget.dart';
 import 'package:connected/presentation/screens/home/widgets/social_tab.dart';
 import 'package:connected/presentation/screens/home/widgets/user_details.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-class DisscussionUi extends StatelessWidget {
-  const DisscussionUi({super.key});
+class InterestsDisscussionUi extends StatelessWidget {
+  const InterestsDisscussionUi({super.key});
 
   @override
   Widget build(BuildContext context) {

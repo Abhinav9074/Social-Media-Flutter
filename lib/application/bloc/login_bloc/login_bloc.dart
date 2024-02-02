@@ -21,7 +21,8 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
                 value: userCred.user!.email!,
                 field: FirebaseConstants.fieldEmail) ==
             true) {
-          //setting login status as true
+          if(await UserDbFunctions().blockStatus(userCred.user!.email!)==false){
+            //setting login status as true
           await SharedPrefLogin.setLogin();
           //saving the ID of user in shared prefs from firebase
           await SharedPrefLogin.saveId(
@@ -31,6 +32,9 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
           emit(UserExistState(
               username: userCred.user!.displayName!,
               email: userCred.user!.email!));
+          }else{
+            emit(UserBlockedState());
+          }
 
           //new user case
         } else {

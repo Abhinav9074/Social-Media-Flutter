@@ -10,6 +10,7 @@ import 'package:connected/presentation/core/themes/theme.dart';
 import 'package:connected/presentation/screens/profile/widgets/discussion_tab.dart';
 import 'package:connected/presentation/screens/profile/widgets/profile_pic_widget.dart';
 import 'package:connected/presentation/screens/profile/widgets/user_basic_details.dart';
+import 'package:connected/presentation/screens/report/screens/user_report_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
@@ -29,9 +30,12 @@ class OtherProfileScreen extends StatelessWidget {
           PopupMenuButton(
               surfaceTintColor: Colors.black,
               itemBuilder: (context) => [
-                    const PopupMenuItem(
+                     PopupMenuItem(
+                      onTap: (){
+                        Navigator.of(context).push(MaterialPageRoute(builder: (ctx)=>UserReportScreen(userId:userId)));
+                      },
                       value: 2,
-                      child: Row(
+                      child: const Row(
                         children: [
                           Icon(Icons.report),
                           SizedBox(
@@ -188,6 +192,7 @@ class OtherProfileScreen extends StatelessWidget {
                             : snapshot
                                 .data![FirebaseConstants.fieldDiscussions]
                                 .length,
+                                id: snapshot.data!.id,
                   ))
                 ],
               ),

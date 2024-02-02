@@ -13,9 +13,11 @@ abstract class UserDb {
   Future<void> unFollowUser(String userId);
   Future<String> getId(String email);
   Future<void> saveUserId(String id);
-  Future<bool>isFollowingState(String id);
-  Future<bool>isFollowBackState(String id);
-  Future<String>getUsername(String id);
+  Future<bool> isFollowingState(String id);
+  Future<bool> isFollowBackState(String id);
+  Future<String> getUsername(String id);
+  Future<bool> blockStatus(String email);
+  Future<bool> blockStatusId();
 }
 
 class UserDbFunctions extends UserDb {
@@ -27,7 +29,6 @@ class UserDbFunctions extends UserDb {
 
   //logged in user details stored here
   String userId = '';
-  String userImage = '';
 
 //check a value exist or not
   @override
@@ -71,22 +72,32 @@ class UserDbFunctions extends UserDb {
     });
 
     await FirebaseFirestore.instance
-    .collection(FirebaseConstants.userDb)
-    .doc(userId).update({FirebaseConstants.fieldFollowers:FieldValue.arrayUnion([await SharedPrefLogin.getUserId()])});
+        .collection(FirebaseConstants.userDb)
+        .doc(userId)
+        .update({
+      FirebaseConstants.fieldFollowers:
+          FieldValue.arrayUnion([await SharedPrefLogin.getUserId()])
+    });
   }
-
 
   //unfollow a user
-    @override
-  Future<void> unFollowUser(String userId) async{
-    await FirebaseFirestore.instance.collection(FirebaseConstants.userDb)
-    .doc(await SharedPrefLogin.getUserId()).update({FirebaseConstants.fieldFollowing:FieldValue.arrayRemove([userId])});
+  @override
+  Future<void> unFollowUser(String userId) async {
+    await FirebaseFirestore.instance
+        .collection(FirebaseConstants.userDb)
+        .doc(await SharedPrefLogin.getUserId())
+        .update({
+      FirebaseConstants.fieldFollowing: FieldValue.arrayRemove([userId])
+    });
 
-    await FirebaseFirestore.instance.collection(FirebaseConstants.userDb)
-    .doc(userId).update({FirebaseConstants.fieldFollowers:FieldValue.arrayRemove([await SharedPrefLogin.getUserId()])});
+    await FirebaseFirestore.instance
+        .collection(FirebaseConstants.userDb)
+        .doc(userId)
+        .update({
+      FirebaseConstants.fieldFollowers:
+          FieldValue.arrayRemove([await SharedPrefLogin.getUserId()])
+    });
   }
-
-
 
   //get used ID using email
   @override
@@ -98,46 +109,73 @@ class UserDbFunctions extends UserDb {
     return data.docs.first.id;
   }
 
-  //save user id to accessible variable
+
+  //save user id , interests and follwoing list to a accessible type
   @override
   Future<void> saveUserId(String id) async {
     userId = await SharedPrefLogin.getUserId();
   }
-  
+
   //check differient follwing states
 
   //following state
   @override
-  Future<bool> isFollowingState(String id) async{
-    final data = await  FirebaseFirestore.instance.collection(FirebaseConstants.userDb)
-    .doc(await SharedPrefLogin.getUserId()).get();
-    if(data.get(FirebaseConstants.fieldFollowing).contains(id)){
+  Future<bool> isFollowingState(String id) async {
+    final data = await FirebaseFirestore.instance
+        .collection(FirebaseConstants.userDb)
+        .doc(await SharedPrefLogin.getUserId())
+        .get();
+    if (data.get(FirebaseConstants.fieldFollowing).contains(id)) {
       return true;
     }
     return false;
   }
-  
+
   //follow back state
   @override
-  Future<bool> isFollowBackState(String id) async{
-    final data = await  FirebaseFirestore.instance.collection(FirebaseConstants.userDb)
-    .doc(id).get();
-    if(data.get(FirebaseConstants.fieldFollowing).contains(await SharedPrefLogin.getUserId())){
+  Future<bool> isFollowBackState(String id) async {
+    final data = await FirebaseFirestore.instance
+        .collection(FirebaseConstants.userDb)
+        .doc(id)
+        .get();
+    if (data
+        .get(FirebaseConstants.fieldFollowing)
+        .contains(await SharedPrefLogin.getUserId())) {
       return true;
     }
     return false;
   }
-  
+
   @override
-  Future<String> getUsername(String id) async{
-    final data = await  FirebaseFirestore.instance.collection(FirebaseConstants.userDb)
-    .doc(id).get();
+  Future<String> getUsername(String id) async {
+    final data = await FirebaseFirestore.instance
+        .collection(FirebaseConstants.userDb)
+        .doc(id)
+        .get();
     return data[FirebaseConstants.fieldRealname];
   }
-  
 
+  @override
+  Future<bool> blockStatusId() async {
+    final data = await FirebaseFirestore.instance
+        .collection(FirebaseConstants.userDb)
+        .doc(userId)
+        .get();
+    if (data[FirebaseConstants.fieldUserBlocked] == true) {
+      return true;
+    }
+    return false;
+  }
 
-  
-
-
+  @override
+  Future<bool> blockStatus(String email) async {
+    final data = await FirebaseFirestore.instance
+        .collection(FirebaseConstants.userDb)
+        .where(FirebaseConstants.fieldEmail, isEqualTo: email)
+        .get();
+    if (data.docs.first[FirebaseConstants.fieldUserBlocked] == true) {
+      return true;
+    }
+    return false;
+  }
 }

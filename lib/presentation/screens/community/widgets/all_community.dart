@@ -42,6 +42,8 @@ class MyCommunity extends StatelessWidget {
                                 FirebaseConstants.fieldCommunitiyNames][index];
                             if (communityName.contains(state.keyword)) {
                               return CommunityTab(communityId: data);
+                            } else {
+                              return const SizedBox();
                             }
                           }),
                       Positioned(

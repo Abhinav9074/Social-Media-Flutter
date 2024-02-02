@@ -1,10 +1,15 @@
+// ignore_for_file: use_build_context_synchronously
+
 import 'package:connected/application/bloc/login_bloc/login_bloc.dart';
 import 'package:connected/application/bloc/login_bloc/login_event.dart';
 import 'package:connected/application/bloc/login_bloc/login_state.dart';
+import 'package:connected/domain/shared_prefrences/login_logout/login_logout.dart';
 import 'package:connected/presentation/core/constants/texts.dart';
 import 'package:connected/presentation/core/snackbars/common_snackbar.dart';
 import 'package:connected/presentation/core/themes/theme.dart';
 import 'package:connected/presentation/screens/add_details_screens/screens/add_details1.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:google_sign_in/google_sign_in.dart';
 import 'package:sign_button/sign_button.dart';
 import 'package:connected/presentation/screens/login/widgets/icon_name.dart';
 import 'package:connected/presentation/screens/main_page/screens/main_page.dart';
@@ -18,7 +23,7 @@ class LoginScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       body: BlocConsumer<LoginBloc, LoginState>(
-        listener: (context, state) {
+        listener: (context, state) async{
           if (state is UserExistState) {
             AllSnackBars.commonSnackbar(context: context, title: 'Welcome Back', content: state.username, bg: Colors.green);
             Navigator.of(context).pushAndRemoveUntil(
@@ -29,6 +34,12 @@ class LoginScreen extends StatelessWidget {
             Navigator.of(context).pushAndRemoveUntil(
                 MaterialPageRoute(builder: (ctx) => const AddGender()),
                 (route) => false);
+          } else if(state is UserBlockedState){
+            await GoogleSignIn().signOut();
+              FirebaseAuth.instance.signOut();
+              await SharedPrefLogin.logOut();
+            Navigator.of(context).pushAndRemoveUntil(MaterialPageRoute(builder: (ctx)=>const LoginScreen()), (route) => false);
+            AllSnackBars.commonSnackbar(context: context, title: 'Error', content: 'Your Account Is Blocked', bg: Colors.red);
           }
         },
         builder: (context, state) {

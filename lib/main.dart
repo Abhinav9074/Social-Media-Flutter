@@ -8,6 +8,7 @@ import 'package:connected/application/bloc/image_picker_bloc/image_picker_bloc.d
 import 'package:connected/application/bloc/login_bloc/login_bloc.dart';
 import 'package:connected/application/bloc/other_profile_bloc/other_profile_bloc.dart';
 import 'package:connected/application/bloc/splash_bloc/splash_bloc.dart';
+import 'package:connected/application/bloc/user_access_bloc/user_access_bloc.dart';
 import 'package:connected/application/bloc/user_name_bloc/username_bloc.dart';
 import 'package:connected/application/bloc/user_search_bloc/user_search_bloc.dart';
 import 'package:connected/presentation/screens/splash/screens/splash_screen.dart';
@@ -44,6 +45,7 @@ class MyApp extends StatelessWidget {
           BlocProvider(create: (context)=>ContributionBloc()),
           BlocProvider(create: (context)=>OtherProfileBloc()),
           BlocProvider(create: (context)=>CommunityPostingBloc()),
+          BlocProvider(create: (context)=>UserAccessBloc()),
         ],
       child: MaterialApp(
         debugShowCheckedModeBanner: false,

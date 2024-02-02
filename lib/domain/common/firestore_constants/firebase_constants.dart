@@ -10,6 +10,10 @@ class FirebaseConstants{
   static const String interestsDb = 'interest';
   static const String communityDb = 'community';
   static const String communityPostDb = 'community_posts';
+  static const String chatRoom = 'chat_room';
+  static const String messagesSubCollection = 'messages';
+  static const String userReportDb = 'reportedUsers';
+  static const String discussionReportDb = 'reportedDiscussions';
 
   //interest db id
   static const String interestDbId = 'IJ6hEiz0OVdo7AfhXvg4';
@@ -34,6 +38,7 @@ class FirebaseConstants{
   static const String fieldCommunities = 'communities';
   static const String fieldRequestedCommunities = 'requestedCommunities';
   static const String fieldCommunitiyNames = 'communityNames';
+  static const String fieldUserBlocked = 'blocked';
 
 
   //discussion db fields
@@ -71,6 +76,7 @@ class FirebaseConstants{
   static const String fieldCommunityNotifications = 'communityNotifications';
   static const String fieldCommunityRequests = 'communityRequests';
   static const String fieldCommunityTyping = 'typing';
+  static const String fieldCommunityRestricted = 'restricted';
 
   //community post fields
   static const String fieldCommunityPostMessage = 'message';
@@ -81,5 +87,18 @@ class FirebaseConstants{
   static const String fieldCommunityPostUserId = 'userId';
   static const String fieldCommunityPostTime = 'time';
 
+
+  //chat fields
+  static const String fieldchatSenderId = 'sender';
+  static const String fieldchatReceiverId = 'reciver';
+  static const String fieldchatMessage = 'message';
+  static const String fieldchatTime = 'time';
+  static const String fieldChatTimeStamp = 'timestamp';
+
+  //report db fields
+  static const String fieldReportedUserId = 'reportedUser';
+  static const String fieldReporterId = 'reporter';
+  static const String fieldReportDescription = 'description';
+  static const String fieldReportedDiscussionId = 'discussionId';
 
 }

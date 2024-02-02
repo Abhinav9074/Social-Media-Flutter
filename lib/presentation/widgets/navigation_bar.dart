@@ -1,4 +1,7 @@
+import 'package:connected/application/bloc/user_access_bloc/user_access_bloc.dart';
+import 'package:connected/application/bloc/user_access_bloc/user_access_event.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 ValueNotifier<int> screenChangeNotifier = ValueNotifier(0);
@@ -13,6 +16,7 @@ class BottomNavigationDrawer extends StatelessWidget {
       currentIndex: newIndex,
       onTap: (value) {
         screenChangeNotifier.value = value;
+        BlocProvider.of<UserAccessBloc>(context).add(CheckUserAccess());
       },
       type: BottomNavigationBarType.fixed,
       backgroundColor: const Color.fromARGB(255, 255, 255, 255),

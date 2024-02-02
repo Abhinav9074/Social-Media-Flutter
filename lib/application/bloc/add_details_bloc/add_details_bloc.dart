@@ -54,7 +54,8 @@ class AddDetailsBloc extends Bloc<AddDetailsEvent, AddDetailsState> {
           phno: '',
           communities: [],
           requestedCommunities: [],
-          communitiyNames: []
+          communitiyNames: [],
+          blocked: false
           );
 
       //adding a user to firebase

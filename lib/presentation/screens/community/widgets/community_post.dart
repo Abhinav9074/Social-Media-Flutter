@@ -238,26 +238,29 @@ class CommunityPosts extends StatelessWidget {
                       padding: const EdgeInsets.all(8.0),
                       child: Column(
                         children: [
-                          Container(
-                            decoration: BoxDecoration(
-                                color: const Color.fromARGB(255, 195, 235, 165),
-                                borderRadius: BorderRadius.circular(10)),
-                            child: Padding(
-                              padding: const EdgeInsets.all(8.0),
-                              child: Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  Text(
-                                    snapshot.data![FirebaseConstants
-                                        .fieldCommunityPostMessage],
-                                    style: MyTextStyle.descriptionText,
-                                  ),
-                                  Text(
-                                    snapshot.data![FirebaseConstants
-                                        .fieldCommunityPostTime],
-                                    style: MyTextStyle.greyHeadingTextSmall,
-                                  )
-                                ],
+                          ConstrainedBox(
+                            constraints: const BoxConstraints(maxWidth: 300),
+                            child: Container(
+                              decoration: BoxDecoration(
+                                  color: const Color.fromARGB(255, 195, 235, 165),
+                                  borderRadius: BorderRadius.circular(10)),
+                              child: Padding(
+                                padding: const EdgeInsets.all(8.0),
+                                child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Text(
+                                      snapshot.data![FirebaseConstants
+                                          .fieldCommunityPostMessage],
+                                      style: MyTextStyle.descriptionText,
+                                    ),
+                                    Text(
+                                      snapshot.data![FirebaseConstants
+                                          .fieldCommunityPostTime],
+                                      style: MyTextStyle.greyHeadingTextSmall,
+                                    )
+                                  ],
+                                ),
                               ),
                             ),
                           ),
@@ -295,48 +298,51 @@ class CommunityPosts extends StatelessWidget {
                       padding: const EdgeInsets.all(8.0),
                       child: Column(
                         children: [
-                          Container(
-                            decoration: BoxDecoration(
-                                color: Colors.white,
-                                borderRadius: BorderRadius.circular(10)),
-                            child: Padding(
-                              padding: const EdgeInsets.all(8.0),
-                              child: Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  StreamBuilder(
-                                      stream: FirebaseFirestore.instance
-                                          .collection(FirebaseConstants.userDb)
-                                          .doc(snapshot.data![FirebaseConstants
-                                              .fieldCommunityPostUserId])
-                                          .snapshots(),
-                                      builder: (context, snapshot) {
-                                        if (!snapshot.hasData) {
-                                          return const SizedBox();
-                                        } else {
-                                          return Padding(
-                                            padding: const EdgeInsets.fromLTRB(
-                                                2, 0, 0, 0),
-                                            child: Text(
-                                              '${snapshot.data![FirebaseConstants.fieldRealname]}'
-                                                  .titleCase,
-                                              style: MyTextStyle
-                                                  .commonButtonTextRed,
-                                            ),
-                                          );
-                                        }
-                                      }),
-                                  Text(
-                                    snapshot.data![FirebaseConstants
-                                        .fieldCommunityPostMessage],
-                                    style: MyTextStyle.descriptionText,
-                                  ),
-                                  Text(
-                                    snapshot.data![FirebaseConstants
-                                        .fieldCommunityPostTime],
-                                    style: MyTextStyle.greyHeadingTextSmall,
-                                  )
-                                ],
+                          ConstrainedBox(
+                            constraints: const BoxConstraints(maxWidth: 300),
+                            child: Container(
+                              decoration: BoxDecoration(
+                                  color: Colors.white,
+                                  borderRadius: BorderRadius.circular(10)),
+                              child: Padding(
+                                padding: const EdgeInsets.all(8.0),
+                                child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    StreamBuilder(
+                                        stream: FirebaseFirestore.instance
+                                            .collection(FirebaseConstants.userDb)
+                                            .doc(snapshot.data![FirebaseConstants
+                                                .fieldCommunityPostUserId])
+                                            .snapshots(),
+                                        builder: (context, snapshot) {
+                                          if (!snapshot.hasData) {
+                                            return const SizedBox();
+                                          } else {
+                                            return Padding(
+                                              padding: const EdgeInsets.fromLTRB(
+                                                  2, 0, 0, 0),
+                                              child: Text(
+                                                '${snapshot.data![FirebaseConstants.fieldRealname]}'
+                                                    .titleCase,
+                                                style: MyTextStyle
+                                                    .commonButtonTextRed,
+                                              ),
+                                            );
+                                          }
+                                        }),
+                                    Text(
+                                      snapshot.data![FirebaseConstants
+                                          .fieldCommunityPostMessage],
+                                      style: MyTextStyle.descriptionText,
+                                    ),
+                                    Text(
+                                      snapshot.data![FirebaseConstants
+                                          .fieldCommunityPostTime],
+                                      style: MyTextStyle.greyHeadingTextSmall,
+                                    )
+                                  ],
+                                ),
                               ),
                             ),
                           ),

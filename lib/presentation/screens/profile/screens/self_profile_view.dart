@@ -133,7 +133,7 @@ class ProfileScreen extends StatelessWidget {
 
                   //all discussions
 
-                   Expanded(child: DiscussionTab(count: snapshot.data![FirebaseConstants.fieldDiscussions] == null ? 0 : snapshot.data![FirebaseConstants.fieldDiscussions].length,))
+                   Expanded(child: DiscussionTab(count: snapshot.data![FirebaseConstants.fieldDiscussions] == null ? 0 : snapshot.data![FirebaseConstants.fieldDiscussions].length,id: UserDbFunctions().userId,))
                 ],
               ),
             );
