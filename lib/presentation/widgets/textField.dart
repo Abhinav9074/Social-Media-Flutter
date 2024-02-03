@@ -6,8 +6,9 @@ class CustomTextField extends StatelessWidget {
   final TextEditingController textCont;
   final Function()? suffixOnPressed;
   final Function()? prefixOnPressed;
-  final Widget suffixIcon;
+  final dynamic suffixIcon;
   final Widget prefixIcon;
+  final bool readOnly;
 
   const CustomTextField(
       {super.key,
@@ -16,13 +17,15 @@ class CustomTextField extends StatelessWidget {
       required this.suffixOnPressed,
       required this.prefixOnPressed,
       required this.suffixIcon,
-      required this.prefixIcon});
+      required this.prefixIcon,
+      required this.readOnly});
 
   @override
   Widget build(BuildContext context) {
     return Padding(
       padding: const EdgeInsets.fromLTRB(10, 0, 10, 10),
       child: TextFormField(
+        readOnly: readOnly,
         controller: textCont,
         decoration: InputDecoration(
           contentPadding: const EdgeInsets.all(0),

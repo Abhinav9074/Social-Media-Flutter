@@ -39,6 +39,11 @@ class FirebaseConstants{
   static const String fieldRequestedCommunities = 'requestedCommunities';
   static const String fieldCommunitiyNames = 'communityNames';
   static const String fieldUserBlocked = 'blocked';
+  static const String fieldLattitude = 'lattitude';
+  static const String fieldLongitude = 'longitude';
+  static const String fieldAddress = 'address';
+  static const String fieldAllowLocationView = 'location_view';
+  static const String fieldUserBio = 'bio';
 
 
   //discussion db fields

@@ -1,3 +1,5 @@
+import 'dart:ffi';
+
 import 'package:connected/domain/common/firestore_constants/firebase_constants.dart';
 import 'package:connected/domain/models/common_mixin/firestore_mixin.dart';
 
@@ -21,28 +23,15 @@ class UserModel with FirestoreModel {
   final List<String> liked;
   final List<String> disliked;
   final bool blocked;
+  final bool locationView;
+  final double lattitude;
+  final double longitude;
+  final String address;
+  final String bio;
 
-  UserModel(
-      {required this.username,
-      required this.email,
-      required this.image,
-      required this.realName,
-      required this.gender,
-      required this.locationStr,
-      required this.location,
-      required this.createdTime,
-      required this.phno,
-      required this.following,
-      required this.followers,
-      required this.interest,
-      required this.discussions,
-      required this.liked,
-      required this.disliked,
-      required this.communities,
-      required this.requestedCommunities,
-      required this.communitiyNames,
-      required this.blocked
-      });
+  UserModel({required this.username, required this.email, required this.image, required this.realName, required this.gender, required this.locationStr, required this.location, required this.createdTime, required this.phno, required this.following, required this.followers, required this.interest, required this.discussions, required this.communities, required this.communitiyNames, required this.requestedCommunities, required this.liked, required this.disliked, required this.blocked, required this.locationView, required this.lattitude, required this.longitude, required this.address,required this.bio});
+
+
 
   @override
   Map<String, dynamic> toMap() {
@@ -65,7 +54,12 @@ class UserModel with FirestoreModel {
       FirebaseConstants.fieldCommunities: communities,
       FirebaseConstants.fieldRequestedCommunities:requestedCommunities,
       FirebaseConstants.fieldCommunitiyNames:communitiyNames,
-      FirebaseConstants.fieldUserBlocked:blocked
+      FirebaseConstants.fieldUserBlocked:blocked,
+      FirebaseConstants.fieldAddress:address,
+      FirebaseConstants.fieldLattitude:lattitude,
+      FirebaseConstants.fieldLongitude:longitude,
+      FirebaseConstants.fieldAllowLocationView:locationView,
+      FirebaseConstants.fieldUserBio:bio,
     };
   }
 }

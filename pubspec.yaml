@@ -53,6 +53,8 @@ dependencies:
   sign_button: ^2.0.6
   rxdart: ^0.27.7
   bubble: ^1.2.1
+  geolocator: ^10.1.0
+  geocoding: ^2.1.1
 
   
 

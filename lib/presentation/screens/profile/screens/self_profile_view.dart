@@ -1,4 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:connected/application/bloc/location_bloc/location_bloc.dart';
+import 'package:connected/application/bloc/profile_switch_bloc/profile_switch_bloc.dart';
 import 'package:connected/domain/common/firestore_constants/firebase_constants.dart';
 import 'package:connected/domain/fire_store_functions/user_db/user_db_functions.dart';
 import 'package:connected/presentation/core/themes/theme.dart';
@@ -7,6 +9,7 @@ import 'package:connected/presentation/screens/profile/widgets/profile_pic_widge
 import 'package:connected/presentation/screens/profile/widgets/user_basic_details.dart';
 import 'package:connected/presentation/screens/profile_edit/screens/profile_edit_screen.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 class ProfileScreen extends StatelessWidget {
   const ProfileScreen({super.key});
@@ -19,9 +22,16 @@ class ProfileScreen extends StatelessWidget {
           PopupMenuButton(
               surfaceTintColor: Colors.black,
               itemBuilder: (context) => [
-                     PopupMenuItem(
-                      onTap: (){
-                        Navigator.of(context).push(MaterialPageRoute(builder: (ctx)=>const EditProfileScreen()));
+                    PopupMenuItem(
+                      onTap: () {
+                        Navigator.of(context).push(MaterialPageRoute(
+                            builder: (ctx) => BlocProvider(
+                                  create: (context) => LocationBloc(),
+                                  child: BlocProvider(
+                                    create: (context) => ProfileSwitchBloc(),
+                                    child: EditProfileScreen(),
+                                  ),
+                                )));
                       },
                       value: 1,
                       child: const Row(
@@ -128,12 +138,23 @@ class ProfileScreen extends StatelessWidget {
 
                   const Padding(
                     padding: EdgeInsets.fromLTRB(20, 0, 0, 10),
-                    child: Text('All Discussions',style: MyTextStyle.discussionHeadingText,),
+                    child: Text(
+                      'All Discussions',
+                      style: MyTextStyle.discussionHeadingText,
+                    ),
                   ),
 
                   //all discussions
 
-                   Expanded(child: DiscussionTab(count: snapshot.data![FirebaseConstants.fieldDiscussions] == null ? 0 : snapshot.data![FirebaseConstants.fieldDiscussions].length,id: UserDbFunctions().userId,))
+                  Expanded(
+                      child: DiscussionTab(
+                    count: snapshot.data![FirebaseConstants.fieldDiscussions] ==
+                            null
+                        ? 0
+                        : snapshot
+                            .data![FirebaseConstants.fieldDiscussions].length,
+                    id: UserDbFunctions().userId,
+                  ))
                 ],
               ),
             );

@@ -1,9 +1,18 @@
+// ignore_for_file: use_build_context_synchronously
+
 import 'dart:developer';
+import 'dart:io';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:connected/domain/common/firestore_constants/firebase_constants.dart';
+import 'package:connected/domain/models/location_model/location_model.dart';
 import 'package:connected/domain/models/user_model/user_model.dart';
+import 'package:connected/domain/models/user_model/user_update_model.dart';
+import 'package:connected/domain/repository/file_upload_repository.dart';
 import 'package:connected/domain/shared_prefrences/login_logout/login_logout.dart';
+import 'package:connected/presentation/core/snackbars/common_snackbar.dart';
+import 'package:connected/presentation/screens/main_page/screens/main_page.dart';
+import 'package:flutter/material.dart';
 
 abstract class UserDb {
   Future<void> addUser(UserModel data);
@@ -18,6 +27,10 @@ abstract class UserDb {
   Future<String> getUsername(String id);
   Future<bool> blockStatus(String email);
   Future<bool> blockStatusId();
+  Future<void> addInterest(String interest);
+  Future<void> removeInterest(String interest);
+  Future<void> addLoactionData(LocationModel location);
+  Future<void> updateUserData({required UserUpdateModel data, required String image});
 }
 
 class UserDbFunctions extends UserDb {
@@ -109,7 +122,6 @@ class UserDbFunctions extends UserDb {
     return data.docs.first.id;
   }
 
-
   //save user id , interests and follwoing list to a accessible type
   @override
   Future<void> saveUserId(String id) async {
@@ -177,5 +189,60 @@ class UserDbFunctions extends UserDb {
       return true;
     }
     return false;
+  }
+
+  @override
+  Future<void> addInterest(String interest) async {
+    //updating user list
+    await FirebaseFirestore.instance
+        .collection(FirebaseConstants.userDb)
+        .doc(userId)
+        .update({
+      FirebaseConstants.fieldInterest: FieldValue.arrayUnion([interest])
+    });
+  }
+
+  @override
+  Future<void> removeInterest(String interest) async {
+    //updating user list
+    await FirebaseFirestore.instance
+        .collection(FirebaseConstants.userDb)
+        .doc(userId)
+        .update({
+      FirebaseConstants.fieldInterest: FieldValue.arrayRemove([interest])
+    });
+  }
+
+  @override
+  Future<void> addLoactionData(LocationModel location) async {
+    await FirebaseFirestore.instance
+        .collection(FirebaseConstants.userDb)
+        .doc(userId)
+        .update({
+      FirebaseConstants.fieldLattitude: location.lattitude,
+      FirebaseConstants.fieldLongitude: location.longitude
+    });
+  }
+
+  @override
+  Future<void> updateUserData(
+      {required UserUpdateModel data, String image = ''}) async {
+    if (image == '') {
+      await FirebaseFirestore.instance
+          .collection(FirebaseConstants.userDb)
+          .doc(userId)
+          .update(data.toMap());
+    } else {
+      final upload = FileUploadRepository();
+      String? img = await upload.uploadImage(File(image));
+      final value = UserUpdateModel(image: img!, realName: data.realName, locationView: data.locationView, address: data.address, bio: data.bio);
+      await FirebaseFirestore.instance
+          .collection(FirebaseConstants.userDb)
+          .doc(userId)
+          .update(value.toMap());
+    }
+
+    //snackbar
+    AllSnackBars.commonSnackbar(context: mainPageContext, title: 'Success', content: 'Data Updated', bg: Colors.green);
   }
 }

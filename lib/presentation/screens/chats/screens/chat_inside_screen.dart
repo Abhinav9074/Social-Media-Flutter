@@ -67,6 +67,7 @@ class ChatInsideScreen extends StatelessWidget {
                 }
               }),
           CustomTextField(
+            readOnly: false,
             hint: 'Message',
             textCont: textCont,
             suffixIcon: const Icon(Icons.send),
