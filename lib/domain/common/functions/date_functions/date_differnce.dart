@@ -1,5 +1,4 @@
-String dateDiffernce(DateTime today, DateTime date) {
-  
+String dateDiffernce({required DateTime today,required DateTime date}) {
      today = DateTime(today.year, today.month, today.day,today.hour,today.minute,today.second);
      date = DateTime(date.year, date.month, date.day,date.hour,date.minute,date.second);
     var val = (today.difference(date).inHours).round();

@@ -1,7 +1,5 @@
-class FirebaseConstants{
-
+class FirebaseConstants {
   //All important names in firebase DB
-
 
   //db names
   static const String userDb = 'user';
@@ -14,10 +12,10 @@ class FirebaseConstants{
   static const String messagesSubCollection = 'messages';
   static const String userReportDb = 'reportedUsers';
   static const String discussionReportDb = 'reportedDiscussions';
+  static const String notificationDb = 'notifications';
 
   //interest db id
   static const String interestDbId = 'IJ6hEiz0OVdo7AfhXvg4';
-
 
   // user db fields
   static const String fieldEmail = 'email';
@@ -29,12 +27,12 @@ class FirebaseConstants{
   static const String fieldFollowers = 'followers';
   static const String fieldDiscussions = 'discussions';
   static const String fieldLiked = 'liked';
-  static const String filedDisliked = 'disliked';
+  static const String filedNotifications = 'notification';
   static const String filedGender = 'gender';
   static const String filedLocationStr = 'location_str';
   static const String filedLocation = 'location';
   static const String filedCreatedTime = 'created_time';
-  static const String filedPhone = 'phone';
+  static const String fieldNotificationCount = 'notificationCount';
   static const String fieldCommunities = 'communities';
   static const String fieldRequestedCommunities = 'requestedCommunities';
   static const String fieldCommunitiyNames = 'communityNames';
@@ -44,7 +42,7 @@ class FirebaseConstants{
   static const String fieldAddress = 'address';
   static const String fieldAllowLocationView = 'location_view';
   static const String fieldUserBio = 'bio';
-
+  static const String fieldPremiumUser = 'premium';
 
   //discussion db fields
   static const String fieldDiscussionTitle = 'title';
@@ -64,7 +62,6 @@ class FirebaseConstants{
   static const String fieldContributionDescription = 'description';
   static const String fieldContributer = 'contributer';
   static const String fieldContributedTime = 'createdTime';
-
 
   //interest db fields
   static const String fieldInterests = 'interests';
@@ -92,7 +89,6 @@ class FirebaseConstants{
   static const String fieldCommunityPostUserId = 'userId';
   static const String fieldCommunityPostTime = 'time';
 
-
   //chat fields
   static const String fieldchatSenderId = 'sender';
   static const String fieldchatReceiverId = 'reciver';
@@ -106,4 +102,10 @@ class FirebaseConstants{
   static const String fieldReportDescription = 'description';
   static const String fieldReportedDiscussionId = 'discussionId';
 
+  //notificatiob db fields
+  static const String fieldNotificationCreatedUser = 'userId';
+  static const String fieldNotificationReceivedUser = 'receiverId';
+  static const String fieldNotificationMessage = 'message';
+  static const String fieldNotificationTime = 'time';
+  static const String fieldNotificationTimeStamp = 'timestamp';
 }

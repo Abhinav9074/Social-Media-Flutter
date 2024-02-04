@@ -1,12 +1,20 @@
+// ignore_for_file: use_build_context_synchronously
+
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:connected/domain/common/firestore_constants/firebase_constants.dart';
+import 'package:connected/domain/fire_store_functions/user_db/user_db_functions.dart';
 import 'package:connected/presentation/core/media_query/media_query.dart';
+import 'package:connected/presentation/core/themes/theme.dart';
+import 'package:connected/presentation/screens/notification/screens/notification_screen.dart';
 import 'package:connected/presentation/screens/profile/screens/self_profile_view.dart';
 import 'package:connected/presentation/screens/search_page/screens/search_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
-  const CustomAppBar(
-      {super.key,});
+  const CustomAppBar({
+    super.key,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -22,28 +30,80 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
             children: [
               Row(
                 children: [
-                  IconButton(onPressed: (){
-                    Scaffold.of(context).openDrawer();
-                  }, icon: const Icon(Icons.menu))
+                  IconButton(
+                      onPressed: () {
+                        Scaffold.of(context).openDrawer();
+                      },
+                      icon: const Icon(Icons.menu))
                 ],
               ),
-               Row(
+              Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  IconButton(onPressed: (){Navigator.of(context).push(MaterialPageRoute(builder: (ctx)=>const SearchScreen()));}, icon: const Icon(Icons.search)),
+                  IconButton(
+                      onPressed: () {
+                        Navigator.of(context).push(MaterialPageRoute(
+                            builder: (ctx) => const SearchScreen()));
+                      },
+                      icon: const Icon(Icons.search)),
                   const SizedBox(
                     width: 20,
                   ),
-                  const Icon(
-                    FontAwesomeIcons.bell,
-                    color: Color.fromARGB(255, 0, 0, 0),
+                  Stack(
+                    children: [
+                      IconButton(
+                        onPressed: () async {
+                          Navigator.of(context).push(MaterialPageRoute(
+                              builder: (ctx) => const NotificationScreen()));
+                          //clearing the notification count
+                          await UserDbFunctions().clearNotificationCount();
+                        },
+                        icon: const FaIcon(
+                          FontAwesomeIcons.bell,
+                          color: Color.fromARGB(255, 0, 0, 0),
+                        ),
+                      ),
+                      StreamBuilder(
+                          stream: FirebaseFirestore.instance
+                              .collection(FirebaseConstants.userDb)
+                              .doc(UserDbFunctions().userId)
+                              .snapshots(),
+                          builder: (context, snapshot) {
+                            if (!snapshot.hasData) {
+                              return const SizedBox();
+                            } else if (snapshot.data![
+                                    FirebaseConstants.fieldNotificationCount] >
+                                0) {
+                              return Positioned(
+                                right: 6,
+                                child: CircleAvatar(
+                                  radius: 10,
+                                  backgroundColor: Colors.red,
+                                  child: Text(
+                                    snapshot.data![FirebaseConstants
+                                            .fieldNotificationCount]
+                                        .toString(),
+                                    style: MyTextStyle.commonButtonTextWhite,
+                                  ),
+                                ),
+                              );
+                            } else {
+                              return const SizedBox();
+                            }
+                          })
+                    ],
                   ),
                   const SizedBox(
                     width: 20,
                   ),
-                  IconButton(onPressed: (){
-                        Navigator.of(context).push(MaterialPageRoute(builder: (ctx)=>const ProfileScreen()));
-                      }, icon: const CircleAvatar(child: Icon(Icons.account_circle),))
+                  IconButton(
+                      onPressed: () {
+                        Navigator.of(context).push(MaterialPageRoute(
+                            builder: (ctx) => const ProfileScreen()));
+                      },
+                      icon: const CircleAvatar(
+                        child: Icon(Icons.account_circle),
+                      ))
                 ],
               )
             ],

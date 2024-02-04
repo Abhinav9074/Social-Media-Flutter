@@ -49,13 +49,16 @@ dependencies:
   google_gemini: ^0.1.2
   awesome_dialog: ^3.2.0
   recase: ^4.1.0
-  intl: ^0.19.0
+  intl: 0.18.1
   sign_button: ^2.0.6
   rxdart: ^0.27.7
   bubble: ^1.2.1
   geolocator: ^10.1.0
   geocoding: ^2.1.1
   google_maps_flutter: ^2.5.3
+  pay: ^1.1.2
+  flutter_carousel_widget: ^2.2.0
+  lottie: ^3.0.0
 
   
 
@@ -85,6 +88,8 @@ flutter:
   assets:
     - assets/icons/
     - assets/images/
+    - assets/payments/gpay.json
+    - assets/lottie/
   #   - images/a_dot_ham.jpeg
 
   # An image asset can refer to one or more resolution-specific "variants", see

@@ -31,6 +31,9 @@ class MediaQueryCustom {
   static discussionContainerHeight(BuildContext context) {
     return MediaQuery.of(context).size.height * 0.6;
   }
+  static carouselHeight(BuildContext context) {
+    return MediaQuery.of(context).size.height * 0.7;
+  }
 
   static imageTextCreateContainerHeight(BuildContext context) {
     return MediaQuery.of(context).size.height * 0.7;

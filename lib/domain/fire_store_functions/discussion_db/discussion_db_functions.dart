@@ -5,6 +5,7 @@ import 'package:connected/domain/common/firestore_constants/firebase_constants.d
 import 'package:connected/domain/common/functions/gemini_functions/gemini_functions.dart';
 import 'package:connected/domain/fire_store_functions/user_db/user_db_functions.dart';
 import 'package:connected/domain/models/dicsussion_model/discussion_model.dart';
+import 'package:connected/domain/models/notification_model/notification_model.dart';
 import 'package:connected/domain/shared_prefrences/login_logout/login_logout.dart';
 import 'package:connected/presentation/core/snackbars/common_snackbar.dart';
 import 'package:connected/presentation/screens/main_page/screens/main_page.dart';
@@ -56,6 +57,7 @@ class DiscussionDbFunctions extends DiscussionDb {
   //Like a disscussion
   @override
   Future<void> likeDiscussion(String discussionId) async {
+    //adding the like to discussion db
     await FirebaseFirestore.instance
         .collection(FirebaseConstants.discussionDb)
         .doc(discussionId)
@@ -64,12 +66,31 @@ class DiscussionDbFunctions extends DiscussionDb {
           FieldValue.arrayUnion([await SharedPrefLogin.getUserId()])
     });
 
+    //adding the like to user db
     await FirebaseFirestore.instance
         .collection(FirebaseConstants.userDb)
         .doc(await SharedPrefLogin.getUserId())
         .update({
       FirebaseConstants.fieldLiked: FieldValue.arrayUnion([discussionId])
     });
+
+    //getting the id of user who posted the discussion for sending the notification
+    final value = await FirebaseFirestore.instance
+        .collection(FirebaseConstants.discussionDb)
+        .doc(discussionId)
+        .get();
+
+    if (value[FirebaseConstants.fieldDiscussionUserId] !=
+        UserDbFunctions().userId) {
+      final data = NotificationModel(
+          message: 'Liked Your Discussion',
+          otherUser: value[FirebaseConstants.fieldDiscussionUserId],
+          time: DateTime.now(),
+          timestamp: Timestamp.now(),
+          userId: UserDbFunctions().userId);
+
+      await UserDbFunctions().createNotification(data);
+    }
   }
 
   @override
@@ -131,16 +152,27 @@ class DiscussionDbFunctions extends DiscussionDb {
     await GeminiFunctions()
         .addInterests(discssionId: discussionId, description: data.description);
   }
-  
-  @override
-  Future<void> removeDiscussion(String data) async{
 
-    //deleting from main db 
-    await FirebaseFirestore.instance.collection(FirebaseConstants.discussionDb).doc(data).delete();
+  @override
+  Future<void> removeDiscussion(String data) async {
+    //deleting from main db
+    await FirebaseFirestore.instance
+        .collection(FirebaseConstants.discussionDb)
+        .doc(data)
+        .delete();
 
     //deteting from user list
-    await FirebaseFirestore.instance.collection(FirebaseConstants.userDb).doc(UserDbFunctions().userId).update({FirebaseConstants.fieldDiscussions:FieldValue.arrayRemove([data])});
+    await FirebaseFirestore.instance
+        .collection(FirebaseConstants.userDb)
+        .doc(UserDbFunctions().userId)
+        .update({
+      FirebaseConstants.fieldDiscussions: FieldValue.arrayRemove([data])
+    });
 
-    AllSnackBars.commonSnackbar(context: mainPageContext, title: 'Success', content: 'Deleted Successfully', bg: Colors.green);
+    AllSnackBars.commonSnackbar(
+        context: mainPageContext,
+        title: 'Success',
+        content: 'Deleted Successfully',
+        bg: Colors.green);
   }
 }

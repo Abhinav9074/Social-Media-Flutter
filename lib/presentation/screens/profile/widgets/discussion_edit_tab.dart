@@ -2,6 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:connected/domain/common/firestore_constants/firebase_constants.dart';
 import 'package:connected/domain/common/functions/date_functions/date_differnce.dart';
 import 'package:connected/domain/fire_store_functions/discussion_db/discussion_db_functions.dart';
+import 'package:connected/domain/fire_store_functions/user_db/user_db_functions.dart';
 import 'package:connected/presentation/core/dialog_boxes/all_dialogue_box.dart';
 import 'package:connected/presentation/core/themes/theme.dart';
 import 'package:connected/presentation/screens/editing_screens/screens/edit_discussion.dart';
@@ -51,11 +52,11 @@ class DiscussionEditTab extends StatelessWidget {
                     textScaler: TextScaler.noScaling,
                   ),
                   subtitle: Text(
-                    dateDiffernce(DateTime.now(), time.toDate()),
+                    dateDiffernce(today:DateTime.now(),date: time.toDate()),
                     style: MyTextStyle.smallText,
                     textScaler: TextScaler.noScaling,
                   ),
-                  trailing: PopupMenuButton(
+                  trailing: userId==UserDbFunctions().userId?PopupMenuButton(
                       surfaceTintColor: Colors.black,
                       itemBuilder: (context) => [
                              PopupMenuItem(
@@ -88,8 +89,22 @@ class DiscussionEditTab extends StatelessWidget {
                                 ],
                               ),
                             )
-                          ])),
-            );
+                          ]):PopupMenuButton(
+                      surfaceTintColor: Colors.black,
+                      itemBuilder: (context) => [
+                             const PopupMenuItem(
+                              value: 1,
+                              child: Row(
+                                children: [
+                                  Icon(Icons.edit),
+                                  SizedBox(
+                                    width: 10,
+                                  ),
+                                  Text("Report",style: MyTextStyle.commonButtonText)
+                                ],
+                              ),
+                            ),
+                          ])));
           }
         });
   }

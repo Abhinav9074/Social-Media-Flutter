@@ -9,6 +9,7 @@ class UserBasicDeatils extends StatelessWidget {
   final String following;
   final String followers;
   final String count;
+  final bool premium;
 
   const UserBasicDeatils(
       {super.key,
@@ -17,7 +18,8 @@ class UserBasicDeatils extends StatelessWidget {
       required this.location,
       required this.following,
       required this.followers,
-      required this.count});
+      required this.count,
+      required this.premium});
 
   @override
   Widget build(BuildContext context) {
@@ -29,7 +31,15 @@ class UserBasicDeatils extends StatelessWidget {
           children: [
             Padding(
               padding: const EdgeInsets.fromLTRB(0, 10, 0, 0),
-              child: Text(
+              child: premium==true?Row(
+                children: [
+                  Text(
+                    name,
+                    style: MyTextStyle.discussionHeadingText,
+                  ),
+                  Icon(Icons.verified,color: Colors.blue,)
+                ],
+              ):Text(
                 name,
                 style: MyTextStyle.discussionHeadingText,
               ),

@@ -42,19 +42,29 @@ class UserDeatilsTile extends StatelessWidget {
                           snapshot.data![FirebaseConstants.fieldImage]),
                     ),
                   ),
-                  title: Text(
+                  title: snapshot.data![FirebaseConstants.fieldPremiumUser]==true?Row(
+                    children: [
+                      Text(
+                        '${snapshot.data![FirebaseConstants.fieldRealname]}'.titleCase,
+                        style: MyTextStyle.commonButtonText,
+                        textScaler: TextScaler.noScaling,
+                      ),
+                      const SizedBox(width: 10,),
+                      const Icon(Icons.verified,color: Colors.blue,size: 20,)
+                    ],
+                  ):Text(
                     '${snapshot.data![FirebaseConstants.fieldRealname]}'.titleCase,
                     style: MyTextStyle.commonButtonText,
                     textScaler: TextScaler.noScaling,
                   ),
                   subtitle: edited == false
                       ? Text(
-                          dateDiffernce(DateTime.now(), time.toDate()),
+                          dateDiffernce(today:DateTime.now(),date: time.toDate()),
                           style: MyTextStyle.smallText,
                           textScaler: TextScaler.noScaling,
                         )
                       : Text(
-                          'Edited : ${dateDiffernce(DateTime.now(), time.toDate())}',
+                          'Edited : ${dateDiffernce(today:DateTime.now(),date: time.toDate())}',
                           style: MyTextStyle.smallText,
                           textScaler: TextScaler.noScaling,
                         ),

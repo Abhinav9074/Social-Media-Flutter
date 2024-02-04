@@ -6,6 +6,7 @@ import 'dart:io';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:connected/domain/common/firestore_constants/firebase_constants.dart';
 import 'package:connected/domain/models/location_model/location_model.dart';
+import 'package:connected/domain/models/notification_model/notification_model.dart';
 import 'package:connected/domain/models/user_model/user_model.dart';
 import 'package:connected/domain/models/user_model/user_update_model.dart';
 import 'package:connected/domain/repository/file_upload_repository.dart';
@@ -30,7 +31,10 @@ abstract class UserDb {
   Future<void> addInterest(String interest);
   Future<void> removeInterest(String interest);
   Future<void> addLoactionData(LocationModel location);
-  Future<void> updateUserData({required UserUpdateModel data, required String image});
+  Future<void> updateUserData(
+      {required UserUpdateModel data, required String image});
+  Future<void> subscribeToPremium();
+  Future<void> createNotification(NotificationModel data);
 }
 
 class UserDbFunctions extends UserDb {
@@ -91,6 +95,15 @@ class UserDbFunctions extends UserDb {
       FirebaseConstants.fieldFollowers:
           FieldValue.arrayUnion([await SharedPrefLogin.getUserId()])
     });
+
+    final data = NotificationModel(
+        message: 'Started Following You',
+        otherUser: userId,
+        time: DateTime.now(),
+        timestamp: Timestamp.now(),
+        userId: UserDbFunctions().userId);
+
+    await createNotification(data);
   }
 
   //unfollow a user
@@ -235,7 +248,12 @@ class UserDbFunctions extends UserDb {
     } else {
       final upload = FileUploadRepository();
       String? img = await upload.uploadImage(File(image));
-      final value = UserUpdateModel(image: img!, realName: data.realName, locationView: data.locationView, address: data.address, bio: data.bio);
+      final value = UserUpdateModel(
+          image: img!,
+          realName: data.realName,
+          locationView: data.locationView,
+          address: data.address,
+          bio: data.bio);
       await FirebaseFirestore.instance
           .collection(FirebaseConstants.userDb)
           .doc(userId)
@@ -243,6 +261,61 @@ class UserDbFunctions extends UserDb {
     }
 
     //snackbar
-    AllSnackBars.commonSnackbar(context: mainPageContext, title: 'Success', content: 'Data Updated', bg: Colors.green);
+    AllSnackBars.commonSnackbar(
+        context: mainPageContext,
+        title: 'Success',
+        content: 'Data Updated',
+        bg: Colors.green);
+  }
+
+  @override
+  Future<void> subscribeToPremium() async {
+    await FirebaseFirestore.instance
+        .collection(FirebaseConstants.userDb)
+        .doc(userId)
+        .update({FirebaseConstants.fieldPremiumUser: true});
+
+    //creating notification
+    final data = NotificationModel(
+        message: 'Congrats You Just Became Our VIP Member',
+        otherUser: UserDbFunctions().userId,
+        time: DateTime.now(),
+        timestamp: Timestamp.now());
+
+    await createNotification(data);
+  }
+
+  @override
+  Future<void> createNotification(NotificationModel data) async {
+    //adding the notification to notification db
+    final id = await FirebaseFirestore.instance
+        .collection(FirebaseConstants.notificationDb)
+        .add(data.toMap());
+
+    //adding the notification if to respective user's collection
+    await FirebaseFirestore.instance
+        .collection(FirebaseConstants.userDb)
+        .doc(data.otherUser)
+        .update({
+      FirebaseConstants.filedNotifications: FieldValue.arrayUnion([id.id])
+    });
+
+    //updating the notification count in userdb
+    await FirebaseFirestore.instance
+        .collection(FirebaseConstants.userDb)
+        .doc(data.otherUser)
+        .update({
+      FirebaseConstants.fieldNotificationCount: FieldValue.increment(1)
+    });
+  }
+
+  Future<void> clearNotificationCount() async {
+//updating the notification count in userdb
+    await FirebaseFirestore.instance
+        .collection(FirebaseConstants.userDb)
+        .doc(UserDbFunctions().userId)
+        .update({
+      FirebaseConstants.fieldNotificationCount: 0
+    });
   }
 }

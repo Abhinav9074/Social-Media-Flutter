@@ -46,12 +46,11 @@ class AddDetailsBloc extends Bloc<AddDetailsEvent, AddDetailsState> {
           followers: [],
           discussions: [],
           liked: [],
-          disliked:[],
+          notifications:[],
           location: '',
           gender: '',
           locationStr: '',
           createdTime: DateTime.now(),
-          phno: '',
           communities: [],
           requestedCommunities: [],
           communitiyNames: [],
@@ -60,7 +59,9 @@ class AddDetailsBloc extends Bloc<AddDetailsEvent, AddDetailsState> {
           lattitude: 0.0,
           longitude: 0.0,
           address: '',
-          bio: ''
+          bio: '',
+          premium: false,
+          notificationCount: 0
           );
 
       //adding a user to firebase

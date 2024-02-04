@@ -12,7 +12,7 @@ class UserModel with FirestoreModel {
   final String locationStr;
   final dynamic location;
   final DateTime createdTime;
-  final String phno;
+  final int notificationCount;
   final List<String> following;
   final List<String> followers;
   final List<String> interest;
@@ -21,15 +21,16 @@ class UserModel with FirestoreModel {
   final List<String> communitiyNames;
   final List<String> requestedCommunities;
   final List<String> liked;
-  final List<String> disliked;
+  final List<String> notifications;
   final bool blocked;
   final bool locationView;
   final double lattitude;
   final double longitude;
   final String address;
   final String bio;
+  final bool premium;
 
-  UserModel({required this.username, required this.email, required this.image, required this.realName, required this.gender, required this.locationStr, required this.location, required this.createdTime, required this.phno, required this.following, required this.followers, required this.interest, required this.discussions, required this.communities, required this.communitiyNames, required this.requestedCommunities, required this.liked, required this.disliked, required this.blocked, required this.locationView, required this.lattitude, required this.longitude, required this.address,required this.bio});
+  UserModel({required this.username, required this.email, required this.image, required this.realName, required this.gender, required this.locationStr, required this.location, required this.createdTime, required this.notificationCount, required this.following, required this.followers, required this.interest, required this.discussions, required this.communities, required this.communitiyNames, required this.requestedCommunities, required this.liked, required this.notifications, required this.blocked, required this.locationView, required this.lattitude, required this.longitude, required this.address,required this.bio,required this.premium});
 
 
 
@@ -45,12 +46,12 @@ class UserModel with FirestoreModel {
       FirebaseConstants.fieldFollowing: following,
       FirebaseConstants.fieldDiscussions: discussions,
       FirebaseConstants.fieldLiked: liked,
-      FirebaseConstants.filedDisliked: disliked,
+      FirebaseConstants.filedNotifications: notifications,
       FirebaseConstants.filedGender: gender,
       FirebaseConstants.filedLocationStr: locationStr,
       FirebaseConstants.filedLocation: location,
       FirebaseConstants.filedCreatedTime: createdTime,
-      FirebaseConstants.filedPhone: phno,
+      FirebaseConstants.fieldNotificationCount: notificationCount,
       FirebaseConstants.fieldCommunities: communities,
       FirebaseConstants.fieldRequestedCommunities:requestedCommunities,
       FirebaseConstants.fieldCommunitiyNames:communitiyNames,
@@ -60,6 +61,7 @@ class UserModel with FirestoreModel {
       FirebaseConstants.fieldLongitude:longitude,
       FirebaseConstants.fieldAllowLocationView:locationView,
       FirebaseConstants.fieldUserBio:bio,
+      FirebaseConstants.fieldPremiumUser:premium,
     };
   }
 }

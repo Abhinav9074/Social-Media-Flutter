@@ -156,10 +156,11 @@ class OtherProfileScreen extends StatelessWidget {
                         //user basic details
     
                         UserBasicDeatils(
-                            bio: 'A person with no desire',
+                          premium: snapshot.data![FirebaseConstants.fieldPremiumUser],
+                            bio: snapshot.data![FirebaseConstants.fieldUserBio],
                             name: snapshot
                                 .data![FirebaseConstants.fieldRealname],
-                            location: 'Calicut , India',
+                            location: snapshot.data![FirebaseConstants.fieldAddress],
                             following:
                                 '${snapshot.data![FirebaseConstants.fieldFollowing] == null ? 0 : snapshot.data![FirebaseConstants.fieldFollowing].length}',
                             followers:

@@ -4,12 +4,15 @@ import 'package:connected/application/bloc/profile_switch_bloc/profile_switch_bl
 import 'package:connected/domain/common/firestore_constants/firebase_constants.dart';
 import 'package:connected/domain/fire_store_functions/user_db/user_db_functions.dart';
 import 'package:connected/presentation/core/themes/theme.dart';
+import 'package:connected/presentation/screens/activity_page/screens/user_activity_screen.dart';
+import 'package:connected/presentation/screens/premium/screens/subscribe_to_premium.dart';
 import 'package:connected/presentation/screens/profile/widgets/discussion_tab.dart';
 import 'package:connected/presentation/screens/profile/widgets/profile_pic_widget.dart';
 import 'package:connected/presentation/screens/profile/widgets/user_basic_details.dart';
 import 'package:connected/presentation/screens/profile_edit/screens/profile_edit_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 class ProfileScreen extends StatelessWidget {
   const ProfileScreen({super.key});
@@ -19,46 +22,72 @@ class ProfileScreen extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         actions: [
-          PopupMenuButton(
-              surfaceTintColor: Colors.black,
-              itemBuilder: (context) => [
-                    PopupMenuItem(
-                      onTap: () {
-                        Navigator.of(context).push(MaterialPageRoute(
-                            builder: (ctx) => BlocProvider(
-                                  create: (context) => LocationBloc(),
-                                  child: BlocProvider(
-                                    create: (context) => ProfileSwitchBloc(),
-                                    child: EditProfileScreen(),
-                                  ),
-                                )));
-                      },
-                      value: 1,
-                      child: const Row(
-                        children: [
-                          Icon(Icons.edit),
-                          SizedBox(
-                            width: 10,
+          StreamBuilder(
+            stream: FirebaseFirestore.instance
+              .collection(FirebaseConstants.userDb)
+              .doc(UserDbFunctions().userId)
+              .snapshots(),
+            builder: (context, snapshot) {
+              if(!snapshot.hasData){
+                return const CircularProgressIndicator();
+              }else{
+                return PopupMenuButton(
+                  surfaceTintColor: Colors.black,
+                  itemBuilder: (context) => [
+                        PopupMenuItem(
+                          onTap: () {
+                            Navigator.of(context).push(MaterialPageRoute(
+                                builder: (ctx) => BlocProvider(
+                                      create: (context) => LocationBloc(),
+                                      child: BlocProvider(
+                                        create: (context) => ProfileSwitchBloc(),
+                                        child: EditProfileScreen(),
+                                      ),
+                                    )));
+                          },
+                          value: 1,
+                          child: const Row(
+                            children: [
+                              Icon(Icons.edit),
+                              SizedBox(
+                                width: 10,
+                              ),
+                              Text("Edit Profile",style: MyTextStyle.commonButtonText,)
+                            ],
                           ),
-                          Text("Edit Profile")
-                        ],
-                      ),
-                    ),
-                    const PopupMenuItem(
-                      value: 2,
-                      child: Row(
-                        children: [
-                          Icon(Icons.trending_up),
-                          SizedBox(
-                            width: 10,
+                        ),
+                         PopupMenuItem(
+                          onTap: (){
+                            if(snapshot.data![FirebaseConstants.fieldPremiumUser]==false){
+                              Navigator.of(context).push(MaterialPageRoute(builder: (ctx)=>const SubscribeToPremiumPage()));
+                            }else{
+                              Navigator.of(context).push(MaterialPageRoute(builder: (ctx)=>const UserActivityScreen()));
+                            }
+                          },
+                          value: 2,
+                          child:  const Row(
+                            children: [
+                              FaIcon(FontAwesomeIcons.crown,color: Color.fromARGB(255, 184, 170, 44),),
+                              SizedBox(
+                                width: 10,
+                              ),
+                              Text("My Activity",style: MyTextStyle.commonButtonText,)
+                            ],
                           ),
-                          Text("My Activity")
-                        ],
-                      ),
-                    )
-                  ])
+                        )
+                      ]);
+              }
+            }
+          )
         ],
       ),
+
+
+
+
+
+
+
       body: StreamBuilder(
           stream: FirebaseFirestore.instance
               .collection(FirebaseConstants.userDb)
@@ -114,10 +143,11 @@ class ProfileScreen extends StatelessWidget {
                         //user basic details
 
                         UserBasicDeatils(
-                            bio: 'A person with no desire',
+                          premium: snapshot.data![FirebaseConstants.fieldPremiumUser],
+                            bio: snapshot.data![FirebaseConstants.fieldUserBio],
                             name:
                                 snapshot.data![FirebaseConstants.fieldRealname],
-                            location: 'Calicut , India',
+                            location: snapshot.data![FirebaseConstants.fieldAddress],
                             following:
                                 '${snapshot.data![FirebaseConstants.fieldFollowing] == null ? 0 : snapshot.data![FirebaseConstants.fieldFollowing].length}',
                             followers:
