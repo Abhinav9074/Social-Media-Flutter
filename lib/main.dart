@@ -1,7 +1,5 @@
 import 'dart:developer';
 import 'package:connected/application/bloc/add_details_bloc/add_details_bloc.dart';
-import 'package:connected/application/bloc/community_creation_bloc/community_creation_bloc.dart';
-import 'package:connected/application/bloc/community_join_bloc/community_join_bloc.dart';
 import 'package:connected/application/bloc/community_posting_bloc/community_posting_bloc.dart';
 import 'package:connected/application/bloc/contribution_bloc/contribution_bloc.dart';
 import 'package:connected/application/bloc/image_picker_bloc/image_picker_bloc.dart';

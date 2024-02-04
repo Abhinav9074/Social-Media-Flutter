@@ -7,6 +7,7 @@ import 'package:connected/application/bloc/other_profile_bloc/other_profile_stat
 import 'package:connected/domain/common/firestore_constants/firebase_constants.dart';
 import 'package:connected/domain/fire_store_functions/user_db/user_db_functions.dart';
 import 'package:connected/presentation/core/themes/theme.dart';
+import 'package:connected/presentation/screens/map_view/screens/map_view_screen.dart';
 import 'package:connected/presentation/screens/profile/widgets/discussion_tab.dart';
 import 'package:connected/presentation/screens/profile/widgets/profile_pic_widget.dart';
 import 'package:connected/presentation/screens/profile/widgets/user_basic_details.dart';
@@ -147,6 +148,10 @@ class OtherProfileScreen extends StatelessWidget {
                             )
                           ],
                         ),
+
+                        IconButton(onPressed: (){
+                          Navigator.of(context).push(MaterialPageRoute(builder: (ctx)=>MapViewScreen(userId: userId)));
+                        }, icon: const Icon(Icons.location_on)),
     
                         //user basic details
     
