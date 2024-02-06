@@ -22,6 +22,8 @@ class UserModel with FirestoreModel {
   final List<String> requestedCommunities;
   final List<String> liked;
   final List<String> notifications;
+  final List<String> chat;
+  final List<String> savedDiscussion;
   final bool blocked;
   final bool locationView;
   final double lattitude;
@@ -30,7 +32,7 @@ class UserModel with FirestoreModel {
   final String bio;
   final bool premium;
 
-  UserModel({required this.username, required this.email, required this.image, required this.realName, required this.gender, required this.locationStr, required this.location, required this.createdTime, required this.notificationCount, required this.following, required this.followers, required this.interest, required this.discussions, required this.communities, required this.communitiyNames, required this.requestedCommunities, required this.liked, required this.notifications, required this.blocked, required this.locationView, required this.lattitude, required this.longitude, required this.address,required this.bio,required this.premium});
+  UserModel({required this.username, required this.email, required this.image, required this.realName, required this.gender, required this.locationStr, required this.location, required this.createdTime, required this.notificationCount, required this.following, required this.followers, required this.interest, required this.discussions, required this.communities, required this.communitiyNames, required this.requestedCommunities, required this.liked, required this.notifications, required this.blocked, required this.locationView, required this.lattitude, required this.longitude, required this.address,required this.bio,required this.premium,required this.chat,required this.savedDiscussion});
 
 
 
@@ -62,6 +64,8 @@ class UserModel with FirestoreModel {
       FirebaseConstants.fieldAllowLocationView:locationView,
       FirebaseConstants.fieldUserBio:bio,
       FirebaseConstants.fieldPremiumUser:premium,
+      FirebaseConstants.fieldChats:chat,
+      FirebaseConstants.fieldSavedDiscussions:savedDiscussion,
     };
   }
 }

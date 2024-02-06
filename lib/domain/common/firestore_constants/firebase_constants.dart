@@ -43,6 +43,8 @@ class FirebaseConstants {
   static const String fieldAllowLocationView = 'location_view';
   static const String fieldUserBio = 'bio';
   static const String fieldPremiumUser = 'premium';
+  static const String fieldChats = 'chats';
+  static const String fieldSavedDiscussions = 'savedDiscussions';
 
   //discussion db fields
   static const String fieldDiscussionTitle = 'title';
@@ -95,6 +97,11 @@ class FirebaseConstants {
   static const String fieldchatMessage = 'message';
   static const String fieldchatTime = 'time';
   static const String fieldChatTimeStamp = 'timestamp';
+  static const String fieldChatIsDiscussion = 'isDiscussion';
+  static const String fieldChatDiscussionId = 'discussionId';
+  static const String fieldChatDiscussionName = 'discussionName';
+  static const String fieldChatIsAlert = 'isAlert';
+  static const String fieldChatlertMsg = 'alertMsg';
 
   //report db fields
   static const String fieldReportedUserId = 'reportedUser';

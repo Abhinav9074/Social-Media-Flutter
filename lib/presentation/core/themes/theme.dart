@@ -28,7 +28,7 @@ class MyTextStyle {
       );
   static const TextStyle greyHeadingTextSmall = TextStyle(
       color: Color.fromARGB(255, 133, 127, 127),
-      fontSize: 10,
+      fontSize: 12,
       fontWeight: FontWeight.w200,
       fontFamily: 'Montesserat',
       letterSpacing: 0.9,
@@ -121,6 +121,14 @@ class MyTextStyle {
   static const TextStyle optionTextMedium = TextStyle(
       color: Color.fromARGB(255, 0, 0, 0),
       fontSize: 15,
+      fontWeight: FontWeight.w600,
+      fontFamily: 'Montserrat-Regular',
+      letterSpacing: 0.9,
+      );
+  static const TextStyle linkTextMedium = TextStyle(
+    decoration: TextDecoration.underline,
+      color: Color.fromARGB(255, 7, 34, 240),
+      fontSize: 17,
       fontWeight: FontWeight.w600,
       fontFamily: 'Montserrat-Regular',
       letterSpacing: 0.9,

@@ -13,7 +13,7 @@ class FollowTab extends StatelessWidget {
     return Column(
                   children: [
                     Text(action,style: MyTextStyle.greyHeadingTextSmall,textScaler: TextScaler.noScaling,),
-                    Text(count,style: MyTextStyle.commonHeadingText,textScaler: TextScaler.noScaling,),
+                    Text(count,style: MyTextStyle.commonHeadingTextWhite,textScaler: TextScaler.noScaling,),
                   ],
                 );
   }

@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:connected/application/bloc/like_bloc.dart/like_bloc.dart';
 import 'package:connected/domain/common/firestore_constants/firebase_constants.dart';
+import 'package:connected/domain/streams/following_discussion.dart';
 import 'package:connected/presentation/screens/home/widgets/heading_image_widget.dart';
 import 'package:connected/presentation/screens/home/widgets/social_tab.dart';
 import 'package:connected/presentation/screens/home/widgets/user_details.dart';
@@ -13,9 +14,7 @@ class FollowingDiscussionUi extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return StreamBuilder(
-        stream: FirebaseFirestore.instance
-            .collection(FirebaseConstants.discussionDb)
-            .snapshots(),
+        stream: follwoingDiscussionList(),
         builder: (context, snapshot) {
           if (!snapshot.hasData) {
             return const Center(
@@ -23,9 +22,9 @@ class FollowingDiscussionUi extends StatelessWidget {
             );
           } else {
             return ListView.builder(
-                itemCount: snapshot.data!.docs.length,
+                itemCount: snapshot.data!.length,
                 itemBuilder: (context, index) {
-                  final data = snapshot.data!.docs[index];
+                  final data = snapshot.data![index];
                   return BlocProvider(
                     create: (context) => LikeBloc(),
                     child: Container(
@@ -49,7 +48,7 @@ class FollowingDiscussionUi extends StatelessWidget {
                                   FirebaseConstants.fieldDiscussionImage],
                               text: 'some sample text',
                               index: index,
-                              discssionId: data.id,
+                              discssionId: data['id'],
                               description: data[FirebaseConstants.fieldDiscussionDescription],),
                           SocialTab(
                                 like: data[FirebaseConstants
@@ -59,7 +58,7 @@ class FollowingDiscussionUi extends StatelessWidget {
                                 discussions: data[FirebaseConstants
                                         .fieldDiscussionContribution]
                                     .length,
-                                discussionId: data.id,
+                                discussionId: data['id'],
                                 title: data[FirebaseConstants.fieldDiscussionTitle],
                                 contributions: data[FirebaseConstants.fieldDiscussionContribution].length??0,
                               )

@@ -1,14 +1,17 @@
 // ignore_for_file: use_build_context_synchronously
 
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:connected/application/bloc/user_search_bloc/user_search_bloc.dart';
 import 'package:connected/domain/common/firestore_constants/firebase_constants.dart';
 import 'package:connected/domain/fire_store_functions/user_db/user_db_functions.dart';
 import 'package:connected/presentation/core/media_query/media_query.dart';
 import 'package:connected/presentation/core/themes/theme.dart';
 import 'package:connected/presentation/screens/notification/screens/notification_screen.dart';
+import 'package:connected/presentation/screens/profile/screens/self_profile_test.dart';
 import 'package:connected/presentation/screens/profile/screens/self_profile_view.dart';
 import 'package:connected/presentation/screens/search_page/screens/search_screen.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
@@ -43,7 +46,10 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
                   IconButton(
                       onPressed: () {
                         Navigator.of(context).push(MaterialPageRoute(
-                            builder: (ctx) => const SearchScreen()));
+                            builder: (ctx) =>  BlocProvider(
+                                  create: (context) => UserSearchBloc(),
+                                  child: const SearchScreen(),
+                                )));
                       },
                       icon: const Icon(Icons.search)),
                   const SizedBox(

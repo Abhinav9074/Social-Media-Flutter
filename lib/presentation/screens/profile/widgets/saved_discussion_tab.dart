@@ -1,36 +1,34 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:connected/domain/common/firestore_constants/firebase_constants.dart';
+import 'package:connected/domain/fire_store_functions/user_db/user_db_functions.dart';
 import 'package:connected/presentation/core/media_query/media_query.dart';
 import 'package:connected/presentation/core/themes/theme.dart';
 import 'package:connected/presentation/screens/profile/screens/self_discussion_view.dart';
 import 'package:flutter/material.dart';
 
-class DiscussionTab extends StatelessWidget {
-  final int count;
+class SavedDiscussionTab extends StatelessWidget {
   final String id;
-  const DiscussionTab({super.key, required this.count,required this.id});
+  const SavedDiscussionTab({super.key,required this.id});
 
   @override
   Widget build(BuildContext context) {
     return StreamBuilder(
-        stream: FirebaseFirestore.instance
-            .collection(FirebaseConstants.discussionDb)
-            .where(FirebaseConstants.fieldDiscussionUserId,
-                isEqualTo: id)
+        stream: FirebaseFirestore.instance.
+            collection(FirebaseConstants.userDb).doc(UserDbFunctions().userId)
             .snapshots(),
         builder: (context, snapshot) {
           if (!snapshot.hasData) {
             return const SizedBox();
           } else {
             return ListView.builder(
-                itemCount: snapshot.data!.docs.length,
+                itemCount: snapshot.data![FirebaseConstants.fieldSavedDiscussions].length,
                 itemBuilder: (context, index) {
-                  final data = snapshot.data!.docs[index];
+                  final data = snapshot.data![FirebaseConstants.fieldSavedDiscussions][index];
                   return InkWell(
                     onTap: () {
                       Navigator.of(context).push(MaterialPageRoute(
                           builder: (ctx) => SelfDiscussionView(
-                                discussionId: data.id,
+                                discussionId: data,
                               )));
                     },
                     child: Padding(
@@ -47,26 +45,27 @@ class DiscussionTab extends StatelessWidget {
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
                             Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
                                 Padding(
                                   padding: const EdgeInsets.only(left: 20),
                                   child: SizedBox(
                                       width: 250,
-                                      child: Text(
-                                        data[FirebaseConstants
-                                            .fieldDiscussionTitle],
-                                        style: MyTextStyle.commonButtonText,
-                                        textScaler: TextScaler.noScaling,
+                                      child: StreamBuilder(
+                                        stream: FirebaseFirestore.instance.collection(FirebaseConstants.discussionDb).doc(data).snapshots(),
+                                        builder: (context, snapshot) {
+                                          if(!snapshot.hasData){
+                                            return const SizedBox();
+                                          }else{
+                                            return Text(
+                                            snapshot.data![FirebaseConstants
+                                                .fieldDiscussionTitle],
+                                            style: MyTextStyle.commonButtonText,
+                                            textScaler: TextScaler.noScaling,
+                                          );
+                                          }
+                                        }
                                       )),
                                 ),
-                                TextButton.icon(
-                                    onPressed: () {},
-                                    icon: const Icon(Icons.thumb_up,color: Colors.black,),
-                                    label: Text(data[FirebaseConstants
-                                            .fieldDiscussionLikes]
-                                        .length
-                                        .toString()))
                               ],
                             ),
                           ],

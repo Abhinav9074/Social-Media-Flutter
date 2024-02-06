@@ -2,6 +2,8 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:connected/application/bloc/like_bloc.dart/like_bloc.dart';
 import 'package:connected/domain/common/firestore_constants/firebase_constants.dart';
 import 'package:connected/domain/fire_store_functions/user_db/user_db_functions.dart';
+import 'package:connected/domain/streams/discussion_search_stream.dart';
+import 'package:connected/domain/streams/interest_discussion_stream.dart';
 import 'package:connected/presentation/screens/home/widgets/heading_image_widget.dart';
 import 'package:connected/presentation/screens/home/widgets/social_tab.dart';
 import 'package:connected/presentation/screens/home/widgets/user_details.dart';
@@ -14,9 +16,7 @@ class InterestsDisscussionUi extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return StreamBuilder(
-        stream: FirebaseFirestore.instance
-            .collection(FirebaseConstants.discussionDb)
-            .snapshots(),
+        stream: interestDiscussionList(),
         builder: (context, snapshot) {
           if (!snapshot.hasData) {
             return const Center(
@@ -24,9 +24,9 @@ class InterestsDisscussionUi extends StatelessWidget {
             );
           } else {
             return ListView.builder(
-                itemCount: snapshot.data!.docs.length,
+                itemCount: snapshot.data!.length,
                 itemBuilder: (context, index) {
-                  final data = snapshot.data!.docs[index];
+                  final data = snapshot.data![index];
                   return BlocProvider(
                     create: (context) => LikeBloc(),
                     child: Container(
@@ -50,7 +50,7 @@ class InterestsDisscussionUi extends StatelessWidget {
                                   FirebaseConstants.fieldDiscussionImage],
                               text: 'some sample text',
                               index: index,
-                              discssionId: data.id,
+                              discssionId: data['id'],
                               description: data[FirebaseConstants.fieldDiscussionDescription],),
                           SocialTab(
                                 like: data[FirebaseConstants
@@ -60,7 +60,7 @@ class InterestsDisscussionUi extends StatelessWidget {
                                 discussions: data[FirebaseConstants
                                         .fieldDiscussionContribution]
                                     .length,
-                                discussionId: data.id,
+                                discussionId: data['id'],
                                 title: data[FirebaseConstants.fieldDiscussionTitle],
                                 contributions: data[FirebaseConstants.fieldDiscussionContribution].length??0,
                               )

@@ -2,6 +2,8 @@ import 'package:bubble/bubble.dart';
 import 'package:connected/domain/common/firestore_constants/firebase_constants.dart';
 import 'package:connected/domain/fire_store_functions/chat_service/chat_services.dart';
 import 'package:connected/domain/fire_store_functions/user_db/user_db_functions.dart';
+import 'package:connected/presentation/core/themes/theme.dart';
+import 'package:connected/presentation/screens/profile/screens/self_discussion_view.dart';
 import 'package:connected/presentation/widgets/textField.dart';
 import 'package:flutter/material.dart';
 
@@ -21,9 +23,7 @@ class ChatInsideScreen extends StatelessWidget {
               stream: ChatServices().getChatMessages(receiverId),
               builder: (context, snapshot) {
                 if (!snapshot.hasData) {
-                  return const Center(
-                    child: CircularProgressIndicator(),
-                  );
+                  return const SizedBox();
                 } else {
                   return Expanded(
                       child: ListView.builder(
@@ -49,18 +49,21 @@ class ChatInsideScreen extends StatelessWidget {
                             return Row(
                               mainAxisAlignment: alignment,
                               children: [
-                                ConstrainedBox(
-                                  constraints:
-                                      const BoxConstraints(maxWidth: 300),
-                                  child: Bubble(
-                                    color: color,
-                                    margin: const BubbleEdges.fromLTRB(
-                                        10, 10, 10, 10),
-                                    nip: nipAlignment,
-                                    child: Text(data[
-                                        FirebaseConstants.fieldchatMessage]),
-                                  ),
-                                ),
+                                data[FirebaseConstants.fieldChatIsDiscussion] ==
+                                        true
+                                    ? _sharedDiscussionBubble(
+                                        color: color,
+                                        nipAlignment: nipAlignment,
+                                        data: data,
+                                        context: context)
+                                    : data[FirebaseConstants
+                                                .fieldChatIsAlert] ==
+                                            true
+                                        ? _dateShow(data: data,context: context)
+                                        : _textMsgBubble(
+                                            color: color,
+                                            nipAlignment: nipAlignment,
+                                            data: data),
                               ],
                             );
                           }));
@@ -83,6 +86,96 @@ class ChatInsideScreen extends StatelessWidget {
             prefixOnPressed: () {},
           )
         ],
+      ),
+    );
+  }
+
+  //textmessage bubble
+  Widget _textMsgBubble(
+      {required Color color,
+      required BubbleNip nipAlignment,
+      required final data}) {
+    return ConstrainedBox(
+      constraints: const BoxConstraints(maxWidth: 300),
+      child: Bubble(
+        color: color,
+        margin: const BubbleEdges.fromLTRB(10, 10, 10, 10),
+        nip: nipAlignment,
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Text(
+              data[FirebaseConstants.fieldchatMessage],
+              style: MyTextStyle.descriptionText,
+            ),
+            Text(
+              data[FirebaseConstants.fieldchatTime],
+              style: MyTextStyle.greyHeadingTextSmall,
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+
+  //alert message container
+  Widget _dateShow({required final data,required BuildContext context}) {
+    return SizedBox(
+      width: MediaQuery.of(context).size.width,
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          Container(
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(3),
+              color: Colors.amber
+            ),
+            child: Padding(
+              padding: const EdgeInsets.fromLTRB(5, 1, 5, 1),
+              child: Text(data[FirebaseConstants.fieldChatlertMsg],style: MyTextStyle.greyHeadingTextSmall,),
+            ),
+          )
+        ],
+      ),
+    );
+  }
+
+  //discussion share bubble
+  Widget _sharedDiscussionBubble(
+      {required Color color,
+      required BubbleNip nipAlignment,
+      required final data,
+      required BuildContext context}) {
+    return ConstrainedBox(
+      constraints: const BoxConstraints(maxWidth: 300),
+      child: Bubble(
+        color: color,
+        margin: const BubbleEdges.fromLTRB(10, 10, 10, 10),
+        nip: nipAlignment,
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            const Text(
+              'Shared a discussion',
+              style: MyTextStyle.greyHeadingTextSmall,
+            ),
+            InkWell(
+                onTap: () {
+                  Navigator.of(context).push(MaterialPageRoute(
+                      builder: (ctx) => SelfDiscussionView(
+                          discussionId:
+                              data[FirebaseConstants.fieldChatDiscussionId])));
+                },
+                child: Text(
+                  data[FirebaseConstants.fieldChatDiscussionName],
+                  style: MyTextStyle.linkTextMedium,
+                )),
+            Text(
+              data[FirebaseConstants.fieldchatTime],
+              style: MyTextStyle.greyHeadingTextSmall,
+            ),
+          ],
+        ),
       ),
     );
   }

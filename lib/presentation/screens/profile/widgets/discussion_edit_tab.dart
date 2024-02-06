@@ -6,6 +6,7 @@ import 'package:connected/domain/fire_store_functions/user_db/user_db_functions.
 import 'package:connected/presentation/core/dialog_boxes/all_dialogue_box.dart';
 import 'package:connected/presentation/core/themes/theme.dart';
 import 'package:connected/presentation/screens/editing_screens/screens/edit_discussion.dart';
+import 'package:connected/presentation/screens/profile/screens/other_profile_test.dart';
 import 'package:connected/presentation/screens/profile/screens/other_profile_view.dart';
 import 'package:flutter/material.dart';
 
@@ -30,13 +31,13 @@ class DiscussionEditTab extends StatelessWidget {
             return const SizedBox();
           } else {
             return InkWell(
-              onTap: () {
-                Navigator.of(context).push(MaterialPageRoute(
-                    builder: (ctx) => OtherProfileScreen(
-                          userId: userId,
-                          index: index,
-                        )));
-              },
+              // onTap: () {
+              //   // Navigator.of(context).push(MaterialPageRoute(
+              //   //     builder: (ctx) => OtherProfileScreen(
+              //   //           userId: userId,
+              //   //           index: index,
+              //   //         )));
+              // },
               child: ListTile(
                   leading: Hero(
                     tag: 'profile$index',

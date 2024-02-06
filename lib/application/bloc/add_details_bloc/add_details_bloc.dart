@@ -61,7 +61,9 @@ class AddDetailsBloc extends Bloc<AddDetailsEvent, AddDetailsState> {
           address: '',
           bio: '',
           premium: false,
-          notificationCount: 0
+          notificationCount: 0,
+          chat: [],
+          savedDiscussion: []
           );
 
       //adding a user to firebase

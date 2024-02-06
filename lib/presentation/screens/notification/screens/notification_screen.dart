@@ -3,7 +3,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:connected/domain/common/firestore_constants/firebase_constants.dart';
 import 'package:connected/domain/common/functions/date_functions/date_differnce.dart';
-import 'package:connected/domain/fire_store_functions/user_db/user_db_functions.dart';
 import 'package:connected/domain/streams/notification_stream.dart';
 import 'package:connected/presentation/core/themes/theme.dart';
 import 'package:flutter/material.dart';
@@ -68,19 +67,16 @@ class NotificationScreen extends StatelessWidget {
                                       '${data[FirebaseConstants.fieldNotificationMessage]}',
                                       style: MyTextStyle.descriptionText,
                                     ),
+                                    subtitle: Text(
+                                      '${dateDiffernce(today: DateTime.now(), date: data[FirebaseConstants.fieldNotificationTime].toDate())}',
+                                      style: MyTextStyle.greyHeadingTextSmall,
+                                    ),
                                   );
                           }))
                 ],
               );
             }
           }),
-      floatingActionButton: FloatingActionButton.extended(
-          backgroundColor: Colors.red,
-          onPressed: () {},
-          label: const Text(
-            'Clear All',
-            style: MyTextStyle.commonButtonTextWhite,
-          )),
     );
   }
 }

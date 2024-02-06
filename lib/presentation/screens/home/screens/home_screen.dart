@@ -1,6 +1,7 @@
 // ignore_for_file: use_build_context_synchronously
 
 import 'package:connected/presentation/core/themes/theme.dart';
+import 'package:connected/presentation/screens/home/widgets/following_discussion_ui.dart';
 import 'package:connected/presentation/screens/home/widgets/interest_dissussion_ui.dart';
 import 'package:flutter/material.dart';
 
@@ -30,7 +31,12 @@ class HomeScreen extends StatelessWidget {
                     text: 'Following',
                   ),
                 ]),
-              const Expanded(child: InterestsDisscussionUi()),
+              const Expanded(
+                child: TabBarView(children: [
+                  InterestsDisscussionUi(),
+                  FollowingDiscussionUi()
+                ]),
+              )
             ],
           )),
     );

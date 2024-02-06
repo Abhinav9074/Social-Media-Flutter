@@ -35,6 +35,7 @@ abstract class UserDb {
       {required UserUpdateModel data, required String image});
   Future<void> subscribeToPremium();
   Future<void> createNotification(NotificationModel data);
+  Future<void> saveDiscussion(String discussionId);
 }
 
 class UserDbFunctions extends UserDb {
@@ -310,12 +311,19 @@ class UserDbFunctions extends UserDb {
   }
 
   Future<void> clearNotificationCount() async {
-//updating the notification count in userdb
+//clearing the notification count in userdb
     await FirebaseFirestore.instance
         .collection(FirebaseConstants.userDb)
         .doc(UserDbFunctions().userId)
         .update({
       FirebaseConstants.fieldNotificationCount: 0
     });
+  }
+  
+  @override
+  Future<void> saveDiscussion(String discussionId) async{
+    AllSnackBars.commonSnackbar(context: mainPageContext, title: 'Saved', content: 'Saved', bg: Colors.green);
+    //saving discussion
+    await FirebaseFirestore.instance.collection(FirebaseConstants.userDb).doc(UserDbFunctions().userId).update({FirebaseConstants.fieldSavedDiscussions:FieldValue.arrayUnion([discussionId])});
   }
 }

@@ -7,6 +7,9 @@ class MediaQueryCustom {
   static discussionTabHeight(BuildContext context) {
     return MediaQuery.of(context).size.height * 0.06;
   }
+  static chatGifHeight(BuildContext context) {
+    return MediaQuery.of(context).size.height * 0.09;
+  }
 
   static interestSectionHeight(BuildContext context) {
     return MediaQuery.of(context).size.height * 0.25;
@@ -29,7 +32,7 @@ class MediaQueryCustom {
   }
 
   static discussionContainerHeight(BuildContext context) {
-    return MediaQuery.of(context).size.height * 0.6;
+    return MediaQuery.of(context).size.height * 0.57;
   }
   static carouselHeight(BuildContext context) {
     return MediaQuery.of(context).size.height * 0.7;

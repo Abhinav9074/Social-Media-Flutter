@@ -8,8 +8,15 @@ class ChatMessageModel with FirestoreModel{
   final String message;
   final String time;
   final Timestamp timestamp;
+  final bool isDiscussion;
+  final String? discussionId;
+  final String? discussionName;
+  final bool isAlert;
+  final String? alertMsg;
 
-  ChatMessageModel({required this.senderId, required this.receiverId, required this.message, required this.time,required this.timestamp});
+  ChatMessageModel({required this.senderId, required this.receiverId, required this.message, required this.time, required this.timestamp, required this.isDiscussion,this.discussionId,this.discussionName, required this.isAlert, this.alertMsg});
+
+  
   
   @override
   Map<String, dynamic> toMap() {
@@ -19,8 +26,14 @@ class ChatMessageModel with FirestoreModel{
       FirebaseConstants.fieldchatMessage:message,
       FirebaseConstants.fieldchatTime:time,
       FirebaseConstants.fieldChatTimeStamp:timestamp,
+      FirebaseConstants.fieldChatIsDiscussion:isDiscussion,
+      FirebaseConstants.fieldChatDiscussionId:discussionId,
+      FirebaseConstants.fieldChatDiscussionName:discussionName,
+      FirebaseConstants.fieldChatIsAlert:isAlert,
+      FirebaseConstants.fieldChatlertMsg:alertMsg,
     };
   }
+
 
   
 }

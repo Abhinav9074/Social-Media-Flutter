@@ -1,5 +1,6 @@
 import 'package:connected/application/bloc/user_search_bloc/user_search_bloc.dart';
 import 'package:connected/application/bloc/user_search_bloc/user_search_event.dart';
+import 'package:connected/presentation/core/themes/theme.dart';
 import 'package:connected/presentation/screens/search_page/widgets/searched_discussions.dart';
 import 'package:connected/presentation/screens/search_page/widgets/searched_users.dart';
 import 'package:flutter/material.dart';
@@ -28,16 +29,28 @@ class SearchScreen extends StatelessWidget {
                   decoration: const InputDecoration(
                 prefixIcon: Icon(Icons.search, color: Colors.grey),
                 hintText: 'Search...',
-                hintStyle: TextStyle(color: Colors.grey),
+                hintStyle: MyTextStyle.greyHeadingTextSmall,
                 border: InputBorder.none,
                 contentPadding: EdgeInsets.symmetric(vertical: 15.0),
               )),
 
               //tabs 
-              const TabBar(tabs: [
-                Tab(text: "Discussions",),
-                Tab(text: "People",),
-              ]),
+              TabBar(
+                onTap: (value) {
+                },
+                indicatorColor: Colors.red,
+                dividerHeight: 1,
+                tabAlignment: TabAlignment.fill,
+                labelStyle: MyTextStyle.greyHeadingTextSmall,
+                tabs: const [
+                  Tab(
+                    text: 'Discussions',
+                    iconMargin: EdgeInsets.fromLTRB(0, 0, 0, 0),
+                  ),
+                  Tab(
+                    text: 'People',
+                  ),
+                ]),
 
               //Tab bar view
 

@@ -43,7 +43,7 @@ class MainPage extends StatelessWidget {
         builder: (context, snapshot) {
           if (!snapshot.hasData) {
             return const SizedBox();
-          }  else {
+          } else {
             return BlocListener<UserAccessBloc, UserAccessState>(
               listener: (context, state) async {
                 if (state is UserBlockedState) {
@@ -52,7 +52,7 @@ class MainPage extends StatelessWidget {
                   Navigator.of(context).pushAndRemoveUntil(
                       MaterialPageRoute(builder: (ctx) => const LoginScreen()),
                       (route) => false);
-                      screenChangeNotifier.value=0;
+                  screenChangeNotifier.value = 0;
                   AllSnackBars.commonSnackbar(
                       context: context,
                       title: 'Error',
@@ -63,19 +63,27 @@ class MainPage extends StatelessWidget {
               child: ValueListenableBuilder(
                 valueListenable: screenChangeNotifier,
                 builder: (context, int index, _) {
-                  if(snapshot.data![FirebaseConstants.fieldUserBlocked]==true){
-                    BlocProvider.of<UserAccessBloc>(context).add(CheckUserAccess());
-                  }
-                  return Scaffold(
-                    appBar: const CustomAppBar(),
-                    drawer: const SafeArea(
-                      child: Drawer(
-                        child: DrawerItems(),
+                  if (!snapshot.hasData) {
+                    return const Center(
+                      child: CircularProgressIndicator(),
+                    );
+                  } else {
+                    if (snapshot.data![FirebaseConstants.fieldUserBlocked] ==
+                        true) {
+                      BlocProvider.of<UserAccessBloc>(context)
+                          .add(CheckUserAccess());
+                    }
+                    return Scaffold(
+                      appBar: const CustomAppBar(),
+                      drawer: const SafeArea(
+                        child: Drawer(
+                          child: DrawerItems(),
+                        ),
                       ),
-                    ),
-                    body: pages[index],
-                    bottomNavigationBar: const BottomNavigationDrawer(),
-                  );
+                      body: pages[index],
+                      bottomNavigationBar: const BottomNavigationDrawer(),
+                    );
+                  }
                 },
               ),
             );

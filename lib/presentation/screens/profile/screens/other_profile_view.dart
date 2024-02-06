@@ -16,11 +16,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
-class OtherProfileScreen extends StatelessWidget {
+class OtherProfileScreenw extends StatelessWidget {
   final String userId;
   final int index;
 
-  const OtherProfileScreen(
+  const OtherProfileScreenw(
       {super.key, required this.userId, required this.index});
 
   @override
