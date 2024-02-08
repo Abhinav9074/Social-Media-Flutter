@@ -5,8 +5,10 @@ import 'package:connected/domain/streams/following_discussion.dart';
 import 'package:connected/presentation/screens/home/widgets/heading_image_widget.dart';
 import 'package:connected/presentation/screens/home/widgets/social_tab.dart';
 import 'package:connected/presentation/screens/home/widgets/user_details.dart';
+import 'package:connected/presentation/widgets/skelton.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:skeletonizer/skeletonizer.dart';
 
 class FollowingDiscussionUi extends StatelessWidget {
   const FollowingDiscussionUi({super.key});
@@ -18,7 +20,7 @@ class FollowingDiscussionUi extends StatelessWidget {
         builder: (context, snapshot) {
           if (!snapshot.hasData) {
             return const Center(
-              child: CircularProgressIndicator(),
+              child: CircularProgressIndicator()
             );
           } else {
             return ListView.builder(
@@ -37,7 +39,8 @@ class FollowingDiscussionUi extends StatelessWidget {
                                 data[FirebaseConstants.fieldDiscussionUserId],
                                 time: data[FirebaseConstants.fieldDiscussionCreatedTime],
                                 index: index,
-                                edited : data[FirebaseConstants.fieldDiscussionEdited]
+                                edited : data[FirebaseConstants.fieldDiscussionEdited],
+                                discussionId: data['id'],
                           ),
                           HeadingAndImageWidget(
                               isImage: true,

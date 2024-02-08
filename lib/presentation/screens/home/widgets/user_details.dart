@@ -3,12 +3,14 @@ import 'package:connected/application/bloc/other_profile_bloc/other_profile_bloc
 import 'package:connected/domain/common/firestore_constants/firebase_constants.dart';
 import 'package:connected/domain/common/functions/date_functions/date_differnce.dart';
 import 'package:connected/presentation/core/themes/theme.dart';
+import 'package:connected/presentation/screens/report/screens/discussion_report_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:recase/recase.dart';
 
 class UserDeatilsTile extends StatelessWidget {
   final String userId;
+  final String discussionId;
   final Timestamp time;
   final int index;
   final bool edited;
@@ -18,7 +20,8 @@ class UserDeatilsTile extends StatelessWidget {
       required this.userId,
       required this.time,
       required this.index,
-      required this.edited});
+      required this.edited,
+      required this.discussionId});
 
   @override
   Widget build(BuildContext context) {
@@ -71,9 +74,12 @@ class UserDeatilsTile extends StatelessWidget {
                   trailing: PopupMenuButton(
                       surfaceTintColor: Colors.black,
                       itemBuilder: (context) => [
-                            const PopupMenuItem(
+                             PopupMenuItem(
+                              onTap: (){
+                                Navigator.of(context).push(MaterialPageRoute(builder: (ctx)=>DiscussionReportScreen(discussionId: discussionId)));
+                              },
                               value: 1,
-                              child: Row(
+                              child: const Row(
                                 children: [
                                   Icon(Icons.report),
                                   SizedBox(

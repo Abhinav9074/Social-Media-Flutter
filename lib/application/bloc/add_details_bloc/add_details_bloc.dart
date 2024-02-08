@@ -35,7 +35,6 @@ class AddDetailsBloc extends Bloc<AddDetailsEvent, AddDetailsState> {
     });
 
     on<AddImageEvent>((event, emit) async {
-      log(Timestamp.now().toString());
       final data = UserModel(
           realName: realName,
           username: username,

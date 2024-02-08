@@ -48,4 +48,20 @@ class SharedPrefLogin {
     final sharedPref = await SharedPreferences.getInstance();
     return sharedPref.getString('email')!;
   }
+
+
+  //set the onboarding page status
+  static Future<void>setOnboardingStatus()async{
+    final sharedPref = await SharedPreferences.getInstance();
+    sharedPref.setBool('firstTime', false);
+  }
+
+  //set the onboarding page status
+  static Future<bool>checkOnBoardingStatus()async{
+    final sharedPref = await SharedPreferences.getInstance();
+    if(sharedPref.getBool('firstTime')==null){
+      return true;
+    }
+    return sharedPref.getBool('firstTime')!;
+  }
 }

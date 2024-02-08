@@ -12,11 +12,12 @@ class CommunityModel with FirestoreModel{
   final List<CommunityPostModel> communityPosts;
   final DateTime createdTime;
   final bool private;
+  final bool restricted;
   final List<String>members;
   final List<CommunityNotificationModel> communityNotifications;
   final List<String> requests;
 
-  CommunityModel({required this.name, required this.description, required this.image, required this.adminId, required this.communityPosts, required this.createdTime, required this.private, required this.members, required this.communityNotifications,required this.requests,required this.typing});
+  CommunityModel({required this.name, required this.description, required this.image, required this.adminId, required this.communityPosts, required this.createdTime, required this.private, required this.members, required this.communityNotifications,required this.requests,required this.typing,required this.restricted});
 
   
 
@@ -33,7 +34,8 @@ class CommunityModel with FirestoreModel{
       FirebaseConstants.fieldCommunityMembers:members,
       FirebaseConstants.fieldCommunityNotifications:communityNotifications,
       FirebaseConstants.fieldCommunityRequests:requests,
-      FirebaseConstants.fieldCommunityTyping:typing
+      FirebaseConstants.fieldCommunityTyping:typing,
+      FirebaseConstants.fieldCommunityRestricted:restricted
     };
   }
 }

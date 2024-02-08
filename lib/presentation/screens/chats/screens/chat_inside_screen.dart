@@ -1,4 +1,5 @@
 import 'package:bubble/bubble.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:connected/domain/common/firestore_constants/firebase_constants.dart';
 import 'package:connected/domain/fire_store_functions/chat_service/chat_services.dart';
 import 'package:connected/domain/fire_store_functions/user_db/user_db_functions.dart';
@@ -16,7 +17,32 @@ class ChatInsideScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     TextEditingController textCont = TextEditingController();
     return Scaffold(
-      appBar: AppBar(),
+      appBar: AppBar(
+        title: StreamBuilder(
+            stream: FirebaseFirestore.instance
+                .collection(FirebaseConstants.userDb)
+                .doc(receiverId)
+                .snapshots(),
+            builder: (context, snapshot) {
+              if (!snapshot.hasData) {
+                return const SizedBox();
+              } else {
+                return Row(children: [
+                  CircleAvatar(
+                    backgroundImage: NetworkImage(
+                        snapshot.data![FirebaseConstants.fieldImage]),
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.only(left: 10),
+                    child: Text(
+                      snapshot.data![FirebaseConstants.fieldRealname],
+                      style: MyTextStyle.commonButtonText,
+                    ),
+                  )
+                ]);
+              }
+            }),
+      ),
       body: Column(
         children: [
           StreamBuilder(
@@ -59,7 +85,8 @@ class ChatInsideScreen extends StatelessWidget {
                                     : data[FirebaseConstants
                                                 .fieldChatIsAlert] ==
                                             true
-                                        ? _dateShow(data: data,context: context)
+                                        ? _dateShow(
+                                            data: data, context: context)
                                         : _textMsgBubble(
                                             color: color,
                                             nipAlignment: nipAlignment,
@@ -119,7 +146,7 @@ class ChatInsideScreen extends StatelessWidget {
   }
 
   //alert message container
-  Widget _dateShow({required final data,required BuildContext context}) {
+  Widget _dateShow({required final data, required BuildContext context}) {
     return SizedBox(
       width: MediaQuery.of(context).size.width,
       child: Row(
@@ -127,12 +154,13 @@ class ChatInsideScreen extends StatelessWidget {
         children: [
           Container(
             decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(3),
-              color: Colors.amber
-            ),
+                borderRadius: BorderRadius.circular(3), color: Colors.amber),
             child: Padding(
               padding: const EdgeInsets.fromLTRB(5, 1, 5, 1),
-              child: Text(data[FirebaseConstants.fieldChatlertMsg],style: MyTextStyle.greyHeadingTextSmall,),
+              child: Text(
+                data[FirebaseConstants.fieldChatlertMsg],
+                style: MyTextStyle.greyHeadingTextSmall,
+              ),
             ),
           )
         ],

@@ -1,4 +1,3 @@
-import 'dart:ffi';
 
 import 'package:connected/domain/common/firestore_constants/firebase_constants.dart';
 import 'package:connected/domain/models/common_mixin/firestore_mixin.dart';
@@ -9,7 +8,7 @@ class UserModel with FirestoreModel {
   final String image;
   final String realName;
   final String gender;
-  final String locationStr;
+  final String locationStr;  
   final dynamic location;
   final DateTime createdTime;
   final int notificationCount;

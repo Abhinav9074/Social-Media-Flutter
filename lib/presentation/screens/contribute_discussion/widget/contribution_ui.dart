@@ -29,7 +29,7 @@ class ContributionUi extends StatelessWidget {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  UserDeatilsTile(userId: data[FirebaseConstants.fieldContributer],time: data[FirebaseConstants.fieldContributedTime],index: index,edited: false,),
+                  UserDeatilsTile(userId: data[FirebaseConstants.fieldContributer],time: data[FirebaseConstants.fieldContributedTime],index: index,edited: false,discussionId: discussionId,),
                    Padding(
                      padding: const EdgeInsets.symmetric(horizontal: 20),
                      child: Text(data[FirebaseConstants.fieldContributionDescription],style: MyTextStyle.descriptionText,),

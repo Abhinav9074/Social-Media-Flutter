@@ -3,6 +3,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:connected/domain/common/firestore_constants/firebase_constants.dart';
 import 'package:connected/domain/fire_store_functions/user_db/user_db_functions.dart';
+import 'package:connected/domain/models/report_model/community_report_model.dart';
 import 'package:connected/domain/models/report_model/discussion_report_model.dart';
 import 'package:connected/domain/models/report_model/user_report_model.dart';
 import 'package:connected/presentation/core/snackbars/common_snackbar.dart';
@@ -12,6 +13,7 @@ import 'package:flutter/material.dart';
 abstract class ReportDb {
 Future<void>reportUser({required String userId,required String description});
 Future<void>reportDiscussion({required String discussionId,required String description});
+Future<void>reportCommunity({required String communityId,required String description});
 }
 
 class ReportDbFunctions extends ReportDb {
@@ -39,6 +41,17 @@ class ReportDbFunctions extends ReportDb {
     final value = UserReportModel(reporterId: UserDbFunctions().userId, reportedUserId: userId, description: description);
 
     await FirebaseFirestore.instance.collection(FirebaseConstants.userReportDb).add(value.toMap());
+
+    //snackbar
+    AllSnackBars.commonSnackbar(context: mainPageContext, title: 'Successful', content: 'Your Report Has Been Submitted', bg: Colors.green);
+  }
+  
+  @override
+  Future<void> reportCommunity({required String communityId, required String description}) async{
+    //creating a model
+    final value = CommunityReportModel(reporterId: UserDbFunctions().userId, reportedCommunityId: communityId, description: description);
+
+    await FirebaseFirestore.instance.collection(FirebaseConstants.communityReportDb).add(value.toMap());
 
     //snackbar
     AllSnackBars.commonSnackbar(context: mainPageContext, title: 'Successful', content: 'Your Report Has Been Submitted', bg: Colors.green);

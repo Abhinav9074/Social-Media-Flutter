@@ -1,3 +1,5 @@
+// ignore_for_file: use_build_context_synchronously
+
 import 'dart:io';
 
 import 'package:connected/application/bloc/add_details_bloc/add_details_bloc.dart';
@@ -90,10 +92,12 @@ class AddProfilePicture extends StatelessWidget {
                   if (state is ImageUploadedState) {
                     BlocProvider.of<AddDetailsBloc>(context)
                         .add(AddImageEvent(image: state.image));
-                    Navigator.of(context).pushAndRemoveUntil(
+                   
+                    await SharedPrefLogin.setLogin();
+        
+                     Navigator.of(context).pushAndRemoveUntil(
                         MaterialPageRoute(builder: (ctx) =>  const MainPage()),
                         (route) => false);
-                    await SharedPrefLogin.setLogin();
                   }
                 },
                 builder: (context, state) {

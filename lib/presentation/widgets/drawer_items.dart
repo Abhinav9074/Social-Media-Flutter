@@ -3,7 +3,9 @@
 import 'package:connected/domain/shared_prefrences/login_logout/login_logout.dart';
 import 'package:connected/presentation/core/themes/theme.dart';
 import 'package:connected/presentation/screens/login/screens/login_screen.dart';
+import 'package:connected/presentation/screens/privacy_policy/screens/privacy_policy_screen.dart';
 import 'package:connected/presentation/screens/settings/screens/settings_screen.dart';
+import 'package:connected/presentation/screens/terms_and_conditions/screens/terms_and_conditions_screen.dart';
 import 'package:connected/presentation/widgets/navigation_bar.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -34,8 +36,8 @@ class DrawerItems extends StatelessWidget {
                   TextButton.icon(onPressed: (){
                     Navigator.of(context).push(MaterialPageRoute(builder: (ctx)=>const SettingsScreen()));
                   }, label: const Text('Settings',style: MyTextStyle.commonButtonText,),icon: const Icon(Icons.settings,color: Colors.grey,),),
-                  TextButton.icon(onPressed: (){}, label: const Text('PrIvacy Policy',style: MyTextStyle.commonButtonText,),icon: const Icon(Icons.privacy_tip,color: Colors.grey,),),
-                  TextButton.icon(onPressed: (){}, label: const Text('Terms & Conditions',style: MyTextStyle.commonButtonText,),icon: const Icon(Icons.info,color: Colors.grey,),),
+                  TextButton.icon(onPressed: (){Navigator.of(context).push(MaterialPageRoute(builder: (ctx)=>const PrivacyPolicyScreen()));}, label: const Text('Privacy Policy',style: MyTextStyle.commonButtonText,),icon: const Icon(Icons.privacy_tip,color: Colors.grey,),),
+                  TextButton.icon(onPressed: (){Navigator.of(context).push(MaterialPageRoute(builder: (ctx)=>const TermsAndConditions()));}, label: const Text('Terms & Conditions',style: MyTextStyle.commonButtonText,),icon: const Icon(Icons.info,color: Colors.grey,),),
                   TextButton.icon(onPressed: (){}, label: const Text('About Developer',style: MyTextStyle.commonButtonText,),icon: const Icon(Icons.account_box_outlined,color: Colors.grey,),),
                   TextButton.icon(onPressed: (){}, label: const Text('Rate Us',style: MyTextStyle.commonButtonText,),icon: const Icon(Icons.rate_review,color: Colors.grey,),),
                 ],

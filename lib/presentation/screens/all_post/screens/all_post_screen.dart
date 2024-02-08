@@ -36,7 +36,8 @@ class AllPostsScreen extends StatelessWidget {
                                 data[FirebaseConstants.fieldDiscussionUserId],
                                 time: data[FirebaseConstants.fieldDiscussionCreatedTime],
                                 index: index,
-                                edited : data[FirebaseConstants.fieldDiscussionEdited]
+                                edited : data[FirebaseConstants.fieldDiscussionEdited],
+                                discussionId: data.id,
                           ),
                           HeadingAndImageWidget(
                               isImage: true,

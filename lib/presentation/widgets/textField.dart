@@ -30,7 +30,7 @@ class CustomTextField extends StatelessWidget {
         decoration: InputDecoration(
           contentPadding: const EdgeInsets.all(0),
             suffixIcon: IconButton(onPressed: suffixOnPressed, icon: suffixIcon),
-            prefixIcon: IconButton(onPressed: prefixOnPressed, icon: prefixIcon),
+            prefixIcon: IconButton(onPressed: prefixOnPressed, icon: const Icon(Icons.message)),
             border: OutlineInputBorder(
                 borderSide: BorderSide.none,
                 borderRadius: BorderRadius.circular(40)),

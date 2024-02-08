@@ -13,6 +13,7 @@ class FirebaseConstants {
   static const String userReportDb = 'reportedUsers';
   static const String discussionReportDb = 'reportedDiscussions';
   static const String notificationDb = 'notifications';
+  static const String communityReportDb = 'reportedCommunity';
 
   //interest db id
   static const String interestDbId = 'IJ6hEiz0OVdo7AfhXvg4';
@@ -108,6 +109,7 @@ class FirebaseConstants {
   static const String fieldReporterId = 'reporter';
   static const String fieldReportDescription = 'description';
   static const String fieldReportedDiscussionId = 'discussionId';
+  static const String fieldreportedCommunityId = 'communityId';
 
   //notificatiob db fields
   static const String fieldNotificationCreatedUser = 'userId';

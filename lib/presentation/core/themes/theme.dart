@@ -19,6 +19,7 @@ class MyTextStyle {
       fontFamily: 'Montserrat-bold',
       letterSpacing: 0.9,
       );
+
   static const TextStyle mediumBlackText = TextStyle(
       color: Color.fromARGB(255, 0, 0, 0),
       fontSize: 20,

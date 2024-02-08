@@ -105,40 +105,38 @@ class ProfileScreen extends StatelessWidget {
                                                               255,
                                                               255,
                                                               255),
-                                                      itemBuilder:
-                                                          (context) => [
-                                                                PopupMenuItem(
-                                                                  onTap: () {
-                                                                    Navigator.of(
-                                                                            context)
-                                                                        .push(MaterialPageRoute(
-                                                                            builder: (ctx) => BlocProvider(
-                                                                                  create: (context) => LocationBloc(),
-                                                                                  child: BlocProvider(
-                                                                                    create: (context) => ProfileSwitchBloc(),
-                                                                                    child: EditProfileScreen(),
-                                                                                  ),
-                                                                                )));
-                                                                  },
-                                                                  value: 1,
-                                                                  child:
-                                                                      const Row(
-                                                                    children: [
-                                                                      Icon(Icons
-                                                                          .edit),
-                                                                      SizedBox(
-                                                                        width:
-                                                                            10,
-                                                                      ),
-                                                                      Text(
-                                                                        "Edit Profile",
-                                                                        style: MyTextStyle
-                                                                            .commonButtonText,
-                                                                      )
-                                                                    ],
+                                                      itemBuilder: (context) =>
+                                                          [
+                                                            PopupMenuItem(
+                                                              onTap: () {
+                                                                Navigator.of(
+                                                                        context)
+                                                                    .push(MaterialPageRoute(
+                                                                        builder: (ctx) => BlocProvider(
+                                                                              create: (context) => LocationBloc(),
+                                                                              child: BlocProvider(
+                                                                                create: (context) => ProfileSwitchBloc(),
+                                                                                child: EditProfileScreen(),
+                                                                              ),
+                                                                            )));
+                                                              },
+                                                              value: 1,
+                                                              child: const Row(
+                                                                children: [
+                                                                  Icon(Icons
+                                                                      .edit),
+                                                                  SizedBox(
+                                                                    width: 10,
                                                                   ),
-                                                                ),
-                                                                PopupMenuItem(
+                                                                  Text(
+                                                                    "Edit Profile",
+                                                                    style: MyTextStyle
+                                                                        .commonButtonText,
+                                                                  )
+                                                                ],
+                                                              ),
+                                                            ),
+                                                            snapshot.data![FirebaseConstants.fieldPremiumUser] ==false?PopupMenuItem(
                                                                   onTap: () {
                                                                     if (snapshot
                                                                             .data![FirebaseConstants.fieldPremiumUser] ==
@@ -147,11 +145,6 @@ class ProfileScreen extends StatelessWidget {
                                                                               context)
                                                                           .push(
                                                                               MaterialPageRoute(builder: (ctx) => const SubscribeToPremiumPage()));
-                                                                    } else {
-                                                                      Navigator.of(
-                                                                              context)
-                                                                          .push(
-                                                                              MaterialPageRoute(builder: (ctx) => const UserActivityScreen()));
                                                                     }
                                                                   },
                                                                   value: 2,
@@ -178,8 +171,9 @@ class ProfileScreen extends StatelessWidget {
                                                                       )
                                                                     ],
                                                                   ),
-                                                                )
-                                                              ]);
+                                                                ):const PopupMenuItem(child: SizedBox())
+                                                                        
+                                                          ]);
                                                 }
                                               })
                                         ],
@@ -247,22 +241,22 @@ class ProfileScreen extends StatelessWidget {
                                         text: 'Saved',
                                       ),
                                     ]),
-  
                                 Expanded(
                                     child: TabBarView(children: [
-                                      DiscussionTab(
-                                  count: snapshot.data![FirebaseConstants
-                                              .fieldDiscussions] ==
-                                          null
-                                      ? 0
-                                      : snapshot
-                                          .data![FirebaseConstants
-                                              .fieldDiscussions]
-                                          .length,
-                                  id: snapshot.data!.id,
-                                ),
-                                SavedDiscussionTab(id: UserDbFunctions().userId)
-                                    ])),
+                                  DiscussionTab(
+                                    count: snapshot.data![FirebaseConstants
+                                                .fieldDiscussions] ==
+                                            null
+                                        ? 0
+                                        : snapshot
+                                            .data![FirebaseConstants
+                                                .fieldDiscussions]
+                                            .length,
+                                    id: snapshot.data!.id,
+                                  ),
+                                  SavedDiscussionTab(
+                                      id: UserDbFunctions().userId)
+                                ])),
                               ],
                             ),
                           ),

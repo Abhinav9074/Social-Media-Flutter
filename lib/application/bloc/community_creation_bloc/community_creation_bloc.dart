@@ -57,7 +57,8 @@ class CommunityCreationBloc
           members: [UserDbFunctions().userId],
           communityNotifications: [],
           requests: [],
-          typing: ''
+          typing: '',
+          restricted: false
           );
 
       await CommunityDbFunctions().createCommunity(data);

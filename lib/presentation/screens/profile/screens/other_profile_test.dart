@@ -11,6 +11,7 @@ import 'package:connected/presentation/screens/chats/screens/chat_inside_screen.
 import 'package:connected/presentation/screens/map_view/screens/map_view_screen.dart';
 import 'package:connected/presentation/screens/profile/widgets/discussion_tab.dart';
 import 'package:connected/presentation/screens/profile/widgets/follow_tab.dart';
+import 'package:connected/presentation/screens/report/screens/user_report_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
@@ -76,21 +77,66 @@ class OtherProfileScreen extends StatelessWidget {
                                 children: [
                                   //APP BAR
                                   Row(
+                                    mainAxisAlignment:
+                                        MainAxisAlignment.spaceBetween,
                                     children: [
                                       IconButton(
                                           onPressed: () {
                                             Navigator.of(context).pop();
                                           },
-                                          icon: const Icon(Icons.arrow_back,color: Colors.white,)),
-                                      snapshot.data![FirebaseConstants
-                                                  .fieldAllowLocationView] ==
-                                              true
-                                          ? IconButton(
-                                              onPressed: () {
-                                                 Navigator.of(context).push(MaterialPageRoute(builder: (ctx)=>MapViewScreen(userId: userId)));
-                                              },
-                                              icon: Lottie.asset('assets/lottie/map.json',height: 30,width: 30),)
-                                          : const SizedBox(),
+                                          icon: const Icon(
+                                            Icons.arrow_back,
+                                            color: Colors.white,
+                                          )),
+                                      
+                                      Row(
+                                        children: [
+                                          snapshot.data![FirebaseConstants
+                                                      .fieldAllowLocationView] ==
+                                                  true
+                                              ? IconButton(
+                                                  onPressed: () {
+                                                    Navigator.of(context).push(
+                                                        MaterialPageRoute(
+                                                            builder: (ctx) =>
+                                                                MapViewScreen(
+                                                                    userId:
+                                                                        userId)));
+                                                  },
+                                                  icon: Lottie.asset(
+                                                      'assets/lottie/map.json',
+                                                      height: 30,
+                                                      width: 30),
+                                                )
+                                              : const SizedBox(),
+
+                                              PopupMenuButton(
+                                                iconColor: Colors.white,
+                                          surfaceTintColor: Colors.black,
+                                          itemBuilder: (context) => [
+                                                PopupMenuItem(
+                                                  onTap: () {
+                                                    Navigator.of(context).push(
+                                                        MaterialPageRoute(
+                                                            builder: (ctx) =>
+                                                                UserReportScreen(
+                                                                    userId:
+                                                                        userId)));
+                                                  },
+                                                  value: 2,
+                                                  child: const Row(
+                                                    children: [
+                                                      Icon(Icons.report),
+                                                      SizedBox(
+                                                        width: 10,
+                                                      ),
+                                                      Text("Report")
+                                                    ],
+                                                  ),
+                                                )
+                                              ]),
+                                        ],
+                                      ),
                                     ],
                                   ),
 
@@ -120,7 +166,8 @@ class OtherProfileScreen extends StatelessWidget {
                                         height: 20,
                                       ),
                                       //follow of message button
-                                      followOrMessageBtn(context: context,userId: userId)
+                                      followOrMessageBtn(
+                                          context: context, userId: userId)
                                     ],
                                   )
                                 ],
@@ -173,15 +220,21 @@ class OtherProfileScreen extends StatelessWidget {
   Widget userBasicDeatils(final snapshot) {
     return Column(
       children: [
-        snapshot.data![FirebaseConstants.fieldPremiumUser]==true?Row(
+        snapshot.data![FirebaseConstants.fieldPremiumUser] == true
+            ? Row(
+                mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   Text(
                     snapshot.data![FirebaseConstants.fieldRealname],
                     style: MyTextStyle.commonHeadingTextWhite,
                   ),
-                  const Icon(Icons.verified,color: Colors.blue,)
+                  const Icon(
+                    Icons.verified,
+                    color: Colors.blue,
+                  )
                 ],
-              ):Text(
+              )
+            : Text(
                 snapshot.data![FirebaseConstants.fieldRealname],
                 style: MyTextStyle.commonHeadingTextWhite,
               ),
@@ -237,7 +290,8 @@ class OtherProfileScreen extends StatelessWidget {
   }
 
   //follow or message button
-  Widget followOrMessageBtn({required BuildContext context,required String userId}) {
+  Widget followOrMessageBtn(
+      {required BuildContext context, required String userId}) {
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
       children: [
@@ -245,7 +299,7 @@ class OtherProfileScreen extends StatelessWidget {
         ElevatedButton.icon(
           onPressed: () {
             Navigator.of(context).push(MaterialPageRoute(
-            builder: (ctx) => ChatInsideScreen(receiverId: userId)));
+                builder: (ctx) => ChatInsideScreen(receiverId: userId)));
           },
           icon: const Icon(
             Icons.send,
