@@ -61,6 +61,7 @@ dependencies:
   lottie: ^3.0.0
   flutter_onboarding_slider: ^1.0.11
   skeletonizer: ^1.0.1
+  cached_network_image: ^3.3.1
 
   
 

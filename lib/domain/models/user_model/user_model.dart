@@ -21,7 +21,7 @@ class UserModel with FirestoreModel {
   final List<String> requestedCommunities;
   final List<String> liked;
   final List<String> notifications;
-  final List<String> chat;
+  final List<Map<String,String>> chat;
   final List<String> savedDiscussion;
   final bool blocked;
   final bool locationView;

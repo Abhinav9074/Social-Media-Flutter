@@ -8,7 +8,6 @@ import 'package:connected/application/bloc/other_profile_bloc/other_profile_bloc
 import 'package:connected/application/bloc/splash_bloc/splash_bloc.dart';
 import 'package:connected/application/bloc/user_access_bloc/user_access_bloc.dart';
 import 'package:connected/application/bloc/user_name_bloc/username_bloc.dart';
-import 'package:connected/presentation/screens/onboarding/screens/onboarding_screen.dart';
 import 'package:connected/presentation/screens/splash/screens/splash_screen.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';

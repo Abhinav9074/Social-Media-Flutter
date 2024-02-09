@@ -61,7 +61,7 @@ class AddDetailsBloc extends Bloc<AddDetailsEvent, AddDetailsState> {
           bio: '',
           premium: false,
           notificationCount: 0,
-          chat: [],
+          chat: [{}],
           savedDiscussion: []
           );
 
@@ -80,6 +80,8 @@ class AddDetailsBloc extends Bloc<AddDetailsEvent, AddDetailsState> {
 
       //saving user id locally to acces faster
       await UserDbFunctions().saveUserId(await SharedPrefLogin.getUserId());
+
+      emit(ReadyToGoState());
     });
   }
 }

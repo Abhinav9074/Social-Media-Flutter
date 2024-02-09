@@ -8,3 +8,5 @@ class InterestUpdatedState extends AddDetailsState{
   InterestUpdatedState({required this.interests});
 }
 
+class ReadyToGoState extends AddDetailsState{}
+

@@ -2,6 +2,8 @@ import 'package:connected/presentation/core/media_query/media_query.dart';
 import 'package:connected/presentation/core/themes/theme.dart';
 import 'package:connected/presentation/screens/home/screens/post_view.dart';
 import 'package:flutter/material.dart';
+import 'package:lottie/lottie.dart';
+import 'package:skeletonizer/skeletonizer.dart';
 
 class HeadingAndImageWidget extends StatelessWidget {
   final bool isImage;
@@ -52,19 +54,45 @@ class HeadingAndImageWidget extends StatelessWidget {
                     textScaler: TextScaler.noScaling,
                   )),
             ),
-            image.isNotEmpty?Center(
-              child: ClipRRect(
-                  borderRadius: BorderRadius.circular(10),
-                  child: Hero(
-                      tag: 'image$index',
-                      child: Image.network(
-                        image,
-                        width: MediaQueryCustom.disscussionImageWidth(context),
-                        height:
-                            MediaQueryCustom.disscussionImageHeight(context),
-                        fit: BoxFit.fill,
-                      ))),
-            ):const SizedBox()
+            image.isNotEmpty
+                ? Center(
+                    child: ClipRRect(
+                        borderRadius: BorderRadius.circular(10),
+                        child: Hero(
+                            tag: 'image$index',
+                            child: Image.network(
+                              image,
+                              width: MediaQueryCustom.disscussionImageWidth(
+                                  context),
+                              height: MediaQueryCustom.disscussionImageHeight(
+                                  context),
+                              fit: BoxFit.cover,
+                              loadingBuilder:
+                                  (context, child, loadingProgress) {
+                                if (loadingProgress == null) return child;
+                                return Lottie.asset(
+                                    'assets/lottie/skeleton.json',
+                                    width:
+                                        MediaQueryCustom.disscussionImageWidth(
+                                            context),
+                                    height:
+                                        MediaQueryCustom.disscussionImageHeight(
+                                            context),
+                                    fit: BoxFit.cover,frameRate: const FrameRate(90));
+                              },
+                              errorBuilder: (context, error, stackTrace) {
+                                return Lottie.asset('assets/lottie/error.json',
+                                    width:
+                                        MediaQueryCustom.disscussionImageWidth(
+                                            context),
+                                    height:
+                                        MediaQueryCustom.disscussionImageHeight(
+                                            context),
+                                    );
+                              },
+                            ))),
+                  )
+                : const SizedBox()
           ],
         ),
       ),

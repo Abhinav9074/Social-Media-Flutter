@@ -6,7 +6,9 @@ import 'package:connected/presentation/core/themes/theme.dart';
 import 'package:connected/presentation/screens/report/screens/discussion_report_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:lottie/lottie.dart';
 import 'package:recase/recase.dart';
+import 'package:cached_network_image/cached_network_image.dart';
 
 class UserDeatilsTile extends StatelessWidget {
   final String userId;
@@ -42,7 +44,8 @@ class UserDeatilsTile extends StatelessWidget {
                     child: CircleAvatar(
                       radius: 20,
                       backgroundImage: NetworkImage(
-                          snapshot.data![FirebaseConstants.fieldImage]),
+                          snapshot.data![FirebaseConstants.fieldImage],
+                          ), 
                     ),
                   ),
                   title: snapshot.data![FirebaseConstants.fieldPremiumUser]==true?Row(

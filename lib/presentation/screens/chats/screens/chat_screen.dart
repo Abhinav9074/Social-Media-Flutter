@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:connected/domain/common/firestore_constants/firebase_constants.dart';
+import 'package:connected/domain/fire_store_functions/chat_service/chat_services.dart';
 import 'package:connected/domain/fire_store_functions/user_db/user_db_functions.dart';
 import 'package:connected/domain/streams/chat_user_stream.dart';
 import 'package:connected/presentation/core/media_query/media_query.dart';
@@ -54,13 +55,13 @@ class ChatScreen extends StatelessWidget {
         stream: FirebaseFirestore.instance
             .collection(FirebaseConstants.userDb)
             .doc(UserDbFunctions().userId)
-            .snapshots(),
+            .collection(FirebaseConstants.chatSubCollection).orderBy(FirebaseConstants.fieldChatSubCollectionTime,descending: true).snapshots(),
         builder: (context, snapshot) {
           if (!snapshot.hasData) {
             return const Center(
               child: CircularProgressIndicator(),
             );
-          } else if (snapshot.data![FirebaseConstants.fieldChats].isEmpty) {
+          } else if (snapshot.data!.docs.isEmpty) {
             return Column(
               children: [
                 SizedBox(
@@ -77,26 +78,30 @@ class ChatScreen extends StatelessWidget {
             return Expanded(
               child: ListView.builder(
                   itemCount:
-                      snapshot.data![FirebaseConstants.fieldChats].length,
+                      snapshot.data!.docs.length,
                   itemBuilder: (context, index) {
                     final data =
-                        snapshot.data![FirebaseConstants.fieldChats][index];
+                        snapshot.data!.docs[index];
                     return StreamBuilder(
                         stream: FirebaseFirestore.instance
                             .collection(FirebaseConstants.userDb)
-                            .doc(data)
+                            .doc(data[FirebaseConstants.fieldChatSubCollectionSenderId])
                             .snapshots(),
                         builder: (context, snapshot) {
                           if (!snapshot.hasData) {
                             return const SizedBox();
                           } else {
                             return userList(
-                                receiverId: data,
+                                receiverId: data[FirebaseConstants.fieldChatSubCollectionSenderId],
                                 image: snapshot
                                     .data![FirebaseConstants.fieldImage],
                                 text: snapshot
                                     .data![FirebaseConstants.fieldRealname],
-                                ctx: context);
+                                ctx: context,
+                                msg: data[FirebaseConstants.fieldChatSubCollectionLastMessage],
+                                read: data[FirebaseConstants.fieldChatSubCollectionIsRead],
+                                chatSnippetId: data.id
+                                );
                           }
                         });
                   }),
@@ -110,11 +115,16 @@ class ChatScreen extends StatelessWidget {
       {required String receiverId,
       required String image,
       required String text,
-      required BuildContext ctx}) {
+      required String msg,
+      required bool read,
+      required BuildContext ctx,
+      required String chatSnippetId
+      }) {
     return InkWell(
-      onTap: () {
+      onTap: () async{
         Navigator.of(ctx).push(MaterialPageRoute(
             builder: (ctx) => ChatInsideScreen(receiverId: receiverId)));
+            await ChatServices().markUnread(chatSnippetId);
       },
       child: ListTile(
         leading: CircleAvatar(
@@ -125,6 +135,8 @@ class ChatScreen extends StatelessWidget {
           text.titleCase,
           style: MyTextStyle.optionTextMediumLight,
         ),
+        subtitle: read==false?Text(msg,style: MyTextStyle.descriptionTextBold,):Text(msg,style: MyTextStyle.descriptionText,),
+        trailing: read==false?const Icon(Icons.circle,color: Colors.blue,size: 10,):const SizedBox(),
       ),
     );
   }

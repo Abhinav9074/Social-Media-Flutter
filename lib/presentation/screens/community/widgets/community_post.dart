@@ -3,6 +3,7 @@ import 'package:connected/domain/common/firestore_constants/firebase_constants.d
 import 'package:connected/domain/fire_store_functions/user_db/user_db_functions.dart';
 import 'package:connected/presentation/core/themes/theme.dart';
 import 'package:flutter/material.dart';
+import 'package:lottie/lottie.dart';
 import 'package:recase/recase.dart';
 
 class CommunityPosts extends StatelessWidget {
@@ -75,12 +76,28 @@ class CommunityPosts extends StatelessWidget {
                                 height: 200,
                                 width: 300,
                                 decoration: BoxDecoration(
-                                    image: DecorationImage(
-                                        image: NetworkImage(snapshot.data![
-                                            FirebaseConstants
-                                                .fieldCommunityPostImage]),
-                                        fit: BoxFit.cover),
                                     borderRadius: BorderRadius.circular(20)),
+                                child: ClipRRect(
+                                  borderRadius: BorderRadius.circular(10),
+                                  child: Image.network(
+                                    snapshot.data![FirebaseConstants
+                                        .fieldCommunityPostImage],
+                                    fit: BoxFit.cover,
+                                    loadingBuilder:
+                                        (context, child, loadingProgress) {
+                                      if (loadingProgress == null) return child;
+                                      return Lottie.asset(
+                                          'assets/lottie/skeleton.json',
+                                          fit: BoxFit.cover,
+                                          frameRate: const FrameRate(90));
+                                    },
+                                    errorBuilder: (context, error, stackTrace) {
+                                      return Lottie.asset(
+                                        'assets/lottie/error.json',
+                                      );
+                                    },
+                                  ),
+                                ),
                               ),
                             ),
 
@@ -103,7 +120,8 @@ class CommunityPosts extends StatelessWidget {
                                     ),
                             ),
                             Padding(
-                              padding: const EdgeInsets.only(left: 8,bottom: 10),
+                              padding:
+                                  const EdgeInsets.only(left: 8, bottom: 10),
                               child: Text(
                                 snapshot.data![
                                     FirebaseConstants.fieldCommunityPostTime],
@@ -182,12 +200,28 @@ class CommunityPosts extends StatelessWidget {
                                 height: 200,
                                 width: 300,
                                 decoration: BoxDecoration(
-                                    image: DecorationImage(
-                                        image: NetworkImage(snapshot.data![
-                                            FirebaseConstants
-                                                .fieldCommunityPostImage]),
-                                        fit: BoxFit.cover),
                                     borderRadius: BorderRadius.circular(20)),
+                                child: ClipRRect(
+                                  borderRadius: BorderRadius.circular(10),
+                                  child: Image.network(
+                                    snapshot.data![FirebaseConstants
+                                        .fieldCommunityPostImage],
+                                    fit: BoxFit.cover,
+                                    loadingBuilder:
+                                        (context, child, loadingProgress) {
+                                      if (loadingProgress == null) return child;
+                                      return Lottie.asset(
+                                          'assets/lottie/skeleton.json',
+                                          fit: BoxFit.cover,
+                                          frameRate: const FrameRate(90));
+                                    },
+                                    errorBuilder: (context, error, stackTrace) {
+                                      return Lottie.asset(
+                                        'assets/lottie/error.json',
+                                      );
+                                    },
+                                  ),
+                                ),
                               ),
                             ),
 
@@ -210,7 +244,8 @@ class CommunityPosts extends StatelessWidget {
                                     ),
                             ),
                             Padding(
-                              padding: const EdgeInsets.only(left: 8,bottom: 10),
+                              padding:
+                                  const EdgeInsets.only(left: 8, bottom: 10),
                               child: Text(
                                 snapshot.data![
                                     FirebaseConstants.fieldCommunityPostTime],
@@ -242,7 +277,8 @@ class CommunityPosts extends StatelessWidget {
                             constraints: const BoxConstraints(maxWidth: 300),
                             child: Container(
                               decoration: BoxDecoration(
-                                  color: const Color.fromARGB(255, 195, 235, 165),
+                                  color:
+                                      const Color.fromARGB(255, 195, 235, 165),
                                   borderRadius: BorderRadius.circular(10)),
                               child: Padding(
                                 padding: const EdgeInsets.all(8.0),
@@ -311,17 +347,20 @@ class CommunityPosts extends StatelessWidget {
                                   children: [
                                     StreamBuilder(
                                         stream: FirebaseFirestore.instance
-                                            .collection(FirebaseConstants.userDb)
-                                            .doc(snapshot.data![FirebaseConstants
-                                                .fieldCommunityPostUserId])
+                                            .collection(
+                                                FirebaseConstants.userDb)
+                                            .doc(snapshot.data![
+                                                FirebaseConstants
+                                                    .fieldCommunityPostUserId])
                                             .snapshots(),
                                         builder: (context, snapshot) {
                                           if (!snapshot.hasData) {
                                             return const SizedBox();
                                           } else {
                                             return Padding(
-                                              padding: const EdgeInsets.fromLTRB(
-                                                  2, 0, 0, 0),
+                                              padding:
+                                                  const EdgeInsets.fromLTRB(
+                                                      2, 0, 0, 0),
                                               child: Text(
                                                 '${snapshot.data![FirebaseConstants.fieldRealname]}'
                                                     .titleCase,

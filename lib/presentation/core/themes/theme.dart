@@ -186,6 +186,13 @@ class MyTextStyle {
       fontFamily: 'Montesserat',
       letterSpacing: 0.9,
       );
+  static const TextStyle descriptionTextBold = TextStyle(
+      color: Color.fromARGB(255, 0, 0, 0),
+      fontSize: 12,
+      fontWeight: FontWeight.w900,
+      fontFamily: 'Montesserat',
+      letterSpacing: 0.9,
+      );
   static const TextStyle logoutText = TextStyle(
       color: Color.fromARGB(255, 255, 0, 0),
       fontSize: 12,

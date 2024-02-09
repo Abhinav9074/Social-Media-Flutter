@@ -73,15 +73,17 @@ class MainPage extends StatelessWidget {
                       BlocProvider.of<UserAccessBloc>(context)
                           .add(CheckUserAccess());
                     }
-                    return Scaffold(
-                      appBar: const CustomAppBar(),
-                      drawer: const SafeArea(
-                        child: Drawer(
-                          child: DrawerItems(),
+                    return SafeArea(
+                      child: Scaffold(
+                        appBar: const CustomAppBar(),
+                        drawer: const SafeArea(
+                          child: Drawer(
+                            child: DrawerItems(),
+                          ),
                         ),
+                        body: pages[index],
+                        bottomNavigationBar: const BottomNavigationDrawer(),
                       ),
-                      body: pages[index],
-                      bottomNavigationBar: const BottomNavigationDrawer(),
                     );
                   }
                 },

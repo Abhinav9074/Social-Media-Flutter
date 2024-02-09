@@ -43,76 +43,80 @@ class ChatInsideScreen extends StatelessWidget {
               }
             }),
       ),
-      body: Column(
-        children: [
-          StreamBuilder(
-              stream: ChatServices().getChatMessages(receiverId),
-              builder: (context, snapshot) {
-                if (!snapshot.hasData) {
-                  return const SizedBox();
-                } else {
-                  return Expanded(
-                      child: ListView.builder(
-                          reverse: true,
-                          itemCount: snapshot.data!.docs.length,
-                          itemBuilder: (context, index) {
-                            final data = snapshot.data!.docs[index];
-                            final alignment =
-                                data[FirebaseConstants.fieldchatSenderId] ==
-                                        UserDbFunctions().userId
-                                    ? MainAxisAlignment.end
-                                    : MainAxisAlignment.start;
-                            final nipAlignment =
-                                data[FirebaseConstants.fieldchatSenderId] ==
-                                        UserDbFunctions().userId
-                                    ? BubbleNip.rightTop
-                                    : BubbleNip.leftTop;
-                            final color =
-                                data[FirebaseConstants.fieldchatSenderId] ==
-                                        UserDbFunctions().userId
-                                    ? const Color.fromARGB(255, 195, 235, 165)
-                                    : const Color.fromARGB(255, 232, 230, 230);
-                            return Row(
-                              mainAxisAlignment: alignment,
-                              children: [
-                                data[FirebaseConstants.fieldChatIsDiscussion] ==
-                                        true
-                                    ? _sharedDiscussionBubble(
-                                        color: color,
-                                        nipAlignment: nipAlignment,
-                                        data: data,
-                                        context: context)
-                                    : data[FirebaseConstants
-                                                .fieldChatIsAlert] ==
-                                            true
-                                        ? _dateShow(
-                                            data: data, context: context)
-                                        : _textMsgBubble(
-                                            color: color,
-                                            nipAlignment: nipAlignment,
-                                            data: data),
-                              ],
-                            );
-                          }));
+      body: SizedBox(
+        width: double.infinity,
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            StreamBuilder(
+                stream: ChatServices().getChatMessages(receiverId),
+                builder: (context, snapshot) {
+                  if (!snapshot.hasData) {
+                    return const SizedBox();
+                  } else {
+                    return Expanded(
+                        child: ListView.builder(
+                            reverse: true,
+                            itemCount: snapshot.data!.docs.length,
+                            itemBuilder: (context, index) {
+                              final data = snapshot.data!.docs[index];
+                              final alignment =
+                                  data[FirebaseConstants.fieldchatSenderId] ==
+                                          UserDbFunctions().userId
+                                      ? MainAxisAlignment.end
+                                      : MainAxisAlignment.start;
+                              final nipAlignment =
+                                  data[FirebaseConstants.fieldchatSenderId] ==
+                                          UserDbFunctions().userId
+                                      ? BubbleNip.rightTop
+                                      : BubbleNip.leftTop;
+                              final color =
+                                  data[FirebaseConstants.fieldchatSenderId] ==
+                                          UserDbFunctions().userId
+                                      ? const Color.fromARGB(255, 195, 235, 165)
+                                      : const Color.fromARGB(255, 232, 230, 230);
+                              return Row(
+                                mainAxisAlignment: alignment,
+                                children: [
+                                  data[FirebaseConstants.fieldChatIsDiscussion] ==
+                                          true
+                                      ? _sharedDiscussionBubble(
+                                          color: color,
+                                          nipAlignment: nipAlignment,
+                                          data: data,
+                                          context: context)
+                                      : data[FirebaseConstants
+                                                  .fieldChatIsAlert] ==
+                                              true
+                                          ? _dateShow(
+                                              data: data, context: context)
+                                          : _textMsgBubble(
+                                              color: color,
+                                              nipAlignment: nipAlignment,
+                                              data: data),
+                                ],
+                              );
+                            }));
+                  }
+                }),
+            CustomTextField(
+              readOnly: false,
+              hint: 'Message',
+              textCont: textCont,
+              suffixIcon: const Icon(Icons.send),
+              prefixIcon: const Icon(Icons.attachment),
+              suffixOnPressed: () async {
+                if (textCont.text.isEmpty) {
+                  return;
                 }
-              }),
-          CustomTextField(
-            readOnly: false,
-            hint: 'Message',
-            textCont: textCont,
-            suffixIcon: const Icon(Icons.send),
-            prefixIcon: const Icon(Icons.attachment),
-            suffixOnPressed: () async {
-              if (textCont.text.isEmpty) {
-                return;
-              }
-              String temp = textCont.text;
-              textCont.clear();
-              await ChatServices().sendChatMessage(receiverId, temp);
-            },
-            prefixOnPressed: () {},
-          )
-        ],
+                String temp = textCont.text;
+                textCont.clear();
+                await ChatServices().sendChatMessage(receiverId, temp);
+              },
+              prefixOnPressed: () {},
+            )
+          ],
+        ),
       ),
     );
   }

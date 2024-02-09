@@ -1,13 +1,15 @@
-import 'dart:async';
+
 
 import 'package:connected/application/bloc/like_bloc.dart/like_bloc.dart';
 import 'package:connected/domain/common/firestore_constants/firebase_constants.dart';
 import 'package:connected/domain/streams/interest_discussion_stream.dart';
+import 'package:connected/presentation/core/themes/theme.dart';
 import 'package:connected/presentation/screens/home/widgets/heading_image_widget.dart';
 import 'package:connected/presentation/screens/home/widgets/social_tab.dart';
 import 'package:connected/presentation/screens/home/widgets/user_details.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:lottie/lottie.dart';
 
 class InterestsDisscussionUi extends StatelessWidget {
   const InterestsDisscussionUi({super.key});
@@ -22,8 +24,16 @@ class InterestsDisscussionUi extends StatelessWidget {
             return const Center(
               child: CircularProgressIndicator(),
             );
+          }else if(snapshot.data!.isEmpty){
+           return Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+             children: [
+               Lottie.asset('assets/lottie/no_interest.json'),
+               const Text('Add More Interest to get latest Discussions',style: MyTextStyle.descriptionText,)
+             ],
+           );
           }else{
-           return ListView.builder(
+            return ListView.builder(
                   itemCount: snapshot.data!.length,
                   itemBuilder: (context, index) {
                     final data = snapshot.data![index];

@@ -8,6 +8,7 @@ import 'package:connected/presentation/core/constants/texts.dart';
 import 'package:connected/presentation/core/snackbars/common_snackbar.dart';
 import 'package:connected/presentation/core/themes/theme.dart';
 import 'package:connected/presentation/screens/add_details_screens/screens/add_details1.dart';
+import 'package:connected/presentation/screens/login/widgets/google_button.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:sign_button/sign_button.dart';
@@ -48,7 +49,7 @@ class LoginScreen extends StatelessWidget {
           } else if (state is LoginFailedState) {
             return const Center(child: Text('An Error Occured'));
           } else {
-            return  SafeArea(
+            return  const SafeArea(
               child: SizedBox(
                 height: double.infinity,
                 width: double.infinity,
@@ -56,22 +57,15 @@ class LoginScreen extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
-                    const SizedBox(
+                    SizedBox(
                       height: 20,
                     ),
-                    const IconAndHeading(),
+                    IconAndHeading(),
                     Column(
                       crossAxisAlignment: CrossAxisAlignment.center,
                       children: [
-                        SignInButton(
-                          buttonType: ButtonType.google,
-                          onPressed: (){
-                            BlocProvider.of<LoginBloc>(context).add(LoggedInEvent());
-                          },
-                          buttonSize: ButtonSize.medium,
-                          imagePosition: ImagePosition.left,
-                        ),
-                        const Padding(
+                       GoogleButton(),
+                        Padding(
                           padding: EdgeInsets.fromLTRB(0, 8, 0, 20),
                           child: SizedBox(
                               width: 370,

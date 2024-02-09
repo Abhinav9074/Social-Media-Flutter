@@ -315,15 +315,23 @@ class UserDbFunctions extends UserDb {
     await FirebaseFirestore.instance
         .collection(FirebaseConstants.userDb)
         .doc(UserDbFunctions().userId)
-        .update({
-      FirebaseConstants.fieldNotificationCount: 0
-    });
+        .update({FirebaseConstants.fieldNotificationCount: 0});
   }
-  
+
   @override
-  Future<void> saveDiscussion(String discussionId) async{
-    AllSnackBars.commonSnackbar(context: mainPageContext, title: 'Saved', content: 'Saved', bg: Colors.green);
+  Future<void> saveDiscussion(String discussionId) async {
+    AllSnackBars.commonSnackbar(
+        context: mainPageContext,
+        title: 'Saved',
+        content: 'Saved',
+        bg: Colors.green);
     //saving discussion
-    await FirebaseFirestore.instance.collection(FirebaseConstants.userDb).doc(UserDbFunctions().userId).update({FirebaseConstants.fieldSavedDiscussions:FieldValue.arrayUnion([discussionId])});
+    await FirebaseFirestore.instance
+        .collection(FirebaseConstants.userDb)
+        .doc(UserDbFunctions().userId)
+        .update({
+      FirebaseConstants.fieldSavedDiscussions:
+          FieldValue.arrayUnion([discussionId])
+    });
   }
 }

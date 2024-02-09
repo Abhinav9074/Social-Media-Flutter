@@ -1,6 +1,7 @@
 import 'package:connected/presentation/core/media_query/media_query.dart';
 import 'package:connected/presentation/core/themes/theme.dart';
 import 'package:flutter/material.dart';
+import 'package:lottie/lottie.dart';
 
 class PostViewPage extends StatelessWidget {
   final String discussionId;
@@ -50,7 +51,30 @@ class PostViewPage extends StatelessWidget {
                       image,
                       width: MediaQueryCustom.disscussionImageWidth(context),
                       height: MediaQueryCustom.disscussionImageHeight(context),
-                      fit: BoxFit.fill,
+                      fit: BoxFit.cover,
+                      loadingBuilder:
+                                  (context, child, loadingProgress) {
+                                if (loadingProgress == null) return child;
+                                return Lottie.asset(
+                                    'assets/lottie/skeleton.json',
+                                    width:
+                                        MediaQueryCustom.disscussionImageWidth(
+                                            context),
+                                    height:
+                                        MediaQueryCustom.disscussionImageHeight(
+                                            context),
+                                    fit: BoxFit.cover);
+                              },
+                              errorBuilder: (context, error, stackTrace) {
+                                return Lottie.asset('assets/lottie/error.json',
+                                    width:
+                                        MediaQueryCustom.disscussionImageWidth(
+                                            context),
+                                    height:
+                                        MediaQueryCustom.disscussionImageHeight(
+                                            context),
+                                    );
+                              },
                     ))),
           ):const SizedBox(),
 

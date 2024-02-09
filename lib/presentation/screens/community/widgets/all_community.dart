@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:connected/application/bloc/community_creation_bloc/community_creation_bloc.dart';
 import 'package:connected/application/bloc/community_name_bloc/community_name_bloc.dart';
@@ -5,10 +7,12 @@ import 'package:connected/application/bloc/community_search_bloc/community_searc
 import 'package:connected/application/bloc/community_search_bloc/community_search_state.dart';
 import 'package:connected/domain/common/firestore_constants/firebase_constants.dart';
 import 'package:connected/domain/fire_store_functions/user_db/user_db_functions.dart';
+import 'package:connected/presentation/core/themes/theme.dart';
 import 'package:connected/presentation/screens/community/screens/create_community.dart';
 import 'package:connected/presentation/screens/community/widgets/community_tab.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:lottie/lottie.dart';
 
 class MyCommunity extends StatelessWidget {
   const MyCommunity({super.key});
@@ -27,6 +31,19 @@ class MyCommunity extends StatelessWidget {
                 if (!snapshot.hasData) {
                   return const Center(
                     child: CircularProgressIndicator(),
+                  );
+                } else if (snapshot
+                    .data![FirebaseConstants.fieldCommunities].length==0) {
+                      
+                  return Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Lottie.asset('assets/lottie/no_community.json'),
+                      const Text(
+                        'Join Your First Community',
+                        style: MyTextStyle.descriptionText,
+                      )
+                    ],
                   );
                 } else {
                   return Stack(
@@ -84,6 +101,19 @@ class MyCommunity extends StatelessWidget {
                 if (!snapshot.hasData) {
                   return const Center(
                     child: CircularProgressIndicator(),
+                  );
+                }else if (snapshot
+                    .data![FirebaseConstants.fieldCommunities].length==0) {
+                      
+                  return Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Lottie.asset('assets/lottie/no_community.json'),
+                      const Text(
+                        'Join Your First Community',
+                        style: MyTextStyle.descriptionText,
+                      )
+                    ],
                   );
                 } else {
                   return Stack(

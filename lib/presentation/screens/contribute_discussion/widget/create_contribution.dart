@@ -88,7 +88,8 @@ class CreateContribution extends StatelessWidget {
                       } else {
                         return IconButton(
                             onPressed: () {
-                              BlocProvider.of<ContributionBloc>(context).add(
+                              if(textCont.text.trim().isNotEmpty){
+                                BlocProvider.of<ContributionBloc>(context).add(
                                   ContributionCreateEvent(
                                       imageFile: '',
                                       description: textCont.text,
@@ -96,6 +97,7 @@ class CreateContribution extends StatelessWidget {
                                       edited: false));
                               Navigator.of(context).pop();
                               Navigator.of(context).pop();
+                              }
                             },
                             icon: const Icon(Icons.send));
                       }

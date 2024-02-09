@@ -14,6 +14,7 @@ class FirebaseConstants {
   static const String discussionReportDb = 'reportedDiscussions';
   static const String notificationDb = 'notifications';
   static const String communityReportDb = 'reportedCommunity';
+  static const String chatSubCollection = 'chatSubCollection';
 
   //interest db id
   static const String interestDbId = 'IJ6hEiz0OVdo7AfhXvg4';
@@ -117,4 +118,11 @@ class FirebaseConstants {
   static const String fieldNotificationMessage = 'message';
   static const String fieldNotificationTime = 'time';
   static const String fieldNotificationTimeStamp = 'timestamp';
+
+  //chat Sub Collection fileds
+  static const String fieldChatSubCollectionSenderId = 'senderId';
+  static const String fieldChatSubCollectionLastMessage= 'lastMessage';
+  static const String fieldChatSubCollectionTime = 'time';
+  static const String fieldChatSubCollectionIsRead = 'isRead';
+
 }

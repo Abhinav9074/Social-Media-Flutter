@@ -36,7 +36,7 @@ class CommunityScreen extends StatelessWidget {
                 dividerHeight: 1,
                 tabAlignment: TabAlignment.fill,
                 labelStyle: MyTextStyle.greyHeadingTextSmall,
-                tabs: [
+                tabs: const [
                   Tab(
                     text: 'My Communities',
                     iconMargin: EdgeInsets.fromLTRB(0, 0, 0, 0),
@@ -45,7 +45,7 @@ class CommunityScreen extends StatelessWidget {
                     text: 'Other Communities',
                   ),
                 ]),
-            Expanded(
+            const Expanded(
               child: TabBarView(children: [MyCommunity(), OtherCommunities()]),
             )
           ],

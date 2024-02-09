@@ -13,12 +13,17 @@ class GoogleButton extends StatelessWidget {
   Widget build(BuildContext context) {
     return BlocBuilder<LoginBloc,LoginState>(
       builder: (context,state) {
-        return ElevatedButton.icon(onPressed: ()async{ 
-          BlocProvider.of<LoginBloc>(context).add(LoggedInEvent());
-        }, icon: Image.asset('assets/icons/google.png',height: 30), label: const Padding(
-                    padding: EdgeInsets.fromLTRB(50, 15, 50, 15),
-                    child: Text(TextConstants.googleText,style: MyTextStyle.googleButton,textScaler: TextScaler.noScaling,),
-                  ));
+        return PhysicalModel(
+          color: const Color.fromARGB(0, 0, 0, 0),
+          elevation: 5,
+          borderRadius: BorderRadius.circular(30),
+          child: ElevatedButton.icon(onPressed: ()async{ 
+            BlocProvider.of<LoginBloc>(context).add(LoggedInEvent());
+          }, icon: Image.asset('assets/icons/google.png',height: 30), label: const Padding(
+                      padding: EdgeInsets.fromLTRB(50, 15, 50, 15),
+                      child: Text(TextConstants.googleText,style: MyTextStyle.googleButton,textScaler: TextScaler.noScaling,),
+                    )),
+        );
       }
     );
   }
