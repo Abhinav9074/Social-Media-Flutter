@@ -18,5 +18,21 @@ class OtherProfileBloc extends Bloc<OtherProfileEvent,OtherProfileState>{
         emit(NotFollowingState());
       }
     });
+
+    on<UnfollowUserEvent>((event, emit)async{
+      emit(OtherProfileLoadingState());
+      await UserDbFunctions().unFollowUser(event.unfollowUserId);
+      if(await UserDbFunctions().isFollowBackState(event.unfollowUserId)){
+        emit(FollowBackState());
+      }else{
+        emit(NotFollowingState());
+      }
+    });
+
+    on<FollowUserEvent>((event, emit)async{
+      emit(OtherProfileLoadingState());
+      await UserDbFunctions().followUser(event.followedUserId);
+        emit(FollowingState());
+    });
   }
 }

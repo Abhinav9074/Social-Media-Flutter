@@ -1,10 +1,13 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:connected/application/bloc/location_bloc/location_bloc.dart';
+import 'package:connected/application/bloc/other_profile_bloc/other_profile_bloc.dart';
 import 'package:connected/application/bloc/profile_switch_bloc/profile_switch_bloc.dart';
 import 'package:connected/domain/common/firestore_constants/firebase_constants.dart';
 import 'package:connected/domain/fire_store_functions/user_db/user_db_functions.dart';
 import 'package:connected/presentation/core/themes/theme.dart';
 import 'package:connected/presentation/screens/activity_page/screens/user_activity_screen.dart';
+import 'package:connected/presentation/screens/followers/screens/followers_list_screen.dart';
+import 'package:connected/presentation/screens/followers/screens/following_list_screen.dart';
 import 'package:connected/presentation/screens/premium/screens/subscribe_to_premium.dart';
 import 'package:connected/presentation/screens/profile/widgets/discussion_tab.dart';
 import 'package:connected/presentation/screens/profile/widgets/follow_tab.dart';
@@ -105,75 +108,73 @@ class ProfileScreen extends StatelessWidget {
                                                               255,
                                                               255,
                                                               255),
-                                                      itemBuilder: (context) =>
-                                                          [
-                                                            PopupMenuItem(
-                                                              onTap: () {
-                                                                Navigator.of(
-                                                                        context)
-                                                                    .push(MaterialPageRoute(
-                                                                        builder: (ctx) => BlocProvider(
-                                                                              create: (context) => LocationBloc(),
-                                                                              child: BlocProvider(
-                                                                                create: (context) => ProfileSwitchBloc(),
-                                                                                child: EditProfileScreen(),
-                                                                              ),
-                                                                            )));
-                                                              },
-                                                              value: 1,
-                                                              child: const Row(
-                                                                children: [
-                                                                  Icon(Icons
-                                                                      .edit),
-                                                                  SizedBox(
-                                                                    width: 10,
-                                                                  ),
-                                                                  Text(
-                                                                    "Edit Profile",
-                                                                    style: MyTextStyle
-                                                                        .commonButtonText,
-                                                                  )
-                                                                ],
-                                                              ),
-                                                            ),
-                                                            snapshot.data![FirebaseConstants.fieldPremiumUser] ==false?PopupMenuItem(
+                                                      itemBuilder:
+                                                          (context) => [
+                                                                PopupMenuItem(
                                                                   onTap: () {
-                                                                    if (snapshot
-                                                                            .data![FirebaseConstants.fieldPremiumUser] ==
-                                                                        false) {
-                                                                      Navigator.of(
-                                                                              context)
-                                                                          .push(
-                                                                              MaterialPageRoute(builder: (ctx) => const SubscribeToPremiumPage()));
-                                                                    }
+                                                                    Navigator.of(
+                                                                            context)
+                                                                        .push(MaterialPageRoute(
+                                                                            builder: (ctx) => BlocProvider(
+                                                                                  create: (context) => LocationBloc(),
+                                                                                  child: BlocProvider(
+                                                                                    create: (context) => ProfileSwitchBloc(),
+                                                                                    child: EditProfileScreen(),
+                                                                                  ),
+                                                                                )));
                                                                   },
-                                                                  value: 2,
+                                                                  value: 1,
                                                                   child:
                                                                       const Row(
                                                                     children: [
-                                                                      FaIcon(
-                                                                        FontAwesomeIcons
-                                                                            .crown,
-                                                                        color: Color.fromARGB(
-                                                                            255,
-                                                                            184,
-                                                                            170,
-                                                                            44),
-                                                                      ),
+                                                                      Icon(Icons
+                                                                          .edit),
                                                                       SizedBox(
                                                                         width:
                                                                             10,
                                                                       ),
                                                                       Text(
-                                                                        "My Activity",
+                                                                        "Edit Profile",
                                                                         style: MyTextStyle
                                                                             .commonButtonText,
                                                                       )
                                                                     ],
                                                                   ),
-                                                                ):const PopupMenuItem(child: SizedBox())
-                                                                        
-                                                          ]);
+                                                                ),
+                                                                snapshot.data![FirebaseConstants
+                                                                            .fieldPremiumUser] ==
+                                                                        false
+                                                                    ? PopupMenuItem(
+                                                                        onTap:
+                                                                            () {
+                                                                          if (snapshot.data![FirebaseConstants.fieldPremiumUser] ==
+                                                                              false) {
+                                                                            Navigator.of(context).push(MaterialPageRoute(builder: (ctx) => const SubscribeToPremiumPage()));
+                                                                          }
+                                                                        },
+                                                                        value:
+                                                                            2,
+                                                                        child:
+                                                                            const Row(
+                                                                          children: [
+                                                                            FaIcon(
+                                                                              FontAwesomeIcons.crown,
+                                                                              color: Color.fromARGB(255, 184, 170, 44),
+                                                                            ),
+                                                                            SizedBox(
+                                                                              width: 10,
+                                                                            ),
+                                                                            Text(
+                                                                              "My Activity",
+                                                                              style: MyTextStyle.commonButtonText,
+                                                                            )
+                                                                          ],
+                                                                        ),
+                                                                      )
+                                                                    : const PopupMenuItem(
+                                                                        child:
+                                                                            SizedBox())
+                                                              ]);
                                                 }
                                               })
                                         ],
@@ -201,7 +202,8 @@ class ProfileScreen extends StatelessWidget {
                                           discussions: snapshot
                                               .data![FirebaseConstants
                                                   .fieldDiscussions]
-                                              .length),
+                                              .length,
+                                          context: context),
 
                                       const SizedBox(
                                         height: 20,
@@ -324,17 +326,28 @@ class ProfileScreen extends StatelessWidget {
   Widget countDisplay(
       {required int following,
       required int followers,
-      required int discussions}) {
+      required int discussions,
+      required BuildContext context}) {
     return Padding(
       padding: const EdgeInsets.fromLTRB(0, 15, 0, 0),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          FollowTab(action: 'Following', count: following.toString()),
+          InkWell(
+            onTap: (){
+              Navigator.of(context).push(MaterialPageRoute(builder: (ctx)=>const MyFollowingPage()));
+            },
+            child: FollowTab(action: 'Following', count: following.toString())),
           const SizedBox(
             width: 40,
           ),
-          FollowTab(action: 'Followers', count: followers.toString()),
+          InkWell(
+              onTap: () {
+                Navigator.of(context).push(MaterialPageRoute(
+                    builder: (ctx) =>  const MyFollowersPage()));
+              },
+              child:
+                  FollowTab(action: 'Followers', count: followers.toString())),
           const SizedBox(
             width: 40,
           ),

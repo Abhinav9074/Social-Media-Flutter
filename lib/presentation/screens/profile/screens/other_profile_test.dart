@@ -88,7 +88,6 @@ class OtherProfileScreen extends StatelessWidget {
                                             Icons.arrow_back,
                                             color: Colors.white,
                                           )),
-                                      
                                       Row(
                                         children: [
                                           snapshot.data![FirebaseConstants
@@ -109,32 +108,31 @@ class OtherProfileScreen extends StatelessWidget {
                                                       width: 30),
                                                 )
                                               : const SizedBox(),
-
-                                              PopupMenuButton(
-                                                iconColor: Colors.white,
-                                          surfaceTintColor: Colors.black,
-                                          itemBuilder: (context) => [
-                                                PopupMenuItem(
-                                                  onTap: () {
-                                                    Navigator.of(context).push(
-                                                        MaterialPageRoute(
-                                                            builder: (ctx) =>
-                                                                UserReportScreen(
-                                                                    userId:
-                                                                        userId)));
-                                                  },
-                                                  value: 2,
-                                                  child: const Row(
-                                                    children: [
-                                                      Icon(Icons.report),
-                                                      SizedBox(
-                                                        width: 10,
+                                          PopupMenuButton(
+                                              iconColor: Colors.white,
+                                              surfaceTintColor: Colors.black,
+                                              itemBuilder: (context) => [
+                                                    PopupMenuItem(
+                                                      onTap: () {
+                                                        Navigator.of(context).push(
+                                                            MaterialPageRoute(
+                                                                builder: (ctx) =>
+                                                                    UserReportScreen(
+                                                                        userId:
+                                                                            userId)));
+                                                      },
+                                                      value: 2,
+                                                      child: const Row(
+                                                        children: [
+                                                          Icon(Icons.report),
+                                                          SizedBox(
+                                                            width: 10,
+                                                          ),
+                                                          Text("Report")
+                                                        ],
                                                       ),
-                                                      Text("Report")
-                                                    ],
-                                                  ),
-                                                )
-                                              ]),
+                                                    )
+                                                  ]),
                                         ],
                                       ),
                                     ],
@@ -324,12 +322,13 @@ class OtherProfileScreen extends StatelessWidget {
       children: [
         BlocBuilder<OtherProfileBloc, OtherProfileState>(
           builder: (context, state) {
-            if (state is FollowingState) {
+            if (state is OtherProfileLoadingState) {
+              return Lottie.asset('assets/lottie/loading.json',height: 50,width:50);
+            }else if (state is FollowingState) {
               return ElevatedButton.icon(
                 onPressed: () async {
-                  await UserDbFunctions().unFollowUser(userId);
                   BlocProvider.of<OtherProfileBloc>(context)
-                      .add(OtherProfileRedirectEvent(otherUserId: userId));
+                      .add(UnfollowUserEvent(unfollowUserId: userId));
                 },
                 icon: const FaIcon(
                   FontAwesomeIcons.check,
@@ -346,9 +345,8 @@ class OtherProfileScreen extends StatelessWidget {
             } else if (state is FollowBackState) {
               return ElevatedButton.icon(
                 onPressed: () async {
-                  await UserDbFunctions().followUser(userId);
                   BlocProvider.of<OtherProfileBloc>(context)
-                      .add(OtherProfileRedirectEvent(otherUserId: userId));
+                      .add(FollowUserEvent(followedUserId: userId));
                 },
                 icon: const FaIcon(
                   FontAwesomeIcons.userPlus,
@@ -362,12 +360,11 @@ class OtherProfileScreen extends StatelessWidget {
                 style: ElevatedButton.styleFrom(
                     backgroundColor: const Color.fromARGB(255, 0, 76, 255)),
               );
-            } else {
+            }  else {
               return ElevatedButton.icon(
                 onPressed: () async {
-                  await UserDbFunctions().followUser(userId);
-                  BlocProvider.of<OtherProfileBloc>(context)
-                      .add(OtherProfileRedirectEvent(otherUserId: userId));
+                 BlocProvider.of<OtherProfileBloc>(context)
+                      .add(FollowUserEvent(followedUserId: userId));
                 },
                 icon: const FaIcon(
                   FontAwesomeIcons.userPlus,

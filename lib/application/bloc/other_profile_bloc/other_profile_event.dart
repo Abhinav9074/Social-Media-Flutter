@@ -17,3 +17,4 @@ class UnfollowUserEvent extends OtherProfileEvent{
 
   UnfollowUserEvent({required this.unfollowUserId});
 }
+

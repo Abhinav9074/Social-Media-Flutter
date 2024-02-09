@@ -4,6 +4,7 @@ import 'package:connected/presentation/screens/community/widgets/bottom_tab.dart
 import 'package:connected/presentation/screens/community/widgets/community_appbar.dart';
 import 'package:connected/presentation/screens/community/widgets/community_post.dart';
 import 'package:flutter/material.dart';
+import 'package:lottie/lottie.dart';
 
 class CommunityInsideView extends StatelessWidget {
   final String image;
@@ -39,6 +40,8 @@ class CommunityInsideView extends StatelessWidget {
                       builder: (context, snapshot) {
                         if (!snapshot.hasData) {
                           return const SizedBox();
+                        }else if(snapshot.hasError){
+                          return Center(child: Lottie.asset('assets/lottie/no_internet.json'));
                         } else {
                           return Expanded(
                               child: ListView.builder(
