@@ -45,7 +45,7 @@ class HeadingAndImageWidget extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Padding(
-              padding: const EdgeInsets.fromLTRB(20, 0, 0, 10),
+              padding: const EdgeInsets.fromLTRB(20, 0, 20, 10),
               child: Hero(
                   tag: 'title$index',
                   child: Text(

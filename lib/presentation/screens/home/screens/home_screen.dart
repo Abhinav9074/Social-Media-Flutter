@@ -24,7 +24,7 @@ class HomeScreen extends StatelessWidget {
                 labelStyle: MyTextStyle.greyHeadingTextSmall,
                 tabs: const [
                   Tab(
-                    text: 'My Interests',
+                    text: 'Recommended',
                     iconMargin: EdgeInsets.fromLTRB(0, 0, 0, 0),
                   ),
                   Tab(

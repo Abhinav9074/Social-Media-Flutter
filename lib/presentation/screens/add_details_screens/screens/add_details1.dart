@@ -5,6 +5,7 @@ import 'package:connected/presentation/screens/add_details_screens/screens/add_d
 import 'package:connected/presentation/screens/add_details_screens/widgets/logo_heading.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:lottie/lottie.dart';
 
 class AddGender extends StatelessWidget {
   const AddGender({super.key});
@@ -36,6 +37,8 @@ class AddGender extends StatelessWidget {
               ),
             ),
 
+
+            Lottie.asset('assets/lottie/username.json'),
 
             ElevatedButton.icon(
               onPressed: (){

@@ -127,30 +127,30 @@ class MyCommunity extends StatelessWidget {
                                 [index];
                             return CommunityTab(communityId: data);
                           }),
-                      Positioned(
-                          bottom: 10,
-                          right: 10,
-                          child: FloatingActionButton(
-                            onPressed: () {
-                              Navigator.of(context).push(MaterialPageRoute(
-                                  builder: (context) => BlocProvider(
+                      // Positioned(
+                      //     bottom: 10,
+                      //     right: 10,
+                      //     child: FloatingActionButton(
+                      //       onPressed: () {
+                      //         Navigator.of(context).push(MaterialPageRoute(
+                      //             builder: (context) => BlocProvider(
 
-                                      //provide bloc for community name checking and for all other community operations
-                                      create: (context) => CommunityNameBloc(),
-                                      child: BlocProvider(
-                                        create: (context) =>
-                                            CommunityCreationBloc(),
-                                        child: const CreateCommunity(),
-                                      ))));
-                            },
-                            backgroundColor:
-                                const Color.fromARGB(255, 216, 215, 215),
-                            shape: const CircleBorder(),
-                            child: const Icon(
-                              Icons.add,
-                              color: Colors.grey,
-                            ),
-                          ))
+                      //                 //provide bloc for community name checking and for all other community operations
+                      //                 create: (context) => CommunityNameBloc(),
+                      //                 child: BlocProvider(
+                      //                   create: (context) =>
+                      //                       CommunityCreationBloc(),
+                      //                   child: const CreateCommunity(),
+                      //                 ))));
+                      //       },
+                      //       backgroundColor:
+                      //           const Color.fromARGB(255, 216, 215, 215),
+                      //       shape: const CircleBorder(),
+                      //       child: const Icon(
+                      //         Icons.add,
+                      //         color: Colors.grey,
+                      //       ),
+                      //     ))
                     ],
                   );
                 }

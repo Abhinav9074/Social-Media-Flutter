@@ -34,6 +34,10 @@ class ChatScreen extends StatelessWidget {
       floatingActionButton: FloatingActionButton(
         onPressed: () {
           showBottomSheet(
+            elevation: 10,
+            constraints:  BoxConstraints(
+              maxHeight: MediaQuery.of(context).size.width
+            ),
               context: context,
               builder: (context) {
                 return const FollowingAndFollowers();

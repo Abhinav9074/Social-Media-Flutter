@@ -110,9 +110,17 @@ class SocialTab extends StatelessWidget {
                         TextButton.icon(
                             onPressed: () {
                               showBottomSheet(
+                                  constraints: BoxConstraints(
+                                      maxHeight:
+                                          MediaQuery.of(context).size.width),
                                   context: context,
                                   builder: (context) {
-                                    return  FollowingAndFollowers(discussionId: discussionId,discussionName: snapshot.data![FirebaseConstants.fieldDiscussionTitle],);
+                                    return FollowingAndFollowers(
+                                      discussionId: discussionId,
+                                      discussionName: snapshot.data![
+                                          FirebaseConstants
+                                              .fieldDiscussionTitle],
+                                    );
                                   });
                             },
                             icon: const Icon(

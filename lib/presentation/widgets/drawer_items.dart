@@ -11,6 +11,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_cache_manager/flutter_cache_manager.dart';
 import 'package:google_sign_in/google_sign_in.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class DrawerItems extends StatelessWidget {
   const DrawerItems({super.key});
@@ -38,7 +39,7 @@ class DrawerItems extends StatelessWidget {
                   }, label: const Text('Settings',style: MyTextStyle.commonButtonText,),icon: const Icon(Icons.settings,color: Colors.grey,),),
                   TextButton.icon(onPressed: (){Navigator.of(context).push(MaterialPageRoute(builder: (ctx)=>const PrivacyPolicyScreen()));}, label: const Text('Privacy Policy',style: MyTextStyle.commonButtonText,),icon: const Icon(Icons.privacy_tip,color: Colors.grey,),),
                   TextButton.icon(onPressed: (){Navigator.of(context).push(MaterialPageRoute(builder: (ctx)=>const TermsAndConditions()));}, label: const Text('Terms & Conditions',style: MyTextStyle.commonButtonText,),icon: const Icon(Icons.info,color: Colors.grey,),),
-                  TextButton.icon(onPressed: (){}, label: const Text('About Developer',style: MyTextStyle.commonButtonText,),icon: const Icon(Icons.account_box_outlined,color: Colors.grey,),),
+                  TextButton.icon(onPressed: (){_launchUrl();}, label: const Text('About Developer',style: MyTextStyle.commonButtonText,),icon: const Icon(Icons.account_box_outlined,color: Colors.grey,),),
                   TextButton.icon(onPressed: (){}, label: const Text('Rate Us',style: MyTextStyle.commonButtonText,),icon: const Icon(Icons.rate_review,color: Colors.grey,),),
                 ],
               ),
@@ -58,5 +59,12 @@ class DrawerItems extends StatelessWidget {
         ],
       ),
     );
+  }
+
+   Future<void> _launchUrl() async {
+    final Uri url = Uri.parse('https://www.instagram.com/_abhin__av_/');
+    if (!await launchUrl(url)) {
+      throw Exception('Could not launch $url');
+    }
   }
 }
