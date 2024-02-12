@@ -41,6 +41,12 @@ class LoginScreen extends StatelessWidget {
               await SharedPrefLogin.logOut();
             Navigator.of(context).pushAndRemoveUntil(MaterialPageRoute(builder: (ctx)=>const LoginScreen()), (route) => false);
             AllSnackBars.commonSnackbar(context: context, title: 'Error', content: 'Your Account Is Blocked', bg: Colors.red);
+          }else if(state is NoInternetState){
+            AllSnackBars.commonSnackbar(context: context, title: 'Please Check Internet Connection', content: 'Please Check Internet Connection', bg: Colors.red);
+            Navigator.of(context).pushAndRemoveUntil(MaterialPageRoute(builder: (ctx)=>const LoginScreen()), (route) => false);
+          }else if(state is LoginFailedState){
+            AllSnackBars.commonSnackbar(context: context, title: 'Login Failed Try Again', content: 'Login Failed Try Again', bg: Colors.red);
+            Navigator.of(context).pushAndRemoveUntil(MaterialPageRoute(builder: (ctx)=>const LoginScreen()), (route) => false);
           }
         },
         builder: (context, state) {

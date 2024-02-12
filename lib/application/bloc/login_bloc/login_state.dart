@@ -22,3 +22,5 @@ class NewUserState extends LoginState{
 }
 
 class UserBlockedState extends LoginState{}
+
+class NoInternetState extends LoginState{}

@@ -10,7 +10,7 @@ class LogoAndHeading extends StatelessWidget {
     return Column(
       children: [
         Image.asset(
-          'assets/icons/icon-yellow.png',
+          'assets/icons/logo-2.png',
           height: 60,
           width: 60,
         ),

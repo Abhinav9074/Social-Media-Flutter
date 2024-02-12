@@ -1,6 +1,7 @@
 // ignore_for_file: use_build_context_synchronously
 
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:connected/application/bloc/ai_generate_bloc/ai_generate_bloc.dart';
 import 'package:connected/application/bloc/user_access_bloc/user_access_bloc.dart';
 import 'package:connected/application/bloc/user_access_bloc/user_access_event.dart';
 import 'package:connected/application/bloc/user_access_bloc/user_access_state.dart';
@@ -31,7 +32,10 @@ class MainPage extends StatelessWidget {
     final pages = [
       const HomeScreen(),
       const CommunityScreen(),
-      const CreateDiscussion(),
+       BlocProvider(
+        create: (context) => AiGenerateBloc(),
+        child: const CreateDiscussion(),
+      ),
       const ChatScreen(),
       const AllPostsScreen()
     ];
