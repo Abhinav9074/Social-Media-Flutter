@@ -36,6 +36,7 @@ abstract class UserDb {
   Future<void> subscribeToPremium();
   Future<void> createNotification(NotificationModel data);
   Future<void> saveDiscussion(String discussionId);
+  Future<bool> checkPassword(String email,String password);
 }
 
 class UserDbFunctions extends UserDb {
@@ -326,12 +327,23 @@ class UserDbFunctions extends UserDb {
         content: 'Saved',
         bg: Colors.green);
     //saving discussion
-    await FirebaseFirestore.instance
-        .collection(FirebaseConstants.userDb)
-        .doc(UserDbFunctions().userId)
+
+
+    await FirebaseFirestore.instance.collection(FirebaseConstants.userDb).doc(UserDbFunctions().userId)
         .update({
       FirebaseConstants.fieldSavedDiscussions:
           FieldValue.arrayUnion([discussionId])
     });
+  }
+  
+  @override
+  Future<bool> checkPassword(String email, String password) async{
+    final data = await FirebaseFirestore.instance.collection(FirebaseConstants.userDb).where(FirebaseConstants.fieldEmail,isEqualTo: email).get();
+
+    if(data.docs.first[FirebaseConstants.fieldPassword]==password && data.docs.first[FirebaseConstants.fieldIsGoogle]==true){
+      return true;
+    }else{
+      return false;
+    }
   }
 }

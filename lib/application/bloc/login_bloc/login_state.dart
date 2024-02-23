@@ -6,6 +6,8 @@ class LoginFailedState extends LoginState{}
 
 class LoginLoadingState extends LoginState{}
 
+class ManualLoginLoadingState extends LoginState{}
+
 class UserExistState extends LoginState{
   final String username;
   final String email;
@@ -24,3 +26,5 @@ class NewUserState extends LoginState{
 class UserBlockedState extends LoginState{}
 
 class NoInternetState extends LoginState{}
+
+class NoUserState extends LoginState{}

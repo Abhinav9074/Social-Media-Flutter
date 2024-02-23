@@ -1,11 +1,9 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:connected/application/bloc/location_bloc/location_bloc.dart';
-import 'package:connected/application/bloc/other_profile_bloc/other_profile_bloc.dart';
 import 'package:connected/application/bloc/profile_switch_bloc/profile_switch_bloc.dart';
 import 'package:connected/domain/common/firestore_constants/firebase_constants.dart';
 import 'package:connected/domain/fire_store_functions/user_db/user_db_functions.dart';
 import 'package:connected/presentation/core/themes/theme.dart';
-import 'package:connected/presentation/screens/activity_page/screens/user_activity_screen.dart';
 import 'package:connected/presentation/screens/followers/screens/followers_list_screen.dart';
 import 'package:connected/presentation/screens/followers/screens/following_list_screen.dart';
 import 'package:connected/presentation/screens/premium/screens/subscribe_to_premium.dart';

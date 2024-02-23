@@ -1,6 +1,4 @@
 import 'dart:developer';
-
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:connected/application/bloc/other_profile_bloc/other_profile_bloc.dart';
 import 'package:connected/application/bloc/other_profile_bloc/other_profile_event.dart';
 import 'package:connected/application/bloc/user_search_bloc/user_search_bloc.dart';
@@ -10,9 +8,7 @@ import 'package:connected/domain/fire_store_functions/user_db/user_db_functions.
 import 'package:connected/domain/streams/searched_users.dart';
 import 'package:connected/presentation/core/themes/theme.dart';
 import 'package:connected/presentation/screens/profile/screens/other_profile_test.dart';
-import 'package:connected/presentation/screens/profile/screens/other_profile_view.dart';
 import 'package:connected/presentation/screens/profile/screens/self_profile_test.dart';
-import 'package:connected/presentation/screens/profile/screens/self_profile_view.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:lottie/lottie.dart';

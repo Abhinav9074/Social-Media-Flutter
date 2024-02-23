@@ -8,7 +8,6 @@ import 'package:connected/presentation/core/media_query/media_query.dart';
 import 'package:connected/presentation/core/themes/theme.dart';
 import 'package:connected/presentation/screens/notification/screens/notification_screen.dart';
 import 'package:connected/presentation/screens/profile/screens/self_profile_test.dart';
-import 'package:connected/presentation/screens/profile/screens/self_profile_view.dart';
 import 'package:connected/presentation/screens/search_page/screens/search_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';

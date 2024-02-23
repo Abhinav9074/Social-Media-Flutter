@@ -47,6 +47,8 @@ class FirebaseConstants {
   static const String fieldPremiumUser = 'premium';
   static const String fieldChats = 'chats';
   static const String fieldSavedDiscussions = 'savedDiscussions';
+  static const String fieldPassword = 'password';
+  static const String fieldIsGoogle = 'isGoogle';
 
   //discussion db fields
   static const String fieldDiscussionTitle = 'title';

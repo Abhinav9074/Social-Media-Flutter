@@ -1,4 +1,4 @@
-import 'dart:developer';
+
 import 'dart:io';
 
 import 'package:connected/application/bloc/community_creation_bloc/community_creation_event.dart';
@@ -10,7 +10,6 @@ import 'package:connected/domain/repository/file_upload_repository.dart';
 import 'package:connected/presentation/core/snackbars/common_snackbar.dart';
 import 'package:connected/presentation/screens/main_page/screens/main_page.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:image_picker/image_picker.dart';
 

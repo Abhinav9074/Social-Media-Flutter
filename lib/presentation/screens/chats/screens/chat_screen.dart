@@ -2,7 +2,6 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:connected/domain/common/firestore_constants/firebase_constants.dart';
 import 'package:connected/domain/fire_store_functions/chat_service/chat_services.dart';
 import 'package:connected/domain/fire_store_functions/user_db/user_db_functions.dart';
-import 'package:connected/domain/streams/chat_user_stream.dart';
 import 'package:connected/presentation/core/media_query/media_query.dart';
 import 'package:connected/presentation/core/themes/theme.dart';
 import 'package:connected/presentation/screens/chats/screens/chat_inside_screen.dart';

@@ -8,7 +8,6 @@ import 'package:connected/application/bloc/add_details_bloc/add_details_state.da
 import 'package:connected/application/bloc/image_picker_bloc/image_picker_bloc.dart';
 import 'package:connected/application/bloc/image_picker_bloc/image_picker_event.dart';
 import 'package:connected/application/bloc/image_picker_bloc/image_picker_state.dart';
-import 'package:connected/domain/fire_store_functions/user_db/user_db_functions.dart';
 import 'package:connected/domain/shared_prefrences/login_logout/login_logout.dart';
 import 'package:connected/presentation/core/themes/theme.dart';
 import 'package:connected/presentation/screens/add_details_screens/widgets/logo_heading.dart';
@@ -18,7 +17,8 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 class AddProfilePicture extends StatelessWidget {
-  const AddProfilePicture({super.key});
+  final String password;
+  const AddProfilePicture({super.key,required this.password});
 
   @override
   Widget build(BuildContext context) {
@@ -101,7 +101,7 @@ class AddProfilePicture extends StatelessWidget {
                   listener: (context, state) async {
                     if (state is ImageUploadedState) {
                       BlocProvider.of<AddDetailsBloc>(context)
-                          .add(AddImageEvent(image: state.image));
+                          .add(AddImageEvent(image: state.image,password: password));
 
                       await SharedPrefLogin.setLogin();
                     }

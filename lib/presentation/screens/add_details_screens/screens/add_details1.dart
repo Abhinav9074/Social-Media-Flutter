@@ -8,7 +8,10 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:lottie/lottie.dart';
 
 class AddGender extends StatelessWidget {
-  const AddGender({super.key});
+  final String password;
+
+  const AddGender({super.key, required this.password});
+
 
   @override
   Widget build(BuildContext context) {
@@ -43,7 +46,7 @@ class AddGender extends StatelessWidget {
             ElevatedButton.icon(
               onPressed: (){
                 BlocProvider.of<AddDetailsBloc>(context).add(AddSurnameEvent(realName: usernameCont.text.toLowerCase()));
-                Navigator.of(context).push(MaterialPageRoute(builder: (ctx)=>const AddInterests()));
+                Navigator.of(context).push(MaterialPageRoute(builder: (ctx)=> AddInterests(password: password,)));
               }, 
               icon: const Icon(Icons.safety_check), label: const Text('Next'))
           ],

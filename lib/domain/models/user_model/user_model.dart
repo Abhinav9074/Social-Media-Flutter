@@ -2,6 +2,7 @@
 import 'package:connected/domain/common/firestore_constants/firebase_constants.dart';
 import 'package:connected/domain/models/common_mixin/firestore_mixin.dart';
 
+
 class UserModel with FirestoreModel {
   final String username;
   final String email;
@@ -30,8 +31,10 @@ class UserModel with FirestoreModel {
   final String address;
   final String bio;
   final bool premium;
+  final String password;
+  final bool isGoogle;
 
-  UserModel({required this.username, required this.email, required this.image, required this.realName, required this.gender, required this.locationStr, required this.location, required this.createdTime, required this.notificationCount, required this.following, required this.followers, required this.interest, required this.discussions, required this.communities, required this.communitiyNames, required this.requestedCommunities, required this.liked, required this.notifications, required this.blocked, required this.locationView, required this.lattitude, required this.longitude, required this.address,required this.bio,required this.premium,required this.chat,required this.savedDiscussion});
+  UserModel({required this.username, required this.email, required this.image, required this.realName, required this.gender, required this.locationStr, required this.location, required this.createdTime, required this.notificationCount, required this.following, required this.followers, required this.interest, required this.discussions, required this.communities, required this.communitiyNames, required this.requestedCommunities, required this.liked, required this.notifications, required this.blocked, required this.locationView, required this.lattitude, required this.longitude, required this.address,required this.bio,required this.premium,required this.chat,required this.savedDiscussion,required this.password,required this.isGoogle});
 
 
 
@@ -65,6 +68,8 @@ class UserModel with FirestoreModel {
       FirebaseConstants.fieldPremiumUser:premium,
       FirebaseConstants.fieldChats:chat,
       FirebaseConstants.fieldSavedDiscussions:savedDiscussion,
+      FirebaseConstants.fieldPassword:password,
+      FirebaseConstants.fieldIsGoogle:isGoogle
     };
   }
 }

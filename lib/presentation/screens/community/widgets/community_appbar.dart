@@ -62,55 +62,53 @@ class CommunityAppBar extends StatelessWidget implements PreferredSizeWidget {
                   color: const Color.fromARGB(255, 255, 255, 255),
                   child: Padding(
                     padding: const EdgeInsets.fromLTRB(10, 0, 10, 0),
-                    child: Container(
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        crossAxisAlignment: CrossAxisAlignment.center,
-                        children: [
-                          Row(
-                            children: [
-                              IconButton(
-                                  onPressed: () {
-                                    Navigator.of(context).pop();
-                                  },
-                                  icon: const Icon(Icons.arrow_back)),
-                              Hero(
-                                  tag: 'communityProfile',
-                                  child: CircleAvatar(
-                                    backgroundImage: NetworkImage(image),
-                                  )),
-                              const SizedBox(
-                                width: 10,
-                              ),
-                              Hero(
-                                tag: 'communityName',
-                                child: Text(
-                                  snapshot.data![
-                                      FirebaseConstants.fieldCommunityName],
-                                  style: MyTextStyle.mediumHeadingText,
-                                ),
-                              ),
-                            ],
-                          ),
-                          snapshot.data![FirebaseConstants.fieldCommunityAdminId]!=UserDbFunctions().userId?PopupMenuButton(itemBuilder: (context) {
-                            return [
-                               PopupMenuItem(
-                                onTap: (){
-                                  Navigator.of(context).push(MaterialPageRoute(builder: (ctx)=>CommunityReportPage(communityId: communityId)));
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: [
+                        Row(
+                          children: [
+                            IconButton(
+                                onPressed: () {
+                                  Navigator.of(context).pop();
                                 },
-                                  child: const Row(
-                                children: [
-                                  Icon(
-                                    Icons.report,
-                                    color: Colors.red,
-                                  ),
-                                  Text('Report', style: MyTextStyle.errorText)
-                                ],
-                              ))
-                            ];
-                          }):const SizedBox()
-                        ],
-                      ),
+                                icon: const Icon(Icons.arrow_back)),
+                            Hero(
+                                tag: 'communityProfile',
+                                child: CircleAvatar(
+                                  backgroundImage: NetworkImage(image),
+                                )),
+                            const SizedBox(
+                              width: 10,
+                            ),
+                            Hero(
+                              tag: 'communityName',
+                              child: Text(
+                                snapshot.data![
+                                    FirebaseConstants.fieldCommunityName],
+                                style: MyTextStyle.mediumHeadingText,
+                              ),
+                            ),
+                          ],
+                        ),
+                        snapshot.data![FirebaseConstants.fieldCommunityAdminId]!=UserDbFunctions().userId?PopupMenuButton(itemBuilder: (context) {
+                          return [
+                             PopupMenuItem(
+                              onTap: (){
+                                Navigator.of(context).push(MaterialPageRoute(builder: (ctx)=>CommunityReportPage(communityId: communityId)));
+                              },
+                                child: const Row(
+                              children: [
+                                Icon(
+                                  Icons.report,
+                                  color: Colors.red,
+                                ),
+                                Text('Report', style: MyTextStyle.errorText)
+                              ],
+                            ))
+                          ];
+                        }):const SizedBox()
+                      ],
                     ),
                   ),
                 ),

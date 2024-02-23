@@ -20,9 +20,9 @@ class MyFollowersPage extends StatelessWidget {
       ),
       body: StreamBuilder(
           stream: FirebaseFirestore.instance
-              .collection(FirebaseConstants.userDb)
-              .doc(UserDbFunctions().userId)
-              .snapshots(),
+               .collection(FirebaseConstants.userDb)
+               .doc(UserDbFunctions().userId)
+               .snapshots(),
           builder: (context, snapshot) {
             if (!snapshot.hasData) {
               return const SizedBox();

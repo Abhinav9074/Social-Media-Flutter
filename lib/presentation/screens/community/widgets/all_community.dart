@@ -1,4 +1,3 @@
-import 'dart:developer';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:connected/application/bloc/community_creation_bloc/community_creation_bloc.dart';

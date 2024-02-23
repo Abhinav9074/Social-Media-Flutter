@@ -11,7 +11,6 @@ import 'package:connected/presentation/screens/main_page/screens/main_page.dart'
 import 'package:connected/presentation/screens/onboarding/screens/onboarding_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:lottie/lottie.dart';
 
 class SplashScreen extends StatelessWidget {
   const SplashScreen({super.key});

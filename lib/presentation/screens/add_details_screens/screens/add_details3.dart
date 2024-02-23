@@ -10,9 +10,12 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 
 // ignore: must_be_immutable
 class AddUserName extends StatelessWidget {
-  AddUserName({super.key});
+  final String password;
+
 
   TextEditingController controller = TextEditingController();
+
+   AddUserName({super.key, required this.password});
 
   @override
   Widget build(BuildContext context) {
@@ -149,7 +152,7 @@ class AddUserName extends StatelessWidget {
                                 BlocProvider.of<AddDetailsBloc>(context).add(
                                   AddUserNameEvent(username: controller.text));
                               Navigator.of(context).push(MaterialPageRoute(
-                                  builder: (ctx) => const AddProfilePicture()));
+                                  builder: (ctx) =>  AddProfilePicture(password: password,)));
                               BlocProvider.of<UsernameBloc>(context)
                                   .add(UserNameResetEvent());
                               }

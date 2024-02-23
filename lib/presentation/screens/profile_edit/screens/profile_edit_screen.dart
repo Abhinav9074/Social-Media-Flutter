@@ -17,7 +17,7 @@ import 'package:connected/presentation/core/media_query/media_query.dart';
 import 'package:connected/presentation/core/themes/theme.dart';
 import 'package:connected/presentation/screens/profile_edit/widgets/old_profile.dart';
 import 'package:connected/presentation/widgets/button.dart';
-import 'package:connected/presentation/widgets/textField.dart';
+import 'package:connected/presentation/widgets/text_field.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';

@@ -37,7 +37,7 @@ class UserBasicDeatils extends StatelessWidget {
                     name,
                     style: MyTextStyle.discussionHeadingText,
                   ),
-                  Icon(Icons.verified,color: Colors.blue,)
+                  const Icon(Icons.verified,color: Colors.blue,)
                 ],
               ):Text(
                 name,

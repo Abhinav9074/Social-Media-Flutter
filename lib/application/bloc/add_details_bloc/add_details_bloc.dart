@@ -1,6 +1,3 @@
-import 'dart:developer';
-
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:connected/application/bloc/add_details_bloc/add_details_event.dart';
 import 'package:connected/application/bloc/add_details_bloc/add_details_state.dart';
 import 'package:connected/domain/fire_store_functions/user_db/user_db_functions.dart';
@@ -62,7 +59,9 @@ class AddDetailsBloc extends Bloc<AddDetailsEvent, AddDetailsState> {
           premium: false,
           notificationCount: 0,
           chat: [{}],
-          savedDiscussion: []
+          savedDiscussion: [],
+          password: event.password,
+          isGoogle: event.password.isEmpty?false:true
           );
 
       //adding a user to firebase

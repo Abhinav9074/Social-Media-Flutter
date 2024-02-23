@@ -26,6 +26,7 @@ class AddUserNameEvent extends AddDetailsEvent {
 
 class AddImageEvent extends AddDetailsEvent{
   final String image;
+  final String password;
 
-  AddImageEvent({required this.image});
+  AddImageEvent({required this.image,required this.password});
 }

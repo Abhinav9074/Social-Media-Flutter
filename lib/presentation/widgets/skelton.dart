@@ -1,8 +1,6 @@
 import 'package:connected/application/bloc/like_bloc.dart/like_bloc.dart';
-import 'package:connected/presentation/screens/home/widgets/user_details.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:skeletonizer/skeletonizer.dart';
 
 class SkeletonLoader extends StatelessWidget {
   const SkeletonLoader({super.key});

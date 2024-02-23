@@ -1,4 +1,4 @@
-package com.example.connected
+package com.aplhadevs.chattersphere
 
 import io.flutter.embedding.android.FlutterActivity
 

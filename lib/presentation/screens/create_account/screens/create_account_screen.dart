@@ -1,40 +1,35 @@
 // ignore_for_file: use_build_context_synchronously
 
+import 'dart:developer';
+
 import 'package:connected/application/bloc/login_bloc/login_bloc.dart';
 import 'package:connected/application/bloc/login_bloc/login_event.dart';
 import 'package:connected/application/bloc/login_bloc/login_state.dart';
-import 'package:connected/domain/shared_prefrences/login_logout/login_logout.dart';
 import 'package:connected/presentation/core/snackbars/common_snackbar.dart';
 import 'package:connected/presentation/core/themes/theme.dart';
 import 'package:connected/presentation/screens/add_details_screens/screens/add_details1.dart';
-import 'package:connected/presentation/screens/create_account/screens/create_account_screen.dart';
+import 'package:connected/presentation/screens/login/screens/login_screen.dart';
 import 'package:connected/presentation/screens/login/widgets/custom_button.dart';
 import 'package:connected/presentation/screens/login/widgets/custom_textfield.dart';
-import 'package:firebase_auth/firebase_auth.dart';
-import 'package:google_sign_in/google_sign_in.dart';
 import 'package:lottie/lottie.dart';
 import 'package:connected/presentation/screens/main_page/screens/main_page.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-class LoginScreen extends StatelessWidget {
-  const LoginScreen({super.key});
+class CreateAccountScreen extends StatelessWidget {
+  const CreateAccountScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
     TextEditingController emailCont = TextEditingController();
     TextEditingController passwordCont = TextEditingController();
+    TextEditingController confirmPasswordCont = TextEditingController();
     return Scaffold(
+      appBar: AppBar(),
       body: BlocConsumer<LoginBloc, LoginState>(
         listener: (context, state) async {
-          if(state is NoUserState){
-            AllSnackBars.commonSnackbar(
-                context: context,
-                title: 'Invalid Credentials',
-                content: 'Invalid Credentials',
-                bg: const Color.fromARGB(255, 255, 0, 0));
-          }
-          else if (state is UserExistState) {
+         
+         if (state is UserExistState) {
             AllSnackBars.commonSnackbar(
                 context: context,
                 title: 'Welcome Back',
@@ -43,6 +38,12 @@ class LoginScreen extends StatelessWidget {
             Navigator.of(context).pushAndRemoveUntil(
                 MaterialPageRoute(builder: (ctx) => const MainPage()),
                 (route) => false);
+          }else if (state is NoUserState) {
+            AllSnackBars.commonSnackbar(
+                context: context,
+                title: 'Email',
+                content: 'Email Already Exist',
+                bg: const Color.fromARGB(255, 255, 0, 0));
           } else if (state is NewUserState) {
             AllSnackBars.commonSnackbar(
                 context: context,
@@ -57,18 +58,6 @@ class LoginScreen extends StatelessWidget {
                               : passwordCont.text,
                         )),
                 (route) => false);
-          } else if (state is UserBlockedState) {
-            await GoogleSignIn().signOut();
-            FirebaseAuth.instance.signOut();
-            await SharedPrefLogin.logOut();
-            Navigator.of(context).pushAndRemoveUntil(
-                MaterialPageRoute(builder: (ctx) => const LoginScreen()),
-                (route) => false);
-            AllSnackBars.commonSnackbar(
-                context: context,
-                title: 'Error',
-                content: 'Your Account Is Blocked',
-                bg: Colors.red);
           } else if (state is NoInternetState) {
             AllSnackBars.commonSnackbar(
                 context: context,
@@ -76,7 +65,8 @@ class LoginScreen extends StatelessWidget {
                 content: 'Please Check Internet Connection',
                 bg: Colors.red);
             Navigator.of(context).pushAndRemoveUntil(
-                MaterialPageRoute(builder: (ctx) => const LoginScreen()),
+                MaterialPageRoute(
+                    builder: (ctx) => const CreateAccountScreen()),
                 (route) => false);
           } else if (state is LoginFailedState) {
             AllSnackBars.commonSnackbar(
@@ -85,12 +75,13 @@ class LoginScreen extends StatelessWidget {
                 content: 'Login Failed Try Again',
                 bg: Colors.red);
             Navigator.of(context).pushAndRemoveUntil(
-                MaterialPageRoute(builder: (ctx) => const LoginScreen()),
+                MaterialPageRoute(
+                    builder: (ctx) => const CreateAccountScreen()),
                 (route) => false);
           }
         },
         builder: (context, state) {
-          if (state is LoginLoadingState) {
+         if (state is LoginLoadingState) {
             return const Center(child: CircularProgressIndicator());
           } else if (state is LoginFailedState) {
             return const Center(child: Text('An Error Occured'));
@@ -104,12 +95,12 @@ class LoginScreen extends StatelessWidget {
                     crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
                       //HEAD ANIMATION
-                      Lottie.asset('assets/lottie/login.json',
-                          width: 300, height: 300),
+                      Lottie.asset('assets/lottie/signup.json',
+                          width: 200, height: 200),
 
                       //WELCOME TEXT
                       const Text(
-                        'Welcome Back !',
+                        'Start your never ending journey',
                         style: MyTextStyle.optionTextMediumLight,
                         textScaler: TextScaler.noScaling,
                       ),
@@ -130,6 +121,14 @@ class LoginScreen extends StatelessWidget {
                           controller: passwordCont,
                           sufficIcon: const Icon(Icons.password)),
 
+                      //CONFIRM PASSWORD FIELD
+                      CustomCredentialTextField(
+                          heading: 'Cornfirm Password',
+                          hint: 'Cornfirm Password',
+                          obscuredText: true,
+                          controller: confirmPasswordCont,
+                          sufficIcon: const Icon(Icons.password)),
+
                       Padding(
                         padding: const EdgeInsets.fromLTRB(20, 10, 20, 0),
                         child: Row(
@@ -137,32 +136,27 @@ class LoginScreen extends StatelessWidget {
                           children: [
                             TextButton(
                                 onPressed: () {
-                                  Navigator.of(context).push(MaterialPageRoute(
-                                      builder: (ctx) =>
-                                          const CreateAccountScreen()));
+                                  Navigator.of(context).pushAndRemoveUntil(
+                                      MaterialPageRoute(
+                                          builder: (ctx) =>
+                                              const LoginScreen()),
+                                      (route) => false);
                                 },
                                 child: const Text(
-                                  'Register',
+                                  'Login',
                                   style: MyTextStyle.commonButtonText,
                                 )),
-                            BlocBuilder<LoginBloc, LoginState>(
-                              builder: (context, state) {
-                                if(state is ManualLoginLoadingState){
-                                  return const CircularProgressIndicator();
-                                }else{
-                                  return CustomButtonLogin(
-                                  text: 'Login',
-                                  icon: const Icon(
-                                    Icons.arrow_right_alt,
-                                    color: Colors.white,
-                                  ),
-                                  onPressed: () {
-                                    BlocProvider.of<LoginBloc>(context).add(
-                                        ManualLoginEvent(
-                                            email: emailCont.text,
-                                            password: passwordCont.text));
-                                  },
-                                );
+                             CustomButtonLogin(
+                              text: 'Register',
+                              icon: const Icon(
+                                Icons.arrow_right_alt,
+                                color: Colors.white,
+                              ),
+
+                              onPressed: (){
+                                log(emailCont.text);
+                                if(emailCont.text.trim().isNotEmpty&&passwordCont.text==confirmPasswordCont.text){
+                                  BlocProvider.of<LoginBloc>(context).add(ManualSignUpEvent(email: emailCont.text, password: passwordCont.text));
                                 }
                               },
                             )
@@ -180,7 +174,7 @@ class LoginScreen extends StatelessWidget {
                         crossAxisAlignment: CrossAxisAlignment.center,
                         children: [
                           const Text(
-                            'or Login with',
+                            'or SignUp with',
                             style: MyTextStyle.greyHeadingTextSmall,
                           ),
                           IconButton(

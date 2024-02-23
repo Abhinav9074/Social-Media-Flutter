@@ -15,7 +15,7 @@ class CommonButton extends StatelessWidget {
       onPressed: onPressed, 
       icon: icon ,
       label: Text(text,style: MyTextStyle.commonButtonText,),
-      style: ButtonStyle(),
+      style: const ButtonStyle(),
       );
   }
 }

@@ -1,3 +1,5 @@
+// ignore_for_file: must_be_immutable
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:connected/application/bloc/community_creation_bloc/community_creation_bloc.dart';
 import 'package:connected/application/bloc/community_creation_bloc/community_creation_event.dart';
@@ -26,7 +28,7 @@ class EditCommunityPage extends StatelessWidget {
       stream: FirebaseFirestore.instance.collection(FirebaseConstants.communityDb).doc(communityId).snapshots(),
       builder: (context, snapshot) {
         if(!snapshot.hasData){
-          return SizedBox();
+          return const SizedBox();
         }else{
           communityDescController.text = snapshot.data![FirebaseConstants.fieldCommunityDescription];
           communityNameController.text = snapshot.data![FirebaseConstants.fieldCommunityName];

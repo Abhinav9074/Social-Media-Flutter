@@ -5,7 +5,7 @@ import 'package:connected/domain/fire_store_functions/chat_service/chat_services
 import 'package:connected/domain/fire_store_functions/user_db/user_db_functions.dart';
 import 'package:connected/presentation/core/themes/theme.dart';
 import 'package:connected/presentation/screens/profile/screens/self_discussion_view.dart';
-import 'package:connected/presentation/widgets/textField.dart';
+import 'package:connected/presentation/widgets/text_field.dart';
 import 'package:flutter/material.dart';
 
 class ChatInsideScreen extends StatelessWidget {

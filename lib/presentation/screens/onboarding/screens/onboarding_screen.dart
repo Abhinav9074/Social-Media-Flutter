@@ -1,6 +1,5 @@
 // ignore_for_file: use_build_context_synchronously
 
-import 'dart:developer';
 
 import 'package:connected/application/bloc/login_bloc/login_bloc.dart';
 import 'package:connected/domain/shared_prefrences/login_logout/login_logout.dart';

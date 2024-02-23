@@ -5,7 +5,6 @@ import 'package:connected/application/bloc/other_profile_bloc/other_profile_bloc
 import 'package:connected/application/bloc/other_profile_bloc/other_profile_event.dart';
 import 'package:connected/application/bloc/other_profile_bloc/other_profile_state.dart';
 import 'package:connected/domain/common/firestore_constants/firebase_constants.dart';
-import 'package:connected/domain/fire_store_functions/user_db/user_db_functions.dart';
 import 'package:connected/presentation/core/themes/theme.dart';
 import 'package:connected/presentation/screens/chats/screens/chat_inside_screen.dart';
 import 'package:connected/presentation/screens/map_view/screens/map_view_screen.dart';

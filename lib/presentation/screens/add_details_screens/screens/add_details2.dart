@@ -6,7 +6,10 @@ import 'package:connected/presentation/screens/add_details_screens/widgets/selec
 import 'package:flutter/material.dart';
 
 class AddInterests extends StatelessWidget {
-   const AddInterests({super.key});
+  final String password;
+
+  const AddInterests({super.key, required this.password});
+
   
   @override
   Widget build(BuildContext context) {
@@ -35,7 +38,7 @@ class AddInterests extends StatelessWidget {
                 padding: const EdgeInsets.only(bottom: 30),
                 child: ElevatedButton(
                   onPressed: (){
-                    Navigator.of(context).push(MaterialPageRoute(builder: (ctx)=> AddUserName()));
+                    Navigator.of(context).push(MaterialPageRoute(builder: (ctx)=> AddUserName(password: password,)));
                   },
                   style: ButtonStyle(backgroundColor: MaterialStateProperty.all(Colors.black)), 
                   child: const Text('Continue',style: MyTextStyle.commonButtonTextWhite,),

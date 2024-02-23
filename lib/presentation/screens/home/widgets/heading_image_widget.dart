@@ -3,7 +3,6 @@ import 'package:connected/presentation/core/themes/theme.dart';
 import 'package:connected/presentation/screens/home/screens/post_view.dart';
 import 'package:flutter/material.dart';
 import 'package:lottie/lottie.dart';
-import 'package:skeletonizer/skeletonizer.dart';
 
 class HeadingAndImageWidget extends StatelessWidget {
   final bool isImage;
