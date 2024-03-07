@@ -11,6 +11,7 @@ import 'package:connected/presentation/screens/add_details_screens/screens/add_d
 import 'package:connected/presentation/screens/login/screens/login_screen.dart';
 import 'package:connected/presentation/screens/login/widgets/custom_button.dart';
 import 'package:connected/presentation/screens/login/widgets/custom_textfield.dart';
+import 'package:email_validator/email_validator.dart';
 import 'package:lottie/lottie.dart';
 import 'package:connected/presentation/screens/main_page/screens/main_page.dart';
 import 'package:flutter/material.dart';
@@ -21,6 +22,9 @@ class CreateAccountScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final GlobalKey<FormState> formKey = GlobalKey<FormState>();
+    final GlobalKey<FormState> passKey = GlobalKey<FormState>();
+    final GlobalKey<FormState> confirmPassKey = GlobalKey<FormState>();
     TextEditingController emailCont = TextEditingController();
     TextEditingController passwordCont = TextEditingController();
     TextEditingController confirmPasswordCont = TextEditingController();
@@ -28,8 +32,7 @@ class CreateAccountScreen extends StatelessWidget {
       appBar: AppBar(),
       body: BlocConsumer<LoginBloc, LoginState>(
         listener: (context, state) async {
-         
-         if (state is UserExistState) {
+          if (state is UserExistState) {
             AllSnackBars.commonSnackbar(
                 context: context,
                 title: 'Welcome Back',
@@ -38,7 +41,7 @@ class CreateAccountScreen extends StatelessWidget {
             Navigator.of(context).pushAndRemoveUntil(
                 MaterialPageRoute(builder: (ctx) => const MainPage()),
                 (route) => false);
-          }else if (state is NoUserState) {
+          } else if (state is NoUserState) {
             AllSnackBars.commonSnackbar(
                 context: context,
                 title: 'Email',
@@ -81,7 +84,7 @@ class CreateAccountScreen extends StatelessWidget {
           }
         },
         builder: (context, state) {
-         if (state is LoginLoadingState) {
+          if (state is LoginLoadingState) {
             return const Center(child: CircularProgressIndicator());
           } else if (state is LoginFailedState) {
             return const Center(child: Text('An Error Occured'));
@@ -107,27 +110,54 @@ class CreateAccountScreen extends StatelessWidget {
 
                       //EMAIL FIELD
                       CustomCredentialTextField(
-                          heading: 'E-mail address',
-                          hint: 'Email',
-                          obscuredText: false,
-                          controller: emailCont,
-                          sufficIcon: const Icon(Icons.email)),
+                        heading: 'E-mail address',
+                        hint: 'Email',
+                        obscuredText: false,
+                        controller: emailCont,
+                        sufficIcon: const Icon(Icons.email),
+                        formKey: formKey,
+                        validator: (value) {
+                          if (value == null || value.isEmpty) {
+                            return 'Please enter an email address.';
+                          }
+                          if (!EmailValidator.validate(value)) {
+                            return 'Please enter a valid email address.';
+                          }
+                          return null;
+                        },
+                      ),
 
                       //PASSWORD FIELD
                       CustomCredentialTextField(
-                          heading: 'Password',
-                          hint: 'Password',
-                          obscuredText: true,
-                          controller: passwordCont,
-                          sufficIcon: const Icon(Icons.password)),
+                        heading: 'Password',
+                        hint: 'Password',
+                        obscuredText: true,
+                        controller: passwordCont,
+                        sufficIcon: const Icon(Icons.password),
+                        formKey: passKey,
+                        validator: (value) {
+                          if (value == null || value.isEmpty) {
+                            return 'Please Enter a password';
+                          }
+                          return null;
+                        },
+                      ),
 
                       //CONFIRM PASSWORD FIELD
                       CustomCredentialTextField(
-                          heading: 'Cornfirm Password',
-                          hint: 'Cornfirm Password',
-                          obscuredText: true,
-                          controller: confirmPasswordCont,
-                          sufficIcon: const Icon(Icons.password)),
+                        heading: 'Password',
+                        hint: 'Password',
+                        obscuredText: true,
+                        controller: passwordCont,
+                        sufficIcon: const Icon(Icons.password),
+                        formKey: confirmPassKey,
+                        validator: (value) {
+                          if (value == null || value.isEmpty) {
+                            return 'Please Enter a password';
+                          }
+                          return null;
+                        },
+                      ),
 
                       Padding(
                         padding: const EdgeInsets.fromLTRB(20, 10, 20, 0),
@@ -146,17 +176,21 @@ class CreateAccountScreen extends StatelessWidget {
                                   'Login',
                                   style: MyTextStyle.commonButtonText,
                                 )),
-                             CustomButtonLogin(
+                            CustomButtonLogin(
                               text: 'Register',
                               icon: const Icon(
                                 Icons.arrow_right_alt,
                                 color: Colors.white,
                               ),
-
-                              onPressed: (){
+                              onPressed: () {
                                 log(emailCont.text);
-                                if(emailCont.text.trim().isNotEmpty&&passwordCont.text==confirmPasswordCont.text){
-                                  BlocProvider.of<LoginBloc>(context).add(ManualSignUpEvent(email: emailCont.text, password: passwordCont.text));
+                                if (emailCont.text.trim().isNotEmpty &&
+                                    passwordCont.text ==
+                                        confirmPasswordCont.text) {
+                                  BlocProvider.of<LoginBloc>(context).add(
+                                      ManualSignUpEvent(
+                                          email: emailCont.text,
+                                          password: passwordCont.text));
                                 }
                               },
                             )

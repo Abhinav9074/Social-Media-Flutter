@@ -2,6 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:connected/domain/common/firestore_constants/firebase_constants.dart';
 import 'package:connected/domain/fire_store_functions/user_db/user_db_functions.dart';
 import 'package:connected/presentation/core/themes/theme.dart';
+import 'package:easy_image_viewer/easy_image_viewer.dart';
 import 'package:flutter/material.dart';
 import 'package:lottie/lottie.dart';
 import 'package:recase/recase.dart';
@@ -77,25 +78,40 @@ class CommunityPosts extends StatelessWidget {
                                 width: 300,
                                 decoration: BoxDecoration(
                                     borderRadius: BorderRadius.circular(20)),
-                                child: ClipRRect(
-                                  borderRadius: BorderRadius.circular(10),
-                                  child: Image.network(
-                                    snapshot.data![FirebaseConstants
-                                        .fieldCommunityPostImage],
-                                    fit: BoxFit.cover,
-                                    loadingBuilder:
-                                        (context, child, loadingProgress) {
-                                      if (loadingProgress == null) return child;
-                                      return Lottie.asset(
-                                          'assets/lottie/skeleton.json',
-                                          fit: BoxFit.cover,
-                                          frameRate: const FrameRate(90));
-                                    },
-                                    errorBuilder: (context, error, stackTrace) {
-                                      return Lottie.asset(
-                                        'assets/lottie/error.json',
-                                      );
-                                    },
+                                child: InkWell(
+                                  onTap: () {
+                                    final imageProvider = Image.network(
+                                            snapshot.data![FirebaseConstants
+                                                .fieldCommunityPostImage])
+                                        .image;
+                                    showImageViewer(context, imageProvider,
+                                        swipeDismissible: true,
+                                        doubleTapZoomable: true,
+                                        backgroundColor: Colors.black,
+                                        onViewerDismissed: () {});
+                                  },
+                                  child: ClipRRect(
+                                    borderRadius: BorderRadius.circular(10),
+                                    child: Image.network(
+                                      snapshot.data![FirebaseConstants
+                                          .fieldCommunityPostImage],
+                                      fit: BoxFit.cover,
+                                      loadingBuilder:
+                                          (context, child, loadingProgress) {
+                                        if (loadingProgress == null)
+                                          return child;
+                                        return Lottie.asset(
+                                            'assets/lottie/skeleton.json',
+                                            fit: BoxFit.cover,
+                                            frameRate: const FrameRate(90));
+                                      },
+                                      errorBuilder:
+                                          (context, error, stackTrace) {
+                                        return Lottie.asset(
+                                          'assets/lottie/error.json',
+                                        );
+                                      },
+                                    ),
                                   ),
                                 ),
                               ),
@@ -201,25 +217,40 @@ class CommunityPosts extends StatelessWidget {
                                 width: 300,
                                 decoration: BoxDecoration(
                                     borderRadius: BorderRadius.circular(20)),
-                                child: ClipRRect(
-                                  borderRadius: BorderRadius.circular(10),
-                                  child: Image.network(
-                                    snapshot.data![FirebaseConstants
-                                        .fieldCommunityPostImage],
-                                    fit: BoxFit.cover,
-                                    loadingBuilder:
-                                        (context, child, loadingProgress) {
-                                      if (loadingProgress == null) return child;
-                                      return Lottie.asset(
-                                          'assets/lottie/skeleton.json',
-                                          fit: BoxFit.cover,
-                                          frameRate: const FrameRate(90));
-                                    },
-                                    errorBuilder: (context, error, stackTrace) {
-                                      return Lottie.asset(
-                                        'assets/lottie/error.json',
-                                      );
-                                    },
+                                child: InkWell(
+                                  onTap: () {
+                                    final imageProvider = Image.network(
+                                            snapshot.data![FirebaseConstants
+                                                .fieldCommunityPostImage])
+                                        .image;
+                                    showImageViewer(context, imageProvider,
+                                        swipeDismissible: true,
+                                        doubleTapZoomable: true,
+                                        backgroundColor: Colors.black,
+                                        onViewerDismissed: () {});
+                                  },
+                                  child: ClipRRect(
+                                    borderRadius: BorderRadius.circular(10),
+                                    child: Image.network(
+                                      snapshot.data![FirebaseConstants
+                                          .fieldCommunityPostImage],
+                                      fit: BoxFit.cover,
+                                      loadingBuilder:
+                                          (context, child, loadingProgress) {
+                                        if (loadingProgress == null)
+                                          return child;
+                                        return Lottie.asset(
+                                            'assets/lottie/skeleton.json',
+                                            fit: BoxFit.cover,
+                                            frameRate: const FrameRate(90));
+                                      },
+                                      errorBuilder:
+                                          (context, error, stackTrace) {
+                                        return Lottie.asset(
+                                          'assets/lottie/error.json',
+                                        );
+                                      },
+                                    ),
                                   ),
                                 ),
                               ),
